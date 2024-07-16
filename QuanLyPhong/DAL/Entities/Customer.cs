@@ -18,7 +18,6 @@ namespace DAL.Entities
         public MenuGender Gender { get; set; }
         public string? CCCD { get; set; }
         public int Point { get; set; }
-        public Guid RankId { get; set; }
         public List<Orders> Orders { get; set; }
         public List<HistoryPoints> HistoryPoints { get; set; }
 
