@@ -17,9 +17,9 @@ namespace BUS.Service
         {
             _kindOfRoomRepository = new KindOfRoomRepository();
         }
-        public string AddKindOfRoom(KindOfRoom kindofrom)
+        public string AddKindOfRoom(KindOfRoom kindofroom)
         {
-            if (_kindOfRoomRepository.CreateKindOfRoom(kindofrom))
+            if (_kindOfRoomRepository.CreateKindOfRoom(kindofroom))
             {
                 return "Add success";
             }
@@ -42,9 +42,9 @@ namespace BUS.Service
 
         }
 
-        public string UpdateKindOfRoom(KindOfRoom kindofrom)
+        public string UpdateKindOfRoom(KindOfRoom kindofroom)
         {
-            if (_kindOfRoomRepository.UpdateKindOfRoom(kindofrom))
+            if (_kindOfRoomRepository.UpdateKindOfRoom(kindofroom))
             {
                 return "Update success";
             }

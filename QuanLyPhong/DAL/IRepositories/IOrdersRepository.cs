@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-    
-    internal interface IOrdersRepository
+
+    public interface IOrdersRepository
     {
         Orders GetById(Guid Id);
 

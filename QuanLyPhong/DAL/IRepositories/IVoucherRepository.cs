@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-    internal interface IVoucherRepository 
+    public interface IVoucherRepository 
     {
         Voucher GetById(Guid Id);
 
