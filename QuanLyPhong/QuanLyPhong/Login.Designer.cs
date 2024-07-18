@@ -62,7 +62,7 @@
             guna2GradientPanel1.Controls.Add(guna2CirclePictureBox1);
             guna2GradientPanel1.Controls.Add(btn_Exit);
             guna2GradientPanel1.CustomizableEdges = customizableEdges9;
-            guna2GradientPanel1.Location = new Point(410, 138);
+            guna2GradientPanel1.Location = new Point(12, 12);
             guna2GradientPanel1.Name = "guna2GradientPanel1";
             guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2GradientPanel1.Size = new Size(1112, 550);
@@ -201,7 +201,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(1866, 808);
+            ClientSize = new Size(1866, 663);
             Controls.Add(guna2GradientPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Login";
