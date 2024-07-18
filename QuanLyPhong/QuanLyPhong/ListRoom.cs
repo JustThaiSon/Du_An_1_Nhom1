@@ -32,7 +32,7 @@ namespace QuanLyPhong
             LoadCbbKindOfRoom();
             loadDtg();
         }
-       
+
         void LoadCbbStatus()
         {
             cbbStatus.DataSource = Enum.GetValues(typeof(RoomStatus));
@@ -43,9 +43,9 @@ namespace QuanLyPhong
             var floors = _floorService.GetAllFloorFromDb();
 
             cbb_floor.DataSource = floors;
-            cbb_floor.DisplayMember = "FloorName"; 
+            cbb_floor.DisplayMember = "FloorName";
 
-            cbb_floor.SelectedIndex = -1; 
+            cbb_floor.SelectedIndex = -1;
         }
         void LoadCbbKindOfRoom()
         {
@@ -117,6 +117,7 @@ namespace QuanLyPhong
 
         private void btn_addRoom_Click(object sender, EventArgs e)
         {
+
             if (!Validate())
             {
                 MessageBox.Show("Not be empty", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -239,8 +240,9 @@ namespace QuanLyPhong
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
             {
-                e.Handled = true; 
+                e.Handled = true;
             }
+
         }
     }
 }

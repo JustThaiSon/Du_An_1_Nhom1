@@ -10,31 +10,26 @@ using System.Windows.Forms;
 
 namespace QuanLyPhong
 {
-    public partial class AddNhanVien : Form
+    public partial class Service : Form
     {
-        public AddNhanVien()
+        public Service()
         {
             InitializeComponent();
         }
 
-        private void AddNhanVien_Load(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectedTab = tabPage3;
+
         }
 
-        private void btn_add_Click(object sender, EventArgs e)
+        private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            tabControl1.SelectedTab = tabPage2;
-        }
 
-        private void guna2Button4_Click(object sender, EventArgs e)
-        {
-            tabControl1.SelectedTab = tabPage2;
         }
     }
 }
