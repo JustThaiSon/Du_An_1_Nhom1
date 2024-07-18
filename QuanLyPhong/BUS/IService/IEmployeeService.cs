@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BUS.IService
 {
-    internal interface IEmployeeService
+    public interface IEmployeeService
     {
         string AddEmployee(Employee Employee);
         string RemoveEmployee(Guid Id);
         string UpdateEmployee(Employee Employee);
-        List<Floor> GetAllEmployeeFromDb();
+        List<Employee> GetAllEmployeeFromDb();
     }
 }

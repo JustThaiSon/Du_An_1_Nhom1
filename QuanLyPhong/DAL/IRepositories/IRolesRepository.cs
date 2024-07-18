@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-    
-        internal interface IRolesRepository
+
+    public interface IRolesRepository
         {
             Role GetById(Guid Id);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-        internal interface IServiceRepository
+        public interface IServiceRepository
         {
             Service GetById(Guid Id);
 
