@@ -75,7 +75,6 @@ namespace BUS.Service
             }
             return "Delete failure";
         }
-
         public string UpdateRoom(RoomViewModels room)
         {
             var updateRoom = _roomRepository.GetById(room.Id);

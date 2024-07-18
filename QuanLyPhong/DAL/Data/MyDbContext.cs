@@ -48,7 +48,7 @@ namespace DAL.Data
         public DbSet<OrderService> OrderServices { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Service> Services { get; set; }
+        public DbSet<Services> Services { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
     }
 }

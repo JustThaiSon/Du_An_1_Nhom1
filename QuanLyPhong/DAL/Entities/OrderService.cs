@@ -13,7 +13,7 @@ namespace DAL.Entities
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public decimal TotalPrice { get; set; }
-        public Service Service { get; set; }
+        public Services Service { get; set; }
         public Orders Orders { get; set; }
 
     }

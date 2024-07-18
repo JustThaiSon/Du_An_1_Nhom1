@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-        internal interface IServiceRepository
+        public interface IServiceRepository
         {
-            Service GetById(Guid Id);
+            Services GetById(Guid Id);
 
-            List<Service> GetAllService();
-            bool CreateService(Service  service);
-            bool UpdadateService(Service service);
+            List<Services> GetAllService();
+            bool CreateService(Services  service);
+            bool UpdadateService(Services service);
             bool DeleteService(Guid Id);
         }
     }

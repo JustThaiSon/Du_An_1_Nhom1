@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Configruations
 {
-    public class ServiceConfigruation : IEntityTypeConfiguration<Service>
+    public class ServiceConfigruation : IEntityTypeConfiguration<Services>
     {
-        public void Configure(EntityTypeBuilder<Service> builder)
+        public void Configure(EntityTypeBuilder<Services> builder)
         {
             builder.ToTable("Service");
             builder.HasKey(s => s.Id);
