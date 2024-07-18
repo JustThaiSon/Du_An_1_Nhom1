@@ -16,7 +16,7 @@ namespace DAL.Repositories
         {
             _context = new MyDbContext();
         }
-        public bool CreateService(Service service)
+        public bool CreateService(Services service)
         {
             try
             {
@@ -44,17 +44,17 @@ namespace DAL.Repositories
             return false;   
         }
 
-        public List<Service> GetAllService()
+        public List<Services> GetAllService()
         {
             return _context.Services.ToList();
         }
 
-        public Service GetById(Guid Id)
+        public Services GetById(Guid Id)
         {
             return _context.Services.FirstOrDefault(x => x.Id == Id);
         }
 
-        public bool UpdadateService(Service service)
+        public bool UpdadateService(Services service)
         {
             var update = _context.Services.FirstOrDefault(x=>x.Id == service.Id);   
 

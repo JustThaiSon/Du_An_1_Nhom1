@@ -26,12 +26,10 @@ namespace BUS.Service
             return "Add failure";
 
         }
-
         public List<Floor> GetAllFloorFromDb()
         {
             return _floorRepository.GetAllFloor();
         }
-
         public string RemoveFloor(Guid Id)
         {
             if (_floorRepository.DeleteFloor(Id))
@@ -41,7 +39,6 @@ namespace BUS.Service
             return "Delete failure";
 
         }
-
         public string UpdateFloor(Floor floor)
         {
             if (_floorRepository.UpdateFloor(floor))
