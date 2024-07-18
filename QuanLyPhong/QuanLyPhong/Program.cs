@@ -11,8 +11,7 @@ namespace QuanLyPhong
 			// To customize application configuration such as set high DPI settings or default font,
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
-			Application.Run(new AddNhanVien());
-			Application.Run(new ListRoom());
+			Application.Run(new frmVoucher());
 		}
 	}
 }

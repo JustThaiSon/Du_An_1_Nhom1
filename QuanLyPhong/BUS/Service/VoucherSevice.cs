@@ -1,6 +1,8 @@
 ﻿using BUS.IService;
 using DAL.Entities;
+using DAL.Enums;
 using DAL.IRepositories;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,9 +17,9 @@ namespace BUS.Service
     {
         private IVoucherRepository _voucherRepo;
 
-        public VoucherSevice(IVoucherRepository vouvherRepo)
+        public VoucherSevice()
         {
-            _voucherRepo = vouvherRepo;
+            _voucherRepo = new VoucherRepository();
         }
 
         public List<Voucher> GetAllVoucherFromDb()
@@ -59,6 +61,11 @@ namespace BUS.Service
             }
         }
 
-       
+    
+
+        public void UpdateVoucherStatusAuTo()
+        {
+            _voucherRepo.UpdateVoucherStatusAuTo();
+        }
     }
 }

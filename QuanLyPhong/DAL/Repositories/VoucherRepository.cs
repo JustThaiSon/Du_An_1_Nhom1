@@ -1,5 +1,6 @@
 ﻿using DAL.Data;
 using DAL.Entities;
+using DAL.Enums;
 using DAL.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace DAL.Repositories
                 {
                     voucher.Id = Guid.NewGuid();
                     voucher.VoucherCode = GenerateVoucherCode();
+                    voucher.Status = AddVoucherStatus(voucher);
                     _context.Vouchers.Add(voucher);
                     _context.SaveChanges();
                     return true;
@@ -69,7 +71,7 @@ namespace DAL.Repositories
             }
             else if (result.Length < 8)
             {
-                result = result.PadRight(8, '0'); 
+                result = result.PadRight(8, '0');
             }
 
             return result;
@@ -95,8 +97,71 @@ namespace DAL.Repositories
             update.MinPrice = voucher.MinPrice;
             update.StartDate = voucher.StartDate;
             update.EndDate = voucher.EndDate;
-            update.Status = voucher.Status; 
+            update.Status = voucher.Status;
             return true;
         }
+
+        public VoucherStatus AddVoucherStatus(Voucher voucher)
+        {
+            DateTime now = DateTime.UtcNow;
+
+            if (voucher.Status == VoucherStatus.Cancelled)
+            {
+                return VoucherStatus.Cancelled;
+            }
+            else if (now < voucher.StartDate)
+            {
+                return VoucherStatus.NotDueYet; // Chưa đến ngày bắt đầu
+            }
+            else if (now > voucher.EndDate)
+            {
+                return VoucherStatus.Expired; // Đã qua ngày kết thúc
+            }
+            else if (now >= voucher.StartDate && now <= voucher.EndDate)
+            {
+                return VoucherStatus.Active; // Đang trong thời gian sử dụng
+            }
+            else
+            {
+                return VoucherStatus.NotDueYet; // Trường hợp khác (mặc định chưa đến ngày bắt đầu)
+            }
+        }
+
+
+        public void UpdateVoucherStatusAuTo()
+        {
+            var vouchers = _context.Vouchers.ToList();
+
+            foreach (var voucher in vouchers)
+            {
+                DateTime now = DateTime.UtcNow;
+
+
+                if (voucher.Status == VoucherStatus.Cancelled)
+                {
+                    voucher.Status = VoucherStatus.Cancelled;
+                }
+                else if (now < voucher.StartDate)
+                {
+                    voucher.Status = VoucherStatus.NotDueYet; // Chưa đến ngày bắt đầu
+                }
+                else if (now > voucher.EndDate)
+                {
+                    voucher.Status = VoucherStatus.Expired; // Đã qua ngày kết thúc
+                }
+                else if (now >= voucher.StartDate && now <= voucher.EndDate)
+                {
+                    voucher.Status = VoucherStatus.Active; // Đang trong thời gian sử dụng
+                }
+                else
+                {
+                    voucher.Status = VoucherStatus.NotDueYet; // Trường hợp khác (mặc định chưa đến ngày bắt đầu)
+                }
+            }
+
+            _context.SaveChanges();
+        }
+
     }
 }
+
