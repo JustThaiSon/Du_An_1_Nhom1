@@ -25,7 +25,8 @@ namespace DAL.Repositories
             {
                 if (customer != null)
                 {
-                     customer.Id = Guid.NewGuid();
+                    customer.Id = Guid.NewGuid();
+                    customer.CustomerCode = GenerateCustomerCode();
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
                     return true;
@@ -37,7 +38,6 @@ namespace DAL.Repositories
                 return false;
             }
         }
-
         public bool DeleteCustomer(Guid Id)
         {
             var delete = _context.Customers.Find(Id);
@@ -50,19 +50,36 @@ namespace DAL.Repositories
             return false;
         }
 
+        public string GenerateCustomerCode()
+        {
+            var maxCode = _context.Customers
+                .OrderByDescending(c => c.CustomerCode)
+                .Select(c => c.CustomerCode)
+                .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(maxCode))
+            {
+                return "CM001"; 
+            }
+
+            int maxNumber = int.Parse(maxCode.Substring(2));
+
+            return $"CM{maxNumber + 1:D3}"; 
+        }
+
         public List<Customer> GetAllCustomer()
         {
-          return _context.Customers.ToList();
+            return _context.Customers.ToList();
         }
 
         public Customer GetById(Guid Id)
         {
-            return _context.Customers.FirstOrDefault(x=>x.Id == Id);
+            return _context.Customers.FirstOrDefault(x => x.Id == Id);
         }
 
         public bool UpdateCustomer(Customer customer)
         {
-            var update = _context.Customers.FirstOrDefault(y=>y.Id == customer.Id);
+            var update = _context.Customers.FirstOrDefault(y => y.Id == customer.Id);
             if (update == null) return false;
             update.Id = customer.Id;
             update.Address = customer.Address;
