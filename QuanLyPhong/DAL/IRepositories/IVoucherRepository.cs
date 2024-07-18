@@ -15,7 +15,6 @@ namespace DAL.IRepositories
         bool CreateVoucher(Voucher voucher);
         bool UpdadateVoucher(Voucher voucher);
         bool DeleteVoucher(Guid Id);
+        string GenerateVoucherCode();
     }
-    
-    
 }

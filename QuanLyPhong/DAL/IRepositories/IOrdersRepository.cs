@@ -16,7 +16,8 @@ namespace DAL.IRepositories
         bool CreateOrder(Orders orders);
         bool UpdadateOrder(Orders orders);
         bool DeleteOrder(Guid Id);
-    
+		string GenerateOrderCode();
+
     }
-    
+
 }

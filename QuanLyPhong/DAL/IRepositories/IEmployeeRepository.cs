@@ -14,6 +14,7 @@ namespace DAL.IRepositories
         bool CreateEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
         bool DeleteEmployee(Guid Id);
+        bool ChangeStatus(List<Employee> lstEmployee);
         string GenerateEmployeeCode();
 
     }

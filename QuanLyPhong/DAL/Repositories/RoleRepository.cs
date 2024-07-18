@@ -47,6 +47,23 @@ namespace DAL.Repositories
             return false;
         }
 
+        public string GenerateRolesCode()
+        {
+            var maxCode = _context.Roles
+             .OrderByDescending(c => c.RoleCode)
+            .Select(c => c.RoleCode)
+            .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(maxCode))
+            {
+                return "RL001";
+            }
+
+            int maxNumber = int.Parse(maxCode.Substring(2));
+
+            return $"CM{maxNumber + 1:D3}";
+        }
+
         public List<Role> GetAllRole()
         {
             return _context.Roles.ToList();

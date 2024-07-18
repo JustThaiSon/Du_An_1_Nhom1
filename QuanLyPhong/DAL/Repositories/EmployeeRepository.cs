@@ -17,6 +17,27 @@ namespace DAL.Repositories
         {
             _context = new MyDbContext();
         }
+
+        public bool ChangeStatus(List<Employee> lstEmployee)
+        {
+            foreach (var item in lstEmployee)
+            {
+                if (item.Status == true )
+                {
+                    item.Status = false;
+                    _context.Employees.Update(item);
+                    _context.SaveChanges();
+                }
+                else if (item.Status == false)
+                {
+                    item.Status = true;
+                    _context.Employees.Update(item);
+                    _context.SaveChanges();
+                } 
+            }
+            return true;
+        }
+
         public bool CreateEmployee(Employee employee)
         {
             try
@@ -46,7 +67,7 @@ namespace DAL.Repositories
             _context.Employees.Remove(delete);
             _context.SaveChanges();
             return true;
-           
+
         }
 
         public string GenerateEmployeeCode()
@@ -78,7 +99,7 @@ namespace DAL.Repositories
 
         public bool UpdateEmployee(Employee employee)
         {
-           var Update = _context.Employees.Find(employee.Id);
+            var Update = _context.Employees.Find(employee.Id);
             if (Update == null) return false;
             Update.Id = employee.Id;
             Update.EmployeeCode = employee.EmployeeCode;

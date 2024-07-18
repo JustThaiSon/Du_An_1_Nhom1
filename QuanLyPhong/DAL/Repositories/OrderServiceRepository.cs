@@ -23,7 +23,7 @@ namespace DAL.Repositories
             {
                 if (orderService != null)
                 {
-                    orderService.Or = Guid.NewGuid();
+                    orderService.OrderId = Guid.NewGuid();
                     _context.OrderServices.Add(orderService);
                     _context.SaveChanges();
                     return true;
@@ -42,7 +42,7 @@ namespace DAL.Repositories
             var delete = _context.OrderServices.Find(Id);
             if (delete != null)
             {
-                _context.Orders.Remove(delete);
+                _context.OrderServices.Remove(delete);
                 _context.SaveChanges();
                 return true;
             }

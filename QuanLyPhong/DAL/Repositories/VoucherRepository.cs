@@ -24,6 +24,7 @@ namespace DAL.Repositories
                 if (voucher != null)
                 {
                     voucher.Id = Guid.NewGuid();
+                    voucher.VoucherCode = GenerateVoucherCode();
                     _context.Vouchers.Add(voucher);
                     _context.SaveChanges();
                     return true;
@@ -43,6 +44,35 @@ namespace DAL.Repositories
                 return true;
             }
             return false;
+        }
+
+        public string GenerateVoucherCode()
+        {
+            long timestamp = DateTime.UtcNow.Ticks;
+            int random = new Random().Next(1000, 9999); // Random số 4 chữ số
+
+            // Lấy phần cuối của timestamp để đảm bảo độ dài mã không quá dài
+            long truncatedTimestamp = timestamp % 1000000;
+
+            string base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var buffer = new StringBuilder();
+            while (truncatedTimestamp > 0)
+            {
+                buffer.Insert(0, base36[(int)(truncatedTimestamp % 36)]);
+                truncatedTimestamp /= 36;
+            }
+            // Kết hợp với số ngẫu nhiên, đảm bảo chuỗi cuối cùng có độ dài 8 ký tự
+            string result = buffer.ToString() + random.ToString();
+            if (result.Length > 8)
+            {
+                result = result.Substring(0, 8);
+            }
+            else if (result.Length < 8)
+            {
+                result = result.PadRight(8, '0'); 
+            }
+
+            return result;
         }
 
         public List<Voucher> GetAllVouchers()

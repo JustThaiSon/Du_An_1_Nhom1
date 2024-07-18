@@ -48,6 +48,23 @@ namespace DAL.Repositories
             return false;
         }
 
+        public string GenerateOrderCode()
+        {
+            var maxCode = _context.Orders
+               .OrderByDescending(c => c.OrderCode)
+               .Select(c => c.OrderCode)
+               .FirstOrDefault();
+
+            if (string.IsNullOrEmpty(maxCode))
+            {
+                return "OD000001";
+            }
+
+            int maxNumber = int.Parse(maxCode.Substring(2));
+
+            return $"CM{maxNumber + 1:D6}";
+        }
+
         public List<Orders> GetAllOrder()
         {
             return _context.Orders.ToList();

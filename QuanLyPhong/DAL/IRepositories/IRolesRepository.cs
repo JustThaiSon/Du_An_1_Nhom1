@@ -16,6 +16,8 @@ namespace DAL.IRepositories
             bool CreateRole(Role role);
             bool UpdadateRole(Role role);
             bool DeleteRole(Guid Id);
-        }
+            string GenerateRolesCode();
+
     }
+}
 

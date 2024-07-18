@@ -21,7 +21,6 @@ namespace DAL.Repositories
             if (orderDetails == null)
             {
                 orderDetails.Id = Guid.NewGuid();
-                orderDetails.OrderDetailsCode = GenerateOrderDetalsCode();
                 _context.OrderDetails.Add(orderDetails);
                 _context.SaveChanges();
                 return true;
@@ -37,23 +36,6 @@ namespace DAL.Repositories
             _context.OrderDetails.Remove(delete);
             _context.SaveChanges();
             return true;
-        }
-
-        public string GenerateOrderDetalsCode()
-        {
-            var maxCode = _context.OrderDetails
-              .OrderByDescending(c => c.OrderDetailsCode)
-              .Select(c => c.OrderDetailsCode)
-              .FirstOrDefault();
-
-            if (string.IsNullOrEmpty(maxCode))
-            {
-                return "OD001";
-            }
-
-            int maxNumber = int.Parse(maxCode.Substring(2));
-
-            return $"CM{maxNumber + 1:D3}";
         }
 
         public List<OrderDetails> GetAllOrderDetails()
@@ -72,7 +54,6 @@ namespace DAL.Repositories
             if (update == null) return false;
 
             update.Id = OrderDetails.Id;
-            update.OrderDetailsCode = OrderDetails.OrderDetailsCode;
             update.Quantity = OrderDetails.Quantity;
             update.OrderId = OrderDetails.OrderId;
             update.Discount = OrderDetails.Discount;
