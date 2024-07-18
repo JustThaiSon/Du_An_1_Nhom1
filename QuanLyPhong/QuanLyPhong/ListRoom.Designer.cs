@@ -63,6 +63,8 @@
             label3 = new Label();
             dataGridView1 = new DataGridView();
             guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(components);
+            button1 = new Button();
+            button2 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -117,6 +119,8 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ControlLightLight;
+            panel2.Controls.Add(button2);
+            panel2.Controls.Add(button1);
             panel2.Controls.Add(btn_addRoom);
             panel2.Controls.Add(tb_price);
             panel2.Controls.Add(cbb_typeroom);
@@ -146,6 +150,7 @@
             btn_addRoom.TabIndex = 22;
             btn_addRoom.Text = "Add Room";
             btn_addRoom.UseVisualStyleBackColor = true;
+            btn_addRoom.Click += btn_addRoom_Click;
             // 
             // tb_price
             // 
@@ -165,7 +170,7 @@
             tb_price.PlaceholderText = "";
             tb_price.SelectedText = "";
             tb_price.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            tb_price.Size = new Size(438, 36);
+            tb_price.Size = new Size(374, 36);
             tb_price.TabIndex = 21;
             // 
             // cbb_typeroom
@@ -182,7 +187,7 @@
             cbb_typeroom.Location = new Point(37, 366);
             cbb_typeroom.Name = "cbb_typeroom";
             cbb_typeroom.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            cbb_typeroom.Size = new Size(438, 36);
+            cbb_typeroom.Size = new Size(374, 36);
             cbb_typeroom.TabIndex = 20;
             // 
             // cbb_nbroom
@@ -199,7 +204,7 @@
             cbb_nbroom.Location = new Point(37, 266);
             cbb_nbroom.Name = "cbb_nbroom";
             cbb_nbroom.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            cbb_nbroom.Size = new Size(438, 36);
+            cbb_nbroom.Size = new Size(374, 36);
             cbb_nbroom.TabIndex = 19;
             // 
             // radioButton3
@@ -318,7 +323,7 @@
             tb_nameroom.PlaceholderText = "";
             tb_nameroom.SelectedText = "";
             tb_nameroom.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            tb_nameroom.Size = new Size(438, 36);
+            tb_nameroom.Size = new Size(372, 36);
             tb_nameroom.TabIndex = 8;
             // 
             // label4
@@ -349,13 +354,31 @@
             dataGridView1.Location = new Point(41, 245);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(846, 524);
+            dataGridView1.Size = new Size(846, 635);
             dataGridView1.TabIndex = 22;
             // 
             // guna2Elipse1
             // 
             guna2Elipse1.BorderRadius = 30;
             guna2Elipse1.TargetControl = this;
+            // 
+            // button1
+            // 
+            button1.Image = (Image)resources.GetObject("button1.Image");
+            button1.Location = new Point(445, 266);
+            button1.Name = "button1";
+            button1.Size = new Size(37, 36);
+            button1.TabIndex = 23;
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.Location = new Point(445, 366);
+            button2.Name = "button2";
+            button2.Size = new Size(37, 36);
+            button2.TabIndex = 24;
+            button2.UseVisualStyleBackColor = true;
             // 
             // ListRoom
             // 
@@ -368,6 +391,7 @@
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ListRoom";
+            StartPosition = FormStartPosition.WindowsDefaultBounds;
             Text = "Form3";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -400,5 +424,7 @@
 		private DataGridView dataGridView1;
 		private Button btn_addRoom;
 		public Guna.UI2.WinForms.Guna2Elipse guna2Elipse1;
-	}
+        private Button button2;
+        private Button button1;
+    }
 }

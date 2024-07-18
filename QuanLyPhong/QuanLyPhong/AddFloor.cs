@@ -10,24 +10,14 @@ using System.Windows.Forms;
 
 namespace QuanLyPhong
 {
-    public partial class ListRoom : Form
+    public partial class AddFloor : Form
     {
-        public ListRoom()
+        public AddFloor()
         {
             InitializeComponent();
         }
 
-        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void btn_addRoom_Click(object sender, EventArgs e)
+        private void tb_nameroom_TextChanged(object sender, EventArgs e)
         {
 
         }

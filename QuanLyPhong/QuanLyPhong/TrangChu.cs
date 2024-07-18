@@ -18,6 +18,8 @@ namespace QuanLyPhong
         private int picEmployeeOriginalLeft;
         private int picVoucherOriginalLeft;
         private int picServiceOriginalLeft;
+        private int picStatisticalOriginalLeft;
+
         public TrangChu()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace QuanLyPhong
             picEmployeeOriginalLeft = picEmployee.Left;
             picVoucherOriginalLeft = picVoucher.Left;
             picServiceOriginalLeft = picService.Left;
+            picStatisticalOriginalLeft = picStatistical.Left;
 
         }
         private void ResetAllPictures()
@@ -37,6 +40,7 @@ namespace QuanLyPhong
             picEmployee.Left = picEmployeeOriginalLeft;
             picVoucher.Left = picVoucherOriginalLeft;
             picService.Left = picServiceOriginalLeft;
+            picStatistical.Left = picStatisticalOriginalLeft;
         }
         private void btn_Exit_Click_2(object sender, EventArgs e)
         {
@@ -45,42 +49,48 @@ namespace QuanLyPhong
 
         private void btn_ListRoom_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picList.Left = btn_ListRoom.Left + 30; // Di chuyển picList
+            ResetAllPictures(); 
+            picList.Left = btn_ListRoom.Left + 30;
         }
 
         private void btn_Order_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picOrder.Left = btn_Order.Left + 30; // Di chuyển picOrder
+            ResetAllPictures(); 
+            picOrder.Left = btn_Order.Left + 30; 
         }
 
         private void btn_Customer_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picCust.Left = btn_Customer.Left + 30; // Di chuyển picCust
+            ResetAllPictures(); 
+            picCust.Left = btn_Customer.Left + 30; 
         }
 
         private void btn_Empolyee_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picEmployee.Left = btn_Empolyee.Left + 30; // Di chuyển picEmployee
+            ResetAllPictures();
+            picEmployee.Left = btn_Empolyee.Left + 30; 
         }
 
         private void guna2Button5_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picVoucher.Left = btn_Vocher.Left + 30; // Di chuyển picVoucher
+            ResetAllPictures(); 
+            picVoucher.Left = btn_Vocher.Left + 30; 
         }
 
         private void guna2Button6_Click(object sender, EventArgs e)
-        {
-            ResetAllPictures(); // Đặt lại vị trí tất cả các PictureBox
-            picService.Left = btn_service.Left + 30; // Di chuyển picService
+        { 
+            ResetAllPictures(); 
+            picService.Left = btn_service.Left + 30; 
         }
         private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_Statistical_Click(object sender, EventArgs e)
+        {
+            ResetAllPictures(); 
+            picStatistical.Left = btn_Statistical.Left + 30; 
         }
     }
 }
