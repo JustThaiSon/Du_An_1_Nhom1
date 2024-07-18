@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.IRepositories
 {
-    internal interface IRoomRepository
+    public interface IRoomRepository
     {
         Room GetById(Guid Id);
 

@@ -20,7 +20,7 @@ namespace DAL.Repositories
         {
             try
             {
-                if (room == null)
+                if (room != null)
                 {
                     room.Id = Guid.NewGuid();
                     _context.Rooms.Add(room);
