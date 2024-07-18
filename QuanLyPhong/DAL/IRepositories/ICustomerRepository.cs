@@ -14,5 +14,7 @@ namespace DAL.IRepositories
 		bool CreateCustomer(Customer customer);
 		bool UpdateCustomer(Customer customer);
 		bool DeleteCustomer(Guid Id);
-	}
+		string GenerateCustomerCode();
+
+    }
 }

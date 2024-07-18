@@ -9,7 +9,6 @@ namespace DAL.Entities
     public class OrderDetails
     {
         public Guid Id { get; set; }
-        public string? OrderDetailsCode { get; set; }
         public Guid OrderId { get; set; }
         public int Quantity { get; set; }
         public decimal Discount { get; set; }

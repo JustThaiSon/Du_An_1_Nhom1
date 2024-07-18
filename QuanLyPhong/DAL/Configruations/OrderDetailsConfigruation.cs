@@ -15,10 +15,6 @@ namespace DAL.Configruations
         {
             builder.ToTable("OrderDetails");
             builder.HasKey(x => x.Id);
-
-            builder.Property(od => od.OrderDetailsCode)
-              .HasMaxLength(50).IsRequired();
-
             builder.Property(od => od.Quantity)
               .IsRequired();
 

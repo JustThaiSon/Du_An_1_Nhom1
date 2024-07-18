@@ -16,9 +16,10 @@ namespace DAL.Entities
         public string? Email { get; set; }
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
+        public bool Status { get; set; }
         public string? UserName { get; set; }
         public string? PassWord { get; set; }
-        public byte[]? Img   { get; set; }
+        public byte[]? Img   { get; set; } 
         public DateTime? DateOfBirth { get; set; }
         public string? CCCD { get; set; }
         public MenuGender Gender { get; set; }
