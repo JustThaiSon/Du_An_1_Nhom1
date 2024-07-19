@@ -18,6 +18,6 @@ namespace DAL.IRepositories
         bool DeleteVoucher(Guid Id);
         string GenerateVoucherCode();
         VoucherStatus AddVoucherStatus(Voucher voucher);
-        void UpdateVoucherStatusAuTo();
+        Task UpdateVoucherStatusAuTo();
     }
 }

@@ -2,6 +2,7 @@
 using DAL.Entities;
 using DAL.Enums;
 using DAL.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,13 +92,21 @@ namespace DAL.Repositories
         {
             var update = _context.Vouchers.FirstOrDefault(y => y.Id == voucher.Id);
             if (update == null) return false;
-            update.VoucherCode = voucher.VoucherCode;
+           
+            update.Id = voucher.Id;
             update.VoucherName = voucher.VoucherName;
             update.DiscountRate = voucher.DiscountRate;
             update.MinPrice = voucher.MinPrice;
             update.StartDate = voucher.StartDate;
             update.EndDate = voucher.EndDate;
-            update.Status = voucher.Status;
+            if (voucher.Status == VoucherStatus.Cancelled)
+            {
+                update.Status = VoucherStatus.Cancelled;
+            }
+            else
+            {
+                voucher.Status = update.Status;
+            }
             return true;
         }
 
@@ -128,9 +137,9 @@ namespace DAL.Repositories
         }
 
 
-        public void UpdateVoucherStatusAuTo()
+        public async Task UpdateVoucherStatusAuTo()
         {
-            var vouchers = _context.Vouchers.ToList();
+            var vouchers = await _context.Vouchers.ToListAsync();
 
             foreach (var voucher in vouchers)
             {
@@ -159,7 +168,7 @@ namespace DAL.Repositories
                 }
             }
 
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
     }

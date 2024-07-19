@@ -63,9 +63,9 @@ namespace BUS.Service
 
     
 
-        public void UpdateVoucherStatusAuTo()
+        public async Task UpdateVoucherStatusAuTo()
         {
-            _voucherRepo.UpdateVoucherStatusAuTo();
+            await _voucherRepo.UpdateVoucherStatusAuTo();
         }
     }
 }

@@ -2,6 +2,7 @@
 using BUS.Service;
 using DAL.Entities;
 using DAL.Enums;
+using Guna.UI2.WinForms.Suite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace QuanLyPhong
     {
         private IVoucherSevice _voucherSevice;
         private System.Timers.Timer _timer;
+        Guid IdCell = Guid.Empty;
         public frmVoucher()
         {
             InitializeComponent();
@@ -27,6 +29,15 @@ namespace QuanLyPhong
             LoadCbbSatus();
             LoadDtg();
             ClearForm();
+            Css();
+        }
+        void Css()
+        {
+            dtStartDate.Format = DateTimePickerFormat.Custom;
+            dtStartDate.CustomFormat = "dd/MM/yyyy";
+
+            DtEndDate.Format = DateTimePickerFormat.Custom;
+            DtEndDate.CustomFormat = "dd/MM/yyyy";
         }
         private void SetupTimer()
         {
@@ -76,7 +87,7 @@ namespace QuanLyPhong
             foreach (var item in _voucherSevice.GetAllVoucherFromDb())
             {
                 Count++;
-                dtgDanhSach.Rows.Add(item.Id, Count, item.VoucherName, item.VoucherCode, item.DiscountRate, item.MinPrice, item.Status,item.StartDate,item.EndDate);
+                dtgDanhSach.Rows.Add(item.Id, Count, item.VoucherName, item.VoucherCode, item.DiscountRate, item.MinPrice, item.Status, item.StartDate.ToString("dd/MM/yyyy"), item.EndDate.ToString("dd/MM/yyyy"));
             }
         }
 
@@ -88,9 +99,18 @@ namespace QuanLyPhong
         private void btn_addRoom_Click(object sender, EventArgs e)
         {
             DateTime startDate, endDate;
-            if (!DateTime.TryParse(dtStartDate.Text, out startDate) || !DateTime.TryParse(DtEndDate.Text, out endDate))
+            string startDateStr = dtStartDate.Value.ToString("dd/MM/yyyy");
+            string endDateStr = DtEndDate.Value.ToString("dd/MM/yyyy");
+
+            if (!DateTime.TryParseExact(startDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out startDate) ||
+                !DateTime.TryParseExact(endDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out endDate))
             {
                 MessageBox.Show("Ngày không hợp lệ.");
+                return;
+            }
+            if (endDate <= startDate)
+            {
+                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var addVoucher = new Voucher()
@@ -98,12 +118,99 @@ namespace QuanLyPhong
                 StartDate = startDate,
                 EndDate = endDate,
                 VoucherName = tb_voucherName.Text,
-                DiscountRate = Convert.ToDecimal(tbDiscount.Text), 
-                MinPrice = Convert.ToDecimal(tb_minPrice.Text), 
+                DiscountRate = Convert.ToDecimal(tbDiscount.Text),
+                MinPrice = Convert.ToDecimal(tb_minPrice.Text),
             };
             if (MessageBox.Show("Do you want to add this voucher?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _voucherSevice.AddVoucher(addVoucher);
+                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadDtg();
+            ClearForm();
+        }
+
+        private void dtgDanhSach_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                DataGridViewRow selected = dtgDanhSach.SelectedRows[0];
+                tb_voucherName.Text = selected.Cells[2].Value?.ToString() ?? "";
+                tbVoucherCode.Text = selected.Cells[3].Value?.ToString() ?? "";
+                tbDiscount.Text = selected.Cells[4].Value?.ToString() ?? "";
+                tb_minPrice.Text = selected.Cells[5].Value?.ToString() ?? "";
+                cbbStatus.Text = selected.Cells[6].Value?.ToString() ?? "";
+                dtStartDate.Value = DateTime.ParseExact(selected.Cells[7].Value?.ToString(), "dd/MM/yyyy", null);
+                DtEndDate.Value = DateTime.ParseExact(selected.Cells[8].Value?.ToString(), "dd/MM/yyyy", null);
+                IdCell = Guid.Parse(selected.Cells[0].Value?.ToString() ?? "");
+                cbbStatus.Enabled = true;
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+        }
+        //update
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var exists = _voucherSevice.GetAllVoucherFromDb().Any(x => x.Id == IdCell);
+            if (!exists)
+            {
+                MessageBox.Show("Voucher not exists", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            DateTime startDate, endDate;
+            string startDateStr = dtStartDate.Value.ToString("dd/MM/yyyy");
+            string endDateStr = DtEndDate.Value.ToString("dd/MM/yyyy");
+
+            if (!DateTime.TryParseExact(startDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out startDate) ||
+                !DateTime.TryParseExact(endDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out endDate))
+            {
+                MessageBox.Show("Ngày không hợp lệ.");
+                return;
+            }
+            if ((VoucherStatus)cbbStatus.SelectedItem != VoucherStatus.Cancelled)
+            {
+                MessageBox.Show("Bạn chỉ có thể cập nhật trạng thái thành Cancelled.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            if (endDate <= startDate)
+            {
+                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.","Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var addVoucher = new Voucher()
+            {
+                Id = IdCell,
+                StartDate = startDate,
+                EndDate = endDate,
+                VoucherName = tb_voucherName.Text,
+                DiscountRate = Convert.ToDecimal(tbDiscount.Text),
+                MinPrice = Convert.ToDecimal(tb_minPrice.Text),
+                Status = VoucherStatus.Cancelled,
+            };
+            if (MessageBox.Show("Do you want to update this voucher?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string result = _voucherSevice.UpdateVoucher(addVoucher);
+                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadDtg();
+            ClearForm();
+            cbbStatus.Enabled = false;
+        }
+        // Xóa
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var exists = _voucherSevice.GetAllVoucherFromDb().Any(x => x.Id == IdCell);
+            if (!exists)
+            {
+                MessageBox.Show("Voucher not exists");
+                return;
+            }
+            if (MessageBox.Show("Do you want to delete this voucher?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string result = _voucherSevice.RemoveVoucher(IdCell);
                 MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             LoadDtg();

@@ -85,6 +85,7 @@
             dtgDanhSach.RowHeadersWidth = 51;
             dtgDanhSach.Size = new Size(740, 476);
             dtgDanhSach.TabIndex = 25;
+            dtgDanhSach.CellClick += dtgDanhSach_CellClick;
             // 
             // panel2
             // 
@@ -140,6 +141,7 @@
             button2.TabIndex = 30;
             button2.Text = "Delete Voucher";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -150,6 +152,7 @@
             button1.TabIndex = 29;
             button1.Text = "Edit Voucher";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // label9
             // 
@@ -167,11 +170,11 @@
             DtEndDate.Checked = true;
             DtEndDate.CustomizableEdges = customizableEdges3;
             DtEndDate.Font = new Font("Segoe UI", 9F);
-            DtEndDate.Format = DateTimePickerFormat.Short;
+            DtEndDate.Format = DateTimePickerFormat.Custom;
             DtEndDate.Location = new Point(31, 515);
             DtEndDate.Margin = new Padding(3, 2, 3, 2);
             DtEndDate.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            DtEndDate.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            DtEndDate.MinDate = new DateTime(2021, 1, 2, 0, 0, 0, 0);
             DtEndDate.Name = "DtEndDate";
             DtEndDate.ShadowDecoration.CustomizableEdges = customizableEdges4;
             DtEndDate.Size = new Size(385, 38);
@@ -194,7 +197,7 @@
             dtStartDate.Checked = true;
             dtStartDate.CustomizableEdges = customizableEdges5;
             dtStartDate.Font = new Font("Segoe UI", 9F);
-            dtStartDate.Format = DateTimePickerFormat.Short;
+            dtStartDate.Format = DateTimePickerFormat.Custom;
             dtStartDate.Location = new Point(31, 436);
             dtStartDate.Margin = new Padding(3, 2, 3, 2);
             dtStartDate.MaxDate = new DateTime(2024, 12, 31, 0, 0, 0, 0);

@@ -14,6 +14,6 @@ namespace BUS.IService
         string RemoveVoucher(Guid Id);
         string UpdateVoucher(Voucher Voucher);
         List<Voucher> GetAllVoucherFromDb();
-        void UpdateVoucherStatusAuTo();
+        Task UpdateVoucherStatusAuTo();
     }
 }
