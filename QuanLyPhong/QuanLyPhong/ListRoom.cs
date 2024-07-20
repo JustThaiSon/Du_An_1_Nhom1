@@ -31,6 +31,7 @@ namespace QuanLyPhong
             LoadCbbFloor();
             LoadCbbKindOfRoom();
             loadDtg();
+            Clear();
         }
 
         void LoadCbbStatus()

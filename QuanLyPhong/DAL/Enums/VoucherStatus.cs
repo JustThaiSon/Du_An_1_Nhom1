@@ -10,6 +10,7 @@ namespace DAL.Enums
     {
         Active,
         Expired,
-        Cancelled
+        Cancelled,
+        NotDueYet
     }
 }

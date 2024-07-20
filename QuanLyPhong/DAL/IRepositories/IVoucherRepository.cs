@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace DAL.IRepositories
         bool UpdadateVoucher(Voucher voucher);
         bool DeleteVoucher(Guid Id);
         string GenerateVoucherCode();
+        VoucherStatus AddVoucherStatus(Voucher voucher);
+        Task UpdateVoucherStatusAuTo();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace BUS.IService
         string RemoveVoucher(Guid Id);
         string UpdateVoucher(Voucher Voucher);
         List<Voucher> GetAllVoucherFromDb();
+        Task UpdateVoucherStatusAuTo();
     }
 }
