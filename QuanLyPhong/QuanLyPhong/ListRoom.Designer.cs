@@ -152,6 +152,7 @@
             btn_addTypeRoom.Size = new Size(48, 36);
             btn_addTypeRoom.TabIndex = 27;
             btn_addTypeRoom.UseVisualStyleBackColor = true;
+            btn_addTypeRoom.Click += btn_addTypeRoom_Click;
             // 
             // btn_addFloor
             // 
