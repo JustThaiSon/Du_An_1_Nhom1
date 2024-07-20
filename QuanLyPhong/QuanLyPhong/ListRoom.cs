@@ -244,5 +244,12 @@ namespace QuanLyPhong
             }
 
         }
+
+        private void btn_addFloor_Click(object sender, EventArgs e)
+        {
+            AddFloor addFloor = new AddFloor();
+            
+            addFloor.Show();
+        }
     }
 }

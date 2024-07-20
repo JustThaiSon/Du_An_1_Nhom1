@@ -48,6 +48,8 @@
             label2 = new Label();
             tb_search = new Guna.UI2.WinForms.Guna2TextBox();
             panel2 = new Panel();
+            btn_addTypeRoom = new Button();
+            btn_addFloor = new Button();
             btnUpdate = new Button();
             button1 = new Button();
             cbbStatus = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -119,6 +121,8 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.ControlLightLight;
+            panel2.Controls.Add(btn_addTypeRoom);
+            panel2.Controls.Add(btn_addFloor);
             panel2.Controls.Add(btnUpdate);
             panel2.Controls.Add(button1);
             panel2.Controls.Add(cbbStatus);
@@ -139,6 +143,25 @@
             panel2.Size = new Size(517, 841);
             panel2.TabIndex = 1;
             panel2.Paint += panel2_Paint;
+            // 
+            // btn_addTypeRoom
+            // 
+            btn_addTypeRoom.Image = (Image)resources.GetObject("btn_addTypeRoom.Image");
+            btn_addTypeRoom.Location = new Point(438, 365);
+            btn_addTypeRoom.Name = "btn_addTypeRoom";
+            btn_addTypeRoom.Size = new Size(48, 36);
+            btn_addTypeRoom.TabIndex = 27;
+            btn_addTypeRoom.UseVisualStyleBackColor = true;
+            // 
+            // btn_addFloor
+            // 
+            btn_addFloor.Image = (Image)resources.GetObject("btn_addFloor.Image");
+            btn_addFloor.Location = new Point(438, 267);
+            btn_addFloor.Name = "btn_addFloor";
+            btn_addFloor.Size = new Size(48, 36);
+            btn_addFloor.TabIndex = 26;
+            btn_addFloor.UseVisualStyleBackColor = true;
+            btn_addFloor.Click += btn_addFloor_Click;
             // 
             // btnUpdate
             // 
@@ -174,7 +197,7 @@
             cbbStatus.Location = new Point(39, 472);
             cbbStatus.Name = "cbbStatus";
             cbbStatus.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            cbbStatus.Size = new Size(438, 36);
+            cbbStatus.Size = new Size(374, 36);
             cbbStatus.TabIndex = 23;
             // 
             // btn_addRoom
@@ -205,7 +228,7 @@
             tb_price.PlaceholderText = "";
             tb_price.SelectedText = "";
             tb_price.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            tb_price.Size = new Size(441, 43);
+            tb_price.Size = new Size(376, 43);
             tb_price.TabIndex = 21;
             tb_price.KeyPress += tb_price_KeyPress;
             // 
@@ -223,7 +246,7 @@
             cbb_typeroom.Location = new Point(37, 365);
             cbb_typeroom.Name = "cbb_typeroom";
             cbb_typeroom.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            cbb_typeroom.Size = new Size(438, 36);
+            cbb_typeroom.Size = new Size(376, 36);
             cbb_typeroom.TabIndex = 20;
             // 
             // cbb_floor
@@ -240,7 +263,7 @@
             cbb_floor.Location = new Point(37, 267);
             cbb_floor.Name = "cbb_floor";
             cbb_floor.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            cbb_floor.Size = new Size(438, 36);
+            cbb_floor.Size = new Size(376, 36);
             cbb_floor.TabIndex = 19;
             // 
             // label1
@@ -326,7 +349,7 @@
             tb_nameroom.PlaceholderText = "";
             tb_nameroom.SelectedText = "";
             tb_nameroom.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            tb_nameroom.Size = new Size(438, 36);
+            tb_nameroom.Size = new Size(374, 36);
             tb_nameroom.TabIndex = 8;
             // 
             // label4
@@ -412,5 +435,7 @@
         private Guna.UI2.WinForms.Guna2ComboBox cbbStatus;
         private Button btnUpdate;
         private Button button1;
+        private Button btn_addTypeRoom;
+        private Button btn_addFloor;
     }
 }

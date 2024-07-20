@@ -19,7 +19,7 @@ namespace DAL.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-21AERL4\\SQLEXPRESS;Initial Catalog=DuAn1;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+                optionsBuilder.UseSqlServer("Data Source=NAMNIEMNO\\SQLEXPRESS;Initial Catalog=DuAn1;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }

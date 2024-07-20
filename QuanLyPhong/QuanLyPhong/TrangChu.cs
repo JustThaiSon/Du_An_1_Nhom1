@@ -32,6 +32,19 @@ namespace QuanLyPhong
             picStatisticalOriginalLeft = picStatistical.Left;
 
         }
+        private Form currentFormChild;
+        private void OpenChillFrom(Form childForm)
+        {
+            if (currentFormChild != null) { currentFormChild.Close(); }
+            currentFormChild = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            PanHienThi.Controls.Add(childForm);
+            PanHienThi.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+        } 
         private void ResetAllPictures()
         {
             picList.Left = picListOriginalLeft;
@@ -51,41 +64,46 @@ namespace QuanLyPhong
         {
             ResetAllPictures(); 
             picList.Left = btn_ListRoom.Left + 30;
+            OpenChillFrom(new ListRoom());
         }
 
         private void btn_Order_Click(object sender, EventArgs e)
         {
             ResetAllPictures(); 
-            picOrder.Left = btn_Order.Left + 30; 
+            picOrder.Left = btn_Order.Left + 30;
+
         }
 
         private void btn_Customer_Click(object sender, EventArgs e)
         {
             ResetAllPictures(); 
-            picCust.Left = btn_Customer.Left + 30; 
+            picCust.Left = btn_Customer.Left + 30;
+            OpenChillFrom(new Customer());
+
         }
 
         private void btn_Empolyee_Click(object sender, EventArgs e)
         {
             ResetAllPictures();
-            picEmployee.Left = btn_Empolyee.Left + 30; 
+            picEmployee.Left = btn_Empolyee.Left + 30;
+            OpenChillFrom(new AddNhanVien());
+
         }
 
-        private void guna2Button5_Click(object sender, EventArgs e)
+        private void btn_Vocher_Click(object sender, EventArgs e)
         {
             ResetAllPictures(); 
             picVoucher.Left = btn_Vocher.Left + 30; 
+            OpenChillFrom(new Voucher());
         }
 
-        private void guna2Button6_Click(object sender, EventArgs e)
+        private void btn_service_Click(object sender, EventArgs e)
         { 
             ResetAllPictures(); 
             picService.Left = btn_service.Left + 30; 
+            OpenChillFrom(new Service());
         }
-        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void btn_Statistical_Click(object sender, EventArgs e)
         {
