@@ -219,7 +219,6 @@
             picList.SizeMode = PictureBoxSizeMode.CenterImage;
             picList.TabIndex = 0;
             picList.TabStop = false;
-            picList.Click += guna2CirclePictureBox1_Click;
             // 
             // btn_service
             // 
@@ -237,7 +236,7 @@
             btn_service.Size = new Size(263, 76);
             btn_service.TabIndex = 10;
             btn_service.Text = "Service ";
-            btn_service.Click += guna2Button6_Click;
+            btn_service.Click += btn_service_Click;
             // 
             // btn_Vocher
             // 
@@ -255,7 +254,7 @@
             btn_Vocher.Size = new Size(263, 76);
             btn_Vocher.TabIndex = 9;
             btn_Vocher.Text = "Voucher";
-            btn_Vocher.Click += guna2Button5_Click;
+            btn_Vocher.Click += btn_Vocher_Click;
             // 
             // btn_Empolyee
             // 

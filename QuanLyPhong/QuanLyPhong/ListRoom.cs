@@ -245,5 +245,17 @@ namespace QuanLyPhong
             }
 
         }
+
+        private void btn_addFloor_Click(object sender, EventArgs e)
+        {
+            AddFloor addFloor = new AddFloor();
+            addFloor.Show();
+        }
+
+        private void btn_addTypeRoom_Click(object sender, EventArgs e)
+        {
+            AddTypeRoom addTypeRoom = new AddTypeRoom();
+            addTypeRoom.Show();
+        }
     }
 }
