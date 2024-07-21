@@ -393,6 +393,7 @@
             Name = "TrangChu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
+            Load += TrangChu_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picStatistical).EndInit();
             ((System.ComponentModel.ISupportInitialize)picService).EndInit();

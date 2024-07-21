@@ -1,6 +1,7 @@
 ﻿using BUS.IService;
 using DAL.Entities;
 using DAL.IRepositories;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace BUS.Service
 {
-    internal class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
     {
         private ICustomerRepository _CustomerRepo;
 
-        public CustomerService(ICustomerRepository customerRepo)
+        public CustomerService()
         {
-            _CustomerRepo = customerRepo;
+            _CustomerRepo = new CustomerRepository();
         }
         public List<Customer> GetAllCustomerFromDb()
         {

@@ -90,6 +90,7 @@ namespace DAL.Repositories
             update.Point = customer.Point;
             update.CCCD = customer.CCCD;
             update.Gender = customer.Gender;
+            _context.SaveChanges();
             return true;
         }
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BUS.IService;
+using BUS.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,9 +21,10 @@ namespace QuanLyPhong
         private int picVoucherOriginalLeft;
         private int picServiceOriginalLeft;
         private int picStatisticalOriginalLeft;
-
+       
         public TrangChu()
         {
+
             InitializeComponent();
             picListOriginalLeft = picList.Left;
             picOrderOriginalLeft = picOrder.Left;
@@ -30,7 +33,6 @@ namespace QuanLyPhong
             picVoucherOriginalLeft = picVoucher.Left;
             picServiceOriginalLeft = picService.Left;
             picStatisticalOriginalLeft = picStatistical.Left;
-
         }
         private Form currentFormChild;
         private void OpenChillFrom(Form childForm)
@@ -44,7 +46,7 @@ namespace QuanLyPhong
             PanHienThi.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
-        } 
+        }
         private void ResetAllPictures()
         {
             picList.Left = picListOriginalLeft;
@@ -62,23 +64,23 @@ namespace QuanLyPhong
 
         private void btn_ListRoom_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); 
+            ResetAllPictures();
             picList.Left = btn_ListRoom.Left + 30;
             OpenChillFrom(new ListRoom());
         }
 
         private void btn_Order_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); 
+            ResetAllPictures();
             picOrder.Left = btn_Order.Left + 30;
 
         }
 
         private void btn_Customer_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); 
+            ResetAllPictures();
             picCust.Left = btn_Customer.Left + 30;
-            OpenChillFrom(new Customer());
+            OpenChillFrom(new frmCustomer());
 
         }
 
@@ -92,23 +94,28 @@ namespace QuanLyPhong
 
         private void btn_Vocher_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); 
-            picVoucher.Left = btn_Vocher.Left + 30; 
+            ResetAllPictures();
+            picVoucher.Left = btn_Vocher.Left + 30;
             OpenChillFrom(new frmVoucher());
         }
 
         private void btn_service_Click(object sender, EventArgs e)
-        { 
-            ResetAllPictures(); 
-            picService.Left = btn_service.Left + 30; 
+        {
+            ResetAllPictures();
+            picService.Left = btn_service.Left + 30;
             OpenChillFrom(new frmService());
         }
-       
+
 
         private void btn_Statistical_Click(object sender, EventArgs e)
         {
-            ResetAllPictures(); 
-            picStatistical.Left = btn_Statistical.Left + 30; 
+            ResetAllPictures();
+            picStatistical.Left = btn_Statistical.Left + 30;
+        }
+
+        private void TrangChu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

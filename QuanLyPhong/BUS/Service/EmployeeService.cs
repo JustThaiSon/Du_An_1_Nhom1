@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BUS.Service
 {
-    internal class EmployeeService : IEmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private  IEmployeeRepository _employeeRepo;
 
