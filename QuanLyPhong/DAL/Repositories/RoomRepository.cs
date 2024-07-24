@@ -71,6 +71,7 @@ namespace DAL.Repositories
             update.Price = romm.Price;
             update.FloorId = romm.FloorId;
             update.KindOfRoom = romm.KindOfRoom;
+            _context.SaveChanges();
             return true;
         }
     }

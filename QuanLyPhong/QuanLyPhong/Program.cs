@@ -17,7 +17,7 @@ namespace QuanLyPhong
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
           
-            Application.Run(new TrangChu());
+            Application.Run(new frmBookingRoom());
 		}
 	}
 }
