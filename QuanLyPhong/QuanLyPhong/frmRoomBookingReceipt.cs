@@ -10,21 +10,25 @@ using System.Windows.Forms;
 
 namespace QuanLyPhong
 {
-	public partial class frmRoomBookingReceipt : Form
-	{
-		public frmRoomBookingReceipt()
-		{
-			InitializeComponent();
-		}
+    public partial class frmRoomBookingReceipt : Form
+    {
+        public delegate void BookRoomHandler();
+        public event BookRoomHandler OnBookRoom;
+        public frmRoomBookingReceipt()
+        {
+            InitializeComponent();
+        }
 
-		private void frmRoomBookingReceipt_Load(object sender, EventArgs e)
-		{
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
 
-		}
+        }
 
-		private void groupBox1_Enter(object sender, EventArgs e)
-		{
-
-		}
-	}
+        private void btn_checkin_Click(object sender, EventArgs e)
+        {
+            OnBookRoom?.Invoke();
+            this.Close();
+        }
+    }
 }

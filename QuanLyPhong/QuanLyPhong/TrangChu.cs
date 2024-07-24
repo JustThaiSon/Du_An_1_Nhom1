@@ -73,6 +73,7 @@ namespace QuanLyPhong
         {
             ResetAllPictures();
             picOrder.Left = btn_Order.Left + 30;
+            OpenChillFrom(new frmBookingRoom());
 
         }
 

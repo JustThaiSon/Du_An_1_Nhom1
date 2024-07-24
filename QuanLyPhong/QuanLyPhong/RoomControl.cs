@@ -46,9 +46,11 @@ namespace QuanLyPhong
 		}
 
 		private void bookRoomMenuItem_Click(object? sender, EventArgs e)
-		{
-			BookRoom();
-		}
+        {
+            frmRoomBookingReceipt frm = new frmRoomBookingReceipt();
+            frm.OnBookRoom += BookRoom;
+            frm.Show();
+        }
 
 		private void moveRoomMenuItem_Click(object? sender, EventArgs e)
 		{
@@ -57,7 +59,7 @@ namespace QuanLyPhong
 
 		private void payRoomMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("Thanh Toán");
+			CkeckoutRoom();
 		}
 
 		private void viewBillMenuItem_Click(object? sender, EventArgs e)
@@ -85,7 +87,16 @@ namespace QuanLyPhong
 					break;
 			}
 		}
-
+		private void CkeckoutRoom()
+		{
+            if (Room.Status == RoomStatus.UnAvailable)
+            {
+                Room.Status = RoomStatus.Available;
+                roomService.UpdateRoom(Room);
+                MessageBox.Show($"Thanh toán {Room.RoomName} thành công!");
+                ptRoom.Image = Properties.Resources.Available;
+            }
+        }
 		private void BookRoom()
 		{
 			if (Room.Status == RoomStatus.Available)
