@@ -36,12 +36,12 @@
 			tableLayoutPanelRoom.ColumnCount = 2;
 			tableLayoutPanelRoom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 			tableLayoutPanelRoom.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-			tableLayoutPanelRoom.Location = new Point(60, 40);
+			tableLayoutPanelRoom.Location = new Point(-1, 0);
 			tableLayoutPanelRoom.Name = "tableLayoutPanelRoom";
 			tableLayoutPanelRoom.RowCount = 2;
 			tableLayoutPanelRoom.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
 			tableLayoutPanelRoom.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanelRoom.Size = new Size(733, 226);
+			tableLayoutPanelRoom.Size = new Size(822, 492);
 			tableLayoutPanelRoom.TabIndex = 0;
 			// 
 			// frmBookingRoom
