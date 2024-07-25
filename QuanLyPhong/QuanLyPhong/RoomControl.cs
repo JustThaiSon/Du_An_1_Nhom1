@@ -33,7 +33,6 @@ namespace QuanLyPhong
 			var payRoomMenuItem = new ToolStripMenuItem("Thanh toán");
 			var moveRoomMenuItem = new ToolStripMenuItem("Chuyển phòng");
 			var viewBillMenuItem = new ToolStripMenuItem("Xem hóa đơn");
-
 			// Add event handlers for menu items
 			bookRoomMenuItem.Click += bookRoomMenuItem_Click;
 			payRoomMenuItem.Click += payRoomMenuItem_Click;
