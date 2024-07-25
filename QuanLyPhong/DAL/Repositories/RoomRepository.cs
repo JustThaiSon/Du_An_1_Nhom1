@@ -68,7 +68,7 @@ namespace DAL.Repositories
             update.Id = romm.Id;
             update.RoomName = romm.RoomName;
             update.Status = romm.Status;
-            update.Price = romm.Price;
+           
             update.FloorId = romm.FloorId;
             update.KindOfRoom = romm.KindOfRoom;
             _context.SaveChanges();
