@@ -13,5 +13,6 @@ namespace BUS.IService
         string RemoveService(Guid Id);
         string UpdateService(Services sv);
         List<Services> GetAllServiceFromDb();
+        Task UpdateServiceStatusAuto();
     }
 }

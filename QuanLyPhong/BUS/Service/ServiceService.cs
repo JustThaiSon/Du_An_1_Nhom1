@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace BUS.Service
 {
-    public class ServiceService : IServiceSevice
+    public class IServiceService : IServiceSevice
     {
         private IServiceRepository _serviceRepository;
-        public ServiceService()
+        public IServiceService()
         {
             _serviceRepository = new ServiceRepository();
         }
@@ -47,6 +47,10 @@ namespace BUS.Service
                 return "Update Success";
             }
                 return "Update failure";
+        }
+        public async Task UpdateServiceStatusAuto()
+        {
+            await _serviceRepository.UpdateServiceStatusAuto();
         }
     }
 }

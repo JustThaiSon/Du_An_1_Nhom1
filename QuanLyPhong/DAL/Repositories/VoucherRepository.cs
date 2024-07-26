@@ -167,7 +167,6 @@ namespace DAL.Repositories
                     voucher.Status = VoucherStatus.NotDueYet; // Trường hợp khác (mặc định chưa đến ngày bắt đầu)
                 }
             }
-
            await _context.SaveChangesAsync();
         }
 

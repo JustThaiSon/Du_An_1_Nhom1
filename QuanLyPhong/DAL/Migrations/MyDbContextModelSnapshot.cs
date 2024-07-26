@@ -387,7 +387,7 @@ namespace DAL.Migrations
                     b.ToTable("Rooms", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -407,6 +407,9 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -498,7 +501,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.Service", "Service")
+                    b.HasOne("DAL.Entities.Services", "Service")
                         .WithMany("OrderServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -615,7 +618,7 @@ namespace DAL.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Navigation("OrderServices");
                 });
