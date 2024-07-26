@@ -1,4 +1,5 @@
-﻿using BUS.ViewModels;
+﻿using BUS.Service;
+using BUS.ViewModels;
 using DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,5 +15,6 @@ namespace BUS.IService
 		string RemoveOrderServicee(Guid Id);
 		string UpdateOrderService(OrderService orderService);
 		List<OrderServiceViewModel> GetAllOrderService();
+		List<OrderService> GetOrderServicesByOrderId(Guid Id);
 	}
 }

@@ -28,9 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-			DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-			DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -71,8 +68,10 @@
 			groupBox1 = new GroupBox();
 			dtgService = new DataGridView();
 			groupBox2 = new GroupBox();
-			guna2DataGridView2 = new Guna.UI2.WinForms.Guna2DataGridView();
+			dtgListOrders = new DataGridView();
 			groupBox3 = new GroupBox();
+			rdHourly = new Guna.UI2.WinForms.Guna2RadioButton();
+			rddaily = new Guna.UI2.WinForms.Guna2RadioButton();
 			dtGioCheckout = new Guna.UI2.WinForms.Guna2DateTimePicker();
 			DtGioCheckIn = new Guna.UI2.WinForms.Guna2DateTimePicker();
 			guna2HtmlLabel11 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -131,12 +130,11 @@
 			btn_Back = new Guna.UI2.WinForms.Guna2Button();
 			guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			lbTotalPrice = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			rđaily = new Guna.UI2.WinForms.Guna2RadioButton();
-			rdHourly = new Guna.UI2.WinForms.Guna2RadioButton();
+			btnSave = new Button();
 			groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)dtgService).BeginInit();
 			groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)guna2DataGridView2).BeginInit();
+			((System.ComponentModel.ISupportInitialize)dtgListOrders).BeginInit();
 			groupBox3.SuspendLayout();
 			groupBox4.SuspendLayout();
 			groupBox7.SuspendLayout();
@@ -168,7 +166,7 @@
 			// 
 			// groupBox2
 			// 
-			groupBox2.Controls.Add(guna2DataGridView2);
+			groupBox2.Controls.Add(dtgListOrders);
 			groupBox2.Location = new Point(679, 494);
 			groupBox2.Margin = new Padding(3, 2, 3, 2);
 			groupBox2.Name = "groupBox2";
@@ -178,63 +176,21 @@
 			groupBox2.TabStop = false;
 			groupBox2.Text = "List Invoice customer";
 			// 
-			// guna2DataGridView2
+			// dtgListOrders
 			// 
-			dataGridViewCellStyle1.BackColor = Color.White;
-			guna2DataGridView2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
-			dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-			dataGridViewCellStyle2.ForeColor = Color.White;
-			dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-			dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-			dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-			guna2DataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-			guna2DataGridView2.ColumnHeadersHeight = 4;
-			guna2DataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-			dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = Color.White;
-			dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-			dataGridViewCellStyle3.ForeColor = Color.FromArgb(71, 69, 94);
-			dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
-			dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
-			dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-			guna2DataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
-			guna2DataGridView2.GridColor = Color.FromArgb(231, 229, 255);
-			guna2DataGridView2.Location = new Point(22, 20);
-			guna2DataGridView2.Margin = new Padding(3, 2, 3, 2);
-			guna2DataGridView2.Name = "guna2DataGridView2";
-			guna2DataGridView2.RowHeadersVisible = false;
-			guna2DataGridView2.RowHeadersWidth = 51;
-			guna2DataGridView2.RowTemplate.Height = 29;
-			guna2DataGridView2.Size = new Size(574, 130);
-			guna2DataGridView2.TabIndex = 0;
-			guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
-			guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.Font = null;
-			guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
-			guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
-			guna2DataGridView2.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
-			guna2DataGridView2.ThemeStyle.BackColor = Color.White;
-			guna2DataGridView2.ThemeStyle.GridColor = Color.FromArgb(231, 229, 255);
-			guna2DataGridView2.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
-			guna2DataGridView2.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
-			guna2DataGridView2.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
-			guna2DataGridView2.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-			guna2DataGridView2.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-			guna2DataGridView2.ThemeStyle.HeaderStyle.Height = 4;
-			guna2DataGridView2.ThemeStyle.ReadOnly = false;
-			guna2DataGridView2.ThemeStyle.RowsStyle.BackColor = Color.White;
-			guna2DataGridView2.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-			guna2DataGridView2.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
-			guna2DataGridView2.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
-			guna2DataGridView2.ThemeStyle.RowsStyle.Height = 29;
-			guna2DataGridView2.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-			guna2DataGridView2.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
+			dtgListOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+			dtgListOrders.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			dtgListOrders.Location = new Point(22, 21);
+			dtgListOrders.Name = "dtgListOrders";
+			dtgListOrders.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+			dtgListOrders.Size = new Size(570, 129);
+			dtgListOrders.TabIndex = 39;
+			dtgListOrders.CellContentClick += dtgListOrders_CellContentClick;
 			// 
 			// groupBox3
 			// 
 			groupBox3.Controls.Add(rdHourly);
-			groupBox3.Controls.Add(rđaily);
+			groupBox3.Controls.Add(rddaily);
 			groupBox3.Controls.Add(dtGioCheckout);
 			groupBox3.Controls.Add(DtGioCheckIn);
 			groupBox3.Controls.Add(guna2HtmlLabel11);
@@ -264,6 +220,44 @@
 			groupBox3.TabStop = false;
 			groupBox3.Text = "Information Order";
 			// 
+			// rdHourly
+			// 
+			rdHourly.AutoSize = true;
+			rdHourly.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
+			rdHourly.CheckedState.BorderThickness = 0;
+			rdHourly.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
+			rdHourly.CheckedState.InnerColor = Color.White;
+			rdHourly.CheckedState.InnerOffset = -4;
+			rdHourly.Location = new Point(253, 239);
+			rdHourly.Name = "rdHourly";
+			rdHourly.Size = new Size(61, 19);
+			rdHourly.TabIndex = 39;
+			rdHourly.Text = "Hourly";
+			rdHourly.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
+			rdHourly.UncheckedState.BorderThickness = 2;
+			rdHourly.UncheckedState.FillColor = Color.Transparent;
+			rdHourly.UncheckedState.InnerColor = Color.Transparent;
+			rdHourly.CheckedChanged += rdHourly_CheckedChanged;
+			// 
+			// rddaily
+			// 
+			rddaily.AutoSize = true;
+			rddaily.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
+			rddaily.CheckedState.BorderThickness = 0;
+			rddaily.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
+			rddaily.CheckedState.InnerColor = Color.White;
+			rddaily.CheckedState.InnerOffset = -4;
+			rddaily.Location = new Point(157, 239);
+			rddaily.Name = "rddaily";
+			rddaily.Size = new Size(51, 19);
+			rddaily.TabIndex = 38;
+			rddaily.Text = "Daily";
+			rddaily.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
+			rddaily.UncheckedState.BorderThickness = 2;
+			rddaily.UncheckedState.FillColor = Color.Transparent;
+			rddaily.UncheckedState.InnerColor = Color.Transparent;
+			rddaily.CheckedChanged += rđaily_CheckedChanged;
+			// 
 			// dtGioCheckout
 			// 
 			dtGioCheckout.Checked = true;
@@ -282,6 +276,7 @@
 			dtGioCheckout.Size = new Size(138, 27);
 			dtGioCheckout.TabIndex = 37;
 			dtGioCheckout.Value = new DateTime(2024, 7, 24, 22, 24, 3, 83);
+			dtGioCheckout.ValueChanged += dtGioCheckout_ValueChanged;
 			// 
 			// DtGioCheckIn
 			// 
@@ -417,6 +412,7 @@
 			dt_checkout.Size = new Size(134, 27);
 			dt_checkout.TabIndex = 12;
 			dt_checkout.Value = new DateTime(2024, 7, 24, 22, 24, 3, 83);
+			dt_checkout.ValueChanged += dt_checkout_ValueChanged;
 			// 
 			// dt_checkin
 			// 
@@ -573,6 +569,7 @@
 			btn_addToOrder.TabIndex = 30;
 			btn_addToOrder.Text = "Add to Order";
 			btn_addToOrder.UseVisualStyleBackColor = false;
+			btn_addToOrder.Click += btn_addToOrder_Click;
 			// 
 			// groupBox7
 			// 
@@ -1073,41 +1070,16 @@
 			lbTotalPrice.TabIndex = 37;
 			lbTotalPrice.Text = "-----";
 			// 
-			// rđaily
+			// btnSave
 			// 
-			rđaily.AutoSize = true;
-			rđaily.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
-			rđaily.CheckedState.BorderThickness = 0;
-			rđaily.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
-			rđaily.CheckedState.InnerColor = Color.White;
-			rđaily.CheckedState.InnerOffset = -4;
-			rđaily.Location = new Point(157, 239);
-			rđaily.Name = "rđaily";
-			rđaily.Size = new Size(51, 19);
-			rđaily.TabIndex = 38;
-			rđaily.Text = "Daily";
-			rđaily.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
-			rđaily.UncheckedState.BorderThickness = 2;
-			rđaily.UncheckedState.FillColor = Color.Transparent;
-			rđaily.UncheckedState.InnerColor = Color.Transparent;
-			// 
-			// rdHourly
-			// 
-			rdHourly.AutoSize = true;
-			rdHourly.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
-			rdHourly.CheckedState.BorderThickness = 0;
-			rdHourly.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
-			rdHourly.CheckedState.InnerColor = Color.White;
-			rdHourly.CheckedState.InnerOffset = -4;
-			rdHourly.Location = new Point(253, 239);
-			rdHourly.Name = "rdHourly";
-			rdHourly.Size = new Size(61, 19);
-			rdHourly.TabIndex = 39;
-			rdHourly.Text = "Hourly";
-			rdHourly.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
-			rdHourly.UncheckedState.BorderThickness = 2;
-			rdHourly.UncheckedState.FillColor = Color.Transparent;
-			rdHourly.UncheckedState.InnerColor = Color.Transparent;
+			btnSave.BackColor = Color.Red;
+			btnSave.Location = new Point(579, 667);
+			btnSave.Margin = new Padding(3, 2, 3, 2);
+			btnSave.Name = "btnSave";
+			btnSave.Size = new Size(124, 33);
+			btnSave.TabIndex = 38;
+			btnSave.Text = "Save";
+			btnSave.UseVisualStyleBackColor = false;
 			// 
 			// frmRoomBookingReceipt
 			// 
@@ -1115,6 +1087,7 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = Color.LightSteelBlue;
 			ClientSize = new Size(1323, 709);
+			Controls.Add(btnSave);
 			Controls.Add(lbTotalPrice);
 			Controls.Add(guna2HtmlLabel7);
 			Controls.Add(btn_Back);
@@ -1135,7 +1108,7 @@
 			groupBox1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)dtgService).EndInit();
 			groupBox2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)guna2DataGridView2).EndInit();
+			((System.ComponentModel.ISupportInitialize)dtgListOrders).EndInit();
 			groupBox3.ResumeLayout(false);
 			groupBox3.PerformLayout();
 			groupBox4.ResumeLayout(false);
@@ -1152,7 +1125,6 @@
 		#endregion
 		private GroupBox groupBox1;
 		private GroupBox groupBox2;
-		private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView2;
 		private GroupBox groupBox3;
 		private GroupBox groupBox4;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
@@ -1214,6 +1186,8 @@
 		private DataGridView dtgService;
 		private Guna.UI2.WinForms.Guna2HtmlLabel lbTotalPrice;
 		private Guna.UI2.WinForms.Guna2RadioButton rdHourly;
-		private Guna.UI2.WinForms.Guna2RadioButton rđaily;
+		private Guna.UI2.WinForms.Guna2RadioButton rddaily;
+		private Button btnSave;
+		private DataGridView dtgListOrders;
 	}
 }

@@ -18,12 +18,12 @@ namespace QuanLyPhong
 	public partial class frmBookingRoom : Form
 	{
 		private IRoomService _roomService;
-		private IFloorService _floorService;
+		private BUS.IService.IFloorService _floorService;
 		private IKindOfRoomService _kindOfRoomService;
 		public frmBookingRoom()
 		{
 			_roomService = new RoomService();
-			_floorService = new FloorService();
+            _floorService = new FloorService();
 			_kindOfRoomService = new KindOfRoomService();
 			InitializeComponent();
 			LoadBookingRoom();

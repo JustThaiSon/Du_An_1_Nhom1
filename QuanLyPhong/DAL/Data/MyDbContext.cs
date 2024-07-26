@@ -19,7 +19,7 @@ namespace DAL.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-APKREC8K\\SQLEXPRESS;Initial Catalog=DuAn11;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-APKREC8K\\SQLEXPRESS;Initial Catalog=DuAn1_21;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }

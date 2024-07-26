@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240718071944_new")]
-    partial class @new
+    [Migration("20240726184139_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,12 @@ namespace DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<decimal>("PriceByHour")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PricePerDay")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("KindOfRoom", (string)null);
@@ -271,19 +277,21 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired()
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("DatePayment")
+                    b.Property<DateTime?>("DatePayment")
+                        .IsRequired()
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("HistoryPointId")
+                    b.Property<Guid?>("HistoryPointId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
@@ -304,19 +312,21 @@ namespace DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid?>("RoomId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("ToTal")
+                    b.Property<decimal?>("ToTal")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("ToTalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("TotalDiscount")
+                    b.Property<decimal?>("TotalDiscount")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("VoucherId")
+                    b.Property<Guid?>("VoucherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -370,9 +380,6 @@ namespace DAL.Migrations
                     b.Property<Guid>("KindOfRoomId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("RoomName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -390,7 +397,7 @@ namespace DAL.Migrations
                     b.ToTable("Rooms", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -410,6 +417,9 @@ namespace DAL.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -501,7 +511,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.Service", "Service")
+                    b.HasOne("DAL.Entities.Services", "Service")
                         .WithMany("OrderServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -517,32 +527,27 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DAL.Entities.Employee", "Employee")
                         .WithMany("Orders")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DAL.Entities.HistoryPoints", "HistoryPoints")
                         .WithMany("Orders")
                         .HasForeignKey("HistoryPointId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("DAL.Entities.Room", "Room")
                         .WithMany("Orders")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("DAL.Entities.Voucher", "Voucher")
                         .WithMany("Orders")
                         .HasForeignKey("VoucherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Customer");
 
@@ -618,7 +623,7 @@ namespace DAL.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Navigation("OrderServices");
                 });

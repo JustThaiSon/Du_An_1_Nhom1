@@ -32,7 +32,6 @@ namespace BUS.Service
                 RoomName = room.RoomName,
                 KindOfRoomId = room.KindOfRoomId,
                 FloorId = room.FloorId,
-                Price = room.Price,
             };
             if (_roomRepository.CreateRoom(RoomAdd))
             {
@@ -56,9 +55,10 @@ namespace BUS.Service
                                FloorName = f.FloorName,
                                KindOfRoomId = k.Id,
                                KindOfRoomName = k.KindOfRoomName,
-                               Price = r.Price,
-                               Status = r.Status
-                           };
+                               Status = r.Status,
+							   PricePerDay = k.PricePerDay,
+                               PriceByHour = k.PriceByHour,
+						   };
             return RoomView.ToList();
         }
 
@@ -80,7 +80,6 @@ namespace BUS.Service
             var updateRoom = _roomRepository.GetById(room.Id);
             updateRoom.RoomName = room.RoomName;
             updateRoom.Status = room.Status;
-            updateRoom.Price = room.Price;
             updateRoom.FloorId = room.FloorId;
             updateRoom.KindOfRoomId = room.KindOfRoomId;
             if (_roomRepository.UpdadateRoom(updateRoom))

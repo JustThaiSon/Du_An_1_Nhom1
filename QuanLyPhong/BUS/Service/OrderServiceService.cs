@@ -22,7 +22,8 @@ namespace BUS.Service
 			_serviceRepository = new ServiceRepository();
 
 		}
-        public string AddOrderService(OrderService orderService)
+ 
+		public string AddOrderService(OrderService orderService)
 		{
 			if (_orderServiceRepository.CreateOrderSV(orderService))
 			{
@@ -59,6 +60,11 @@ namespace BUS.Service
 			return _orderServiceRepository.GetAllOrder();
 		}
 
+		public List<OrderService> GetOrderServicesByOrderId(Guid Id)
+		{
+			return _orderServiceRepository.GetByOrderId(Id);
+		}
+
 		public string RemoveOrderServicee(Guid Id)
 		{
 			if (_orderServiceRepository.DeleteOrderSV(Id))
@@ -79,6 +85,11 @@ namespace BUS.Service
 				return "Update success";
 			}
 			return "Update failcure";
+		}
+
+		public string UpdateOrderService(IOrderService orderService)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

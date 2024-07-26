@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace QuanLyPhong
 {
-    public partial class AddNhanVien : Form
+    public partial class frmNhanVien : Form
     {
-        public AddNhanVien()
+        public frmNhanVien()
         {
             InitializeComponent();
         }
@@ -35,6 +35,11 @@ namespace QuanLyPhong
         private void guna2Button4_Click(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tabPage2;
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

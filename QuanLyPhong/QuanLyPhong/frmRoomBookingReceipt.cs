@@ -2,6 +2,7 @@
 using BUS.Service;
 using DAL.Entities;
 using DAL.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TheArtOfDevHtmlRenderer.Adapters;
+using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
+using OrderService = DAL.Entities.OrderService;
 
 namespace QuanLyPhong
 {
@@ -25,8 +28,11 @@ namespace QuanLyPhong
 		private ICustomerService _customerService;
 		private IOrderServiceService _orderServiceService;
 		private List<OrderService> _temporaryServices;
+		private IKindOfRoomService _kindOfRoomService;
+		private IOrderService _orderService;
 		private decimal RoomPrice { get; set; }
 		private decimal TotalPriceOrderService { get; set; }
+		private decimal TotalAmount { get; set; }
 		public Guid RoomId { get; set; }
 		public frmRoomBookingReceipt(Guid RoomId)
 		{
@@ -35,7 +41,9 @@ namespace QuanLyPhong
 			_roomService = new RoomService();
 			_customerService = new CustomerService();
 			_orderServiceService = new OrderServiceService();
+			_kindOfRoomService = new KindOfRoomService();
 			_temporaryServices = new List<OrderService>();
+			_orderService = new OrderServicess();
 			this.RoomId = RoomId;
 			Load();
 		}
@@ -46,6 +54,36 @@ namespace QuanLyPhong
 			LoadCbbOrderService();
 			LoadStatusOrder();
 			LoadDataGridViewService();
+			LoadTime();
+			LoadBookingDetails();
+			LoadPrice();
+		}
+
+
+		void LoadPrice()
+		{
+			var room = _roomService.GetAllRooms().Where(x => x.Id == RoomId).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
+
+			if (room != null)
+			{
+				if (rdHourly.Checked)
+				{
+					RoomPrice = room.PriceByHour;
+				}
+				else
+				{
+					RoomPrice = room.PricePerDay;
+				}
+				lbGiaRoom.Text = RoomPrice.ToString("0") + " VNĐ";
+			}
+			else
+			{
+				RoomPrice = 0;
+				lbGiaRoom.Text = "0 VNĐ";
+			}
+		}
+		void LoadTime()
+		{
 			TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
 
 			DateTime utcNow = DateTime.UtcNow;
@@ -55,18 +93,18 @@ namespace QuanLyPhong
 
 			DtGioCheckIn.Format = DateTimePickerFormat.Time;
 			DtGioCheckIn.ShowUpDown = true;
+			DtGioCheckIn.CustomFormat = "HH:mm";
 			DtGioCheckIn.Value = vietnamTime;
-			var room = _roomService.GetAllRooms().FirstOrDefault(x => x.Id == RoomId);
-			if (room != null)
-			{
-				 RoomPrice = room.Price;
-				lbGiaRoom.Text = room.Price.ToString("F2") + " VNĐ";
-			}
-			else
-			{
-				RoomPrice = 0;
-				lbGiaRoom.Text = "0 VNĐ";
-			}
+
+			dtGioCheckout.Format = DateTimePickerFormat.Time;
+			dtGioCheckout.ShowUpDown = true;
+			dtGioCheckout.CustomFormat = "HH:mm";
+			dtGioCheckout.Value = vietnamTime;
+
+			dt_checkin.ShowUpDown = true;
+			dt_checkin.Value = vietnamTime;
+			//dt_checkout.ShowUpDown = true;
+			//dt_checkout.Value = vietnamTime;
 		}
 		void loadNameroom()
 		{
@@ -100,6 +138,49 @@ namespace QuanLyPhong
 
 		private void btn_checkin_Click(object sender, EventArgs e)
 		{
+			//TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+
+			//DateTime utcNow = DateTime.UtcNow;
+
+			//DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, vietnamTimeZone);
+
+			//DtGioCheckIn.Value = vietnamTime;
+			//dt_checkout.Value = vietnamTime;
+			var selectedCustomerName = cbb_Customer.SelectedItem?.ToString();
+			if (string.IsNullOrEmpty(selectedCustomerName))
+			{
+				MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			var selectedCustomer = _customerService.GetAllCustomerFromDb().FirstOrDefault(c => c.Name == selectedCustomerName);
+			if (selectedCustomer == null)
+			{
+				MessageBox.Show("Selected customer does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			var newOrder = new Orders
+			{
+				RoomId = RoomId,
+				CustomerId = selectedCustomer.Id,
+				DateCreated = DtGioCheckIn.Value,
+				DatePayment = null,
+				OrderType = (OrderType)cbbOrderType.SelectedItem,
+				ToTalPrice = TotalAmount,
+
+			};
+
+			if (MessageBox.Show("Do you want to add this Order?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				string result = _orderService.AddOrders(newOrder);
+				MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			foreach (var service in _temporaryServices)
+			{
+				service.OrderId = newOrder.Id;
+				string serviceResult = _orderServiceService.AddOrderService(service);
+			}
 			OnBookRoom?.Invoke();
 			this.Close();
 		}
@@ -116,7 +197,7 @@ namespace QuanLyPhong
 			if (selectedService != null)
 			{
 				txtStatus.Text = selectedService.Status.ToString();
-				lbGia.Text = selectedService.Price.ToString("F2");
+				lbGia.Text = selectedService.Price.ToString("0");
 			}
 		}
 
@@ -175,10 +256,12 @@ namespace QuanLyPhong
 		private void btn_AddService_Click(object sender, EventArgs e)
 		{
 			var selectedServiceName = cbb_NameService.SelectedItem.ToString();
-			var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Name == selectedServiceName);
+			var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == cbb_NameService.Text);
+
 			if (selectedService != null)
 			{
 				var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
+
 				if (existingOrderService != null)
 				{
 					existingOrderService.Quantity += (int)cbbnum_quantitySer.Value;
@@ -192,9 +275,8 @@ namespace QuanLyPhong
 						Quantity = (int)cbbnum_quantitySer.Value,
 						Price = selectedService.Price,
 						TotalPrice = selectedService.Price * (int)cbbnum_quantitySer.Value,
-						Service = selectedService
 					};
-					TotalPriceOrderService = orderService.TotalPrice;
+					//_orderServiceService.AddOrderService(orderService);
 					_temporaryServices.Add(orderService);
 				}
 
@@ -217,14 +299,132 @@ namespace QuanLyPhong
 			foreach (var item in _temporaryServices)
 			{
 				Count++;
-				dtgService.Rows.Add(item.ServiceId, Count, item.Service.Name, item.Quantity, item.Price, item.TotalPrice);
+				dtgService.Rows.Add(item.ServiceId, Count, _serviceSevice.GetAllServiceFromDb().Where(x => x.Id == item.ServiceId).Select(x => x.Name).FirstOrDefault(), item.Quantity, item.Price, item.TotalPrice);
+				TotalPriceOrderService += item.TotalPrice;
+
 			}
 			TotalPrice();
 		}
 		void TotalPrice()
 		{
-			var ToTal = RoomPrice + TotalPriceOrderService;
-			lbTotalPrice.Text = ToTal.ToString("N0") + "VNĐ";
+
+			TimeSpan timeSpanHours = dtGioCheckout.Value - DtGioCheckIn.Value;
+			TimeSpan timeSpanDays = dt_checkout.Value.Date - dt_checkin.Value.Date;
+			var room = _roomService.GetAllRooms().Where(x => x.Id == RoomId).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
+
+			decimal totalPrice = 0;
+
+			if (rddaily.Checked)
+			{
+				totalPrice = room.PricePerDay * (decimal)timeSpanDays.TotalDays;
+			}
+			else if (rdHourly.Checked)
+			{
+				decimal totalHours = (decimal)timeSpanHours.TotalHours;
+				decimal roundedHours = Math.Ceiling(totalHours);
+				totalPrice = room.PriceByHour * roundedHours;
+			}
+
+			TotalAmount = totalPrice + TotalPriceOrderService;
+			lbTotalPrice.Text = TotalAmount.ToString("0") + " VNĐ";
+		}
+
+		private void rdHourly_CheckedChanged(object sender, EventArgs e)
+		{
+			LoadPrice();
+			TotalPrice();
+		}
+
+		private void rđaily_CheckedChanged(object sender, EventArgs e)
+		{
+			LoadPrice();
+			TotalPrice();
+		}
+
+		private void dtGioCheckout_ValueChanged(object sender, EventArgs e)
+		{
+			TotalPrice();
+		}
+
+		private void dt_checkout_ValueChanged(object sender, EventArgs e)
+		{
+			TotalPrice();
+		}
+
+		private void btn_addToOrder_Click(object sender, EventArgs e)
+		{
+
+
+		}
+		void LoadBookingDetails()
+		{
+			var room = _roomService.GetAllRooms().FirstOrDefault(x => x.Id == RoomId);
+
+			if (room != null && room.Status == RoomStatus.UnAvailable)
+			{
+				var currentOrder = _orderService.GetByRoomId(RoomId).FirstOrDefault(x => x.PayMents == null);
+
+				if (currentOrder != null)
+				{
+					var customer = _customerService.GetAllCustomerFromDb().FirstOrDefault(c => c.Id == currentOrder.CustomerId);
+
+					if (customer != null)
+					{
+						cbb_Customer.SelectedItem = customer.Name;
+						tbCustomerName.Text = customer.Name;
+						tb_Address.Text = customer.Address;
+						tb_emailCus.Text = customer.Email;
+						tb_cccd.Text = customer.CCCD;
+						tb_phoneCus.Text = customer.PhoneNumber;
+
+						switch (customer.Gender)
+						{
+							case MenuGender.Male:
+								rdMale.Checked = true;
+								break;
+							case MenuGender.Female:
+								rdFemale.Checked = true;
+								break;
+							case MenuGender.Other:
+								rdMale.Checked = false;
+								rdFemale.Checked = false;
+								break;
+						}
+					}
+
+					if (currentOrder.DateCreated.HasValue)
+					{
+						DtGioCheckIn.Value = currentOrder.DateCreated.Value;
+						dt_checkin.Value = currentOrder.DateCreated.Value;
+					}
+
+					_temporaryServices = _orderServiceService.GetOrderServicesByOrderId(currentOrder.Id);
+					LoadDataGridViewService();
+					TotalPrice();
+				}
+			}
+			else
+			{
+				ClearBookingDetails();
+			}
+		}
+
+		void ClearBookingDetails()
+		{
+			cbb_Customer.SelectedIndex = -1;
+			tbCustomerName.Clear();
+			tb_Address.Clear();
+			tb_emailCus.Clear();
+			tb_cccd.Clear();
+			tb_phoneCus.Clear();
+			rdMale.Checked = false;
+			rdFemale.Checked = false;
+		}
+
+
+		private void dtgListOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+
 		}
 	}
-} 
+}

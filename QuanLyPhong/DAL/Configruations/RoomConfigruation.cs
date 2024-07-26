@@ -24,9 +24,7 @@ namespace DAL.Configruations
                 .IsRequired()
                 .HasConversion<string>();
 
-            builder.Property(r => r.Price)
-                .HasColumnType("decimal(18,2)")
-                .IsRequired();
+           
 
             builder.HasOne(r => r.Floor)
                 .WithMany(f => f.Rooms)

@@ -45,11 +45,16 @@ namespace QuanLyPhong
 		}
 
 		private void bookRoomMenuItem_Click(object? sender, EventArgs e)
-        {
-            frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
-            frm.OnBookRoom += BookRoom;
-            frm.Show();
-        }
+		{
+			if (Room.Status == RoomStatus.UnAvailable)
+			{
+				MessageBox.Show("Phòng Này Đã Được Đặt " + Room.RoomName);
+				return;
+			}
+			frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
+			frm.OnBookRoom += BookRoom;
+			frm.Show();
+		}
 
 		private void moveRoomMenuItem_Click(object? sender, EventArgs e)
 		{
@@ -63,16 +68,23 @@ namespace QuanLyPhong
 
 		private void viewBillMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("View Detail");
+			if (Room.Status == RoomStatus.Available)
+			{
+				MessageBox.Show("Phòng Này Chưa Được Đặt " + Room.RoomName);
+				return;
 
+			}
+			frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
+			frm.OnBookRoom += BookRoom;
+			frm.Show();
 		}
 
 		public void SetRoom(RoomViewModels room)
 		{
 			Room = room;
-
+			var Price = roomService.GetAllRooms().Where(x => x.Id == room.Id).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
 			lbName.Text = room.RoomName;
-			lbGia.Text = $"Giá: {room.Price.ToString("#,0")} VND";
+			lbGia.Text = $"Giá: {room.PricePerDay.ToString("#,0")} VND";
 			switch (room.Status)
 			{
 				case RoomStatus.Available:
@@ -88,14 +100,14 @@ namespace QuanLyPhong
 		}
 		private void CkeckoutRoom()
 		{
-            if (Room.Status == RoomStatus.UnAvailable)
-            {
-                Room.Status = RoomStatus.Available;
-                roomService.UpdateRoom(Room);
-                MessageBox.Show($"Thanh toán {Room.RoomName} thành công!");
-                ptRoom.Image = Properties.Resources.Available;
-            }
-        }
+			if (Room.Status == RoomStatus.UnAvailable)
+			{
+				Room.Status = RoomStatus.Available;
+				roomService.UpdateRoom(Room);
+				MessageBox.Show($"Thanh toán {Room.RoomName} thành công!");
+				ptRoom.Image = Properties.Resources.Available;
+			}
+		}
 		private void BookRoom()
 		{
 			if (Room.Status == RoomStatus.Available)

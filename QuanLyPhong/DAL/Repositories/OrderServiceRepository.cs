@@ -23,7 +23,6 @@ namespace DAL.Repositories
             {
                 if (orderService != null)
                 {
-                    orderService.OrderId = Guid.NewGuid();
                     _context.OrderServices.Add(orderService);
                     _context.SaveChanges();
                     return true;
@@ -56,10 +55,16 @@ namespace DAL.Repositories
 
         public OrderService GetById(Guid Id)
         {
-            throw new NotImplementedException();
+           return _context.OrderServices.FirstOrDefault(x=>x.OrderId == Id);
         }
 
-        public bool UpdadateOrderSV(OrderService orderService)
+		public List<OrderService> GetByOrderId(Guid Id)
+		{
+			return _context.OrderServices.Where(x => x.OrderId == Id).ToList();
+		}
+
+
+		public bool UpdadateOrderSV(OrderService orderService)
         {
             throw new NotImplementedException();
         }
