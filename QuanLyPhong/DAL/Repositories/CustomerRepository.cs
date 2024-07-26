@@ -59,7 +59,7 @@ namespace DAL.Repositories
 
             if (string.IsNullOrEmpty(maxCode))
             {
-                return "CM001"; 
+                return "CM0001"; 
             }
 
             int maxNumber = int.Parse(maxCode.Substring(2));

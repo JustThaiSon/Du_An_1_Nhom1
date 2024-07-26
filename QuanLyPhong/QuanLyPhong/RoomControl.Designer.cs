@@ -20,7 +20,7 @@
 			base.Dispose(disposing);
 		}
 
-		#region Component Designer generated code
+        #region Component Designer generated code
 
 		/// <summary> 
 		/// Required method for Designer support - do not modify 
@@ -80,9 +80,9 @@
 			PerformLayout();
 		}
 
-		#endregion
+        #endregion
 
-		private PictureBox ptRoom;
+        private PictureBox ptRoom;
 		private Label lbName;
 		private Label lbGia;
 	}
