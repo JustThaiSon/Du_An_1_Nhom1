@@ -36,5 +36,10 @@ namespace QuanLyPhong
         {
             tabControl1.SelectedTab = tabPage2;
         }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
