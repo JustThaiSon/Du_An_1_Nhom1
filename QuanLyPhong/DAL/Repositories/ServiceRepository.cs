@@ -1,6 +1,8 @@
 ﻿using DAL.Data;
 using DAL.Entities;
+using DAL.Enums;
 using DAL.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +69,25 @@ namespace DAL.Repositories
             update.Price = service.Price;
             update.CreatedDate = service.CreatedDate;
             update.Type = service.Type;
-                return true;
+            update.Quantity = service.Quantity;
+            _context.SaveChanges();
+            return true;
+        }
+        public async Task UpdateServiceStatusAuto()
+        {
+            var services = await _context.Services.ToListAsync();
+            foreach (var service in services)
+            {
+                if (service.Quantity == 0)
+                {
+                    service.Status = ServiceStatus.OutOfStock;
+                }
+                else
+                {
+                    service.Status = ServiceStatus.Available;
+                }
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

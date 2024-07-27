@@ -842,7 +842,6 @@
 			lbRoomName.Size = new Size(53, 34);
 			lbRoomName.TabIndex = 10;
 			lbRoomName.Text = "-----";
-			lbRoomName.Click += lbRoomName_Click;
 			// 
 			// groupBox6
 			// 
@@ -977,7 +976,6 @@
 			cbb_NameService.ShadowDecoration.CustomizableEdges = customizableEdges34;
 			cbb_NameService.Size = new Size(195, 36);
 			cbb_NameService.TabIndex = 23;
-			cbb_NameService.SelectedIndexChanged += cbb_NameService_SelectedIndexChanged;
 			// 
 			// guna2HtmlLabel25
 			// 

@@ -92,7 +92,7 @@ namespace DAL.Repositories
         {
             var update = _context.Vouchers.FirstOrDefault(y => y.Id == voucher.Id);
             if (update == null) return false;
-           
+
             update.Id = voucher.Id;
             update.VoucherName = voucher.VoucherName;
             update.DiscountRate = voucher.DiscountRate;
@@ -168,9 +168,8 @@ namespace DAL.Repositories
                 }
             }
 
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
     }
 }
-

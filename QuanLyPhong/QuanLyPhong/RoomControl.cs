@@ -58,7 +58,13 @@ namespace QuanLyPhong
 
 		private void moveRoomMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("Chuyển phòng" + Room.RoomName);
+            if (Room.Status == RoomStatus.Available)
+            {
+                MessageBox.Show(Room.RoomName + " Chưa Được Đặt");
+                return;
+            }
+            frmTransfer frm = new frmTransfer(Room.Id);
+			frm.Show();
 		}
 
 		private void payRoomMenuItem_Click(object? sender, EventArgs e)

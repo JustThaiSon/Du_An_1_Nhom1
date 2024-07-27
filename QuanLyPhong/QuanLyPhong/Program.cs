@@ -18,6 +18,7 @@ namespace QuanLyPhong
 			ApplicationConfiguration.Initialize();
           
             Application.Run(new TrangChu());
+
 		}
 	}
 }

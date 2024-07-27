@@ -12,7 +12,7 @@ namespace DAL.IRepositories
     {
         Voucher GetById(Guid Id);
 
-        List<Voucher > GetAllVouchers();
+        List<Voucher> GetAllVouchers();
         bool CreateVoucher(Voucher voucher);
         bool UpdadateVoucher(Voucher voucher);
         bool DeleteVoucher(Guid Id);

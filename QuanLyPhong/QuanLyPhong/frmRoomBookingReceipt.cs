@@ -186,8 +186,9 @@ namespace QuanLyPhong
 		}
 
 		private void cbbnum_quantitySer_ValueChanged(object sender, EventArgs e)
-		{
 
+		{
+			
 		}
 
 		private void cbb_NameService_SelectedIndexChanged(object sender, EventArgs e)
@@ -205,6 +206,7 @@ namespace QuanLyPhong
 		{
 
 		}
+
 
 		private void btn_Create_Click(object sender, EventArgs e)
 		{
@@ -253,38 +255,64 @@ namespace QuanLyPhong
 			}
 		}
 
-		private void btn_AddService_Click(object sender, EventArgs e)
-		{
-			var selectedServiceName = cbb_NameService.SelectedItem.ToString();
-			var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == cbb_NameService.Text);
 
-			if (selectedService != null)
-			{
-				var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
+        private void btn_AddService_Click(object sender, EventArgs e)
+        {
+            var selectedServiceName = cbb_NameService.SelectedItem.ToString();
+            var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == selectedServiceName);
 
-				if (existingOrderService != null)
-				{
-					existingOrderService.Quantity += (int)cbbnum_quantitySer.Value;
-					existingOrderService.TotalPrice = existingOrderService.Price * existingOrderService.Quantity;
-				}
-				else
-				{
-					var orderService = new OrderService()
-					{
-						ServiceId = selectedService.Id,
-						Quantity = (int)cbbnum_quantitySer.Value,
-						Price = selectedService.Price,
-						TotalPrice = selectedService.Price * (int)cbbnum_quantitySer.Value,
-					};
-					//_orderServiceService.AddOrderService(orderService);
-					_temporaryServices.Add(orderService);
-				}
+            if (selectedService != null)
+            {
+                // ckeck stt còn hàng
+                if (selectedService.Status == ServiceStatus.OutOfStock)
+                {
+                    MessageBox.Show("The selected service is out of stock and cannot be added to the order.", "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-				MessageBox.Show("Service added successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				LoadDataGridViewService();
-			}
-		}
-		void LoadDataGridViewService()
+                int quantityToAdd = (int)cbbnum_quantitySer.Value;
+
+                // xem số lượng có đủ ko
+                if (selectedService.Quantity < quantityToAdd)
+                {
+                    MessageBox.Show("Không còn đủ số lượng sản phẩm.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
+
+                if (existingOrderService != null)
+                {
+                    existingOrderService.Quantity += quantityToAdd;
+                    existingOrderService.TotalPrice = existingOrderService.Price * existingOrderService.Quantity;
+                }
+                else
+                {
+                    var orderService = new OrderService()
+                    {
+                        ServiceId = selectedService.Id,
+                        Quantity = quantityToAdd,
+                        Price = selectedService.Price,
+                        TotalPrice = selectedService.Price * quantityToAdd,
+                    };
+                    _temporaryServices.Add(orderService);
+                }
+
+                // Update the quantity in the database
+                selectedService.Quantity -= quantityToAdd;
+                _serviceSevice.UpdateService(selectedService);
+				_serviceSevice.UpdateServiceStatusAuto();
+
+                MessageBox.Show("Service added successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadDataGridViewService();
+            }
+            else
+            {
+                MessageBox.Show("Selected service not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        void LoadDataGridViewService()
 		{
 			dtgService.ColumnCount = 6;
 			dtgService.Columns[0].Name = "Id";
