@@ -63,11 +63,11 @@
             guna2GradientPanel1.Controls.Add(btn_Exit);
             guna2GradientPanel1.CustomizableEdges = customizableEdges9;
             guna2GradientPanel1.Location = new Point(283, 104);
-
             guna2GradientPanel1.Name = "guna2GradientPanel1";
             guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2GradientPanel1.Size = new Size(1112, 550);
             guna2GradientPanel1.TabIndex = 0;
+            guna2GradientPanel1.Paint += guna2GradientPanel1_Paint;
             // 
             // lb_error
             // 

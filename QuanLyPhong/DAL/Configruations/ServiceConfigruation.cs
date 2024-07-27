@@ -37,6 +37,8 @@ namespace DAL.Configruations
 
             builder.Property(s => s.Type)
                 .HasMaxLength(50);
+
+            builder.Property(s => s.Quantity).IsRequired();
         }
     }
 }
