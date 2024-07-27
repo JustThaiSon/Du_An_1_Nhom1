@@ -411,7 +411,7 @@
             tb_SerName.Size = new Size(438, 36);
             tb_SerName.TabIndex = 8;
             // 
-            // label4
+            // label1
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
@@ -467,6 +467,7 @@
             Controls.Add(guna2HtmlLabel1);
             Name = "frmService";
             Text = "Service";
+            Load += frmService_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);

@@ -232,5 +232,10 @@ namespace QuanLyPhong
         {
             Clear();
         }
+
+        private void frmService_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

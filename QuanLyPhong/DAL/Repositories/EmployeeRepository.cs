@@ -89,6 +89,10 @@ namespace DAL.Repositories
 
         public List<Employee> GetAllEmployee()
         {
+            if (_context.Employees.ToList() == null)
+            {
+                throw new Exception("Employee not found"); // hoặc ném ngoại lệ nếu không tìm thấy
+            }
             return _context.Employees.ToList();
         }
 
