@@ -66,13 +66,14 @@ namespace QuanLyPhong
         {
             ResetAllPictures();
             picList.Left = btn_ListRoom.Left + 30;
-            OpenChillFrom(new ListRoom());
+            OpenChillFrom(new frmRoom());
         }
 
         private void btn_Order_Click(object sender, EventArgs e)
         {
             ResetAllPictures();
             picOrder.Left = btn_Order.Left + 30;
+            OpenChillFrom(new frmBookingRoom());
 
         }
 
@@ -88,7 +89,7 @@ namespace QuanLyPhong
         {
             ResetAllPictures();
             picEmployee.Left = btn_Empolyee.Left + 30;
-            OpenChillFrom(new AddNhanVien());
+            OpenChillFrom(new frmNhanVien());
 
         }
 

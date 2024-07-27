@@ -15,6 +15,8 @@ namespace DAL.IRepositories
             bool CreateService(Services  service);
             bool UpdadateService(Services service);
             bool DeleteService(Guid Id);
-        }
+            Task UpdateServiceStatusAuto();
+
     }
+}
 

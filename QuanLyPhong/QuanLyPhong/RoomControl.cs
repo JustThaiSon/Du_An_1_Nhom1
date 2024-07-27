@@ -33,7 +33,6 @@ namespace QuanLyPhong
 			var payRoomMenuItem = new ToolStripMenuItem("Thanh toán");
 			var moveRoomMenuItem = new ToolStripMenuItem("Chuyển phòng");
 			var viewBillMenuItem = new ToolStripMenuItem("Xem hóa đơn");
-
 			// Add event handlers for menu items
 			bookRoomMenuItem.Click += bookRoomMenuItem_Click;
 			payRoomMenuItem.Click += payRoomMenuItem_Click;
@@ -47,31 +46,51 @@ namespace QuanLyPhong
 
 		private void bookRoomMenuItem_Click(object? sender, EventArgs e)
 		{
-			BookRoom();
+			if (Room.Status == RoomStatus.UnAvailable)
+			{
+				MessageBox.Show("Phòng Này Đã Được Đặt " + Room.RoomName);
+				return;
+			}
+			frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
+			frm.OnBookRoom += BookRoom;
+			frm.Show();
 		}
 
 		private void moveRoomMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("Chuyển phòng" + Room.RoomName);
+            if (Room.Status == RoomStatus.Available)
+            {
+                MessageBox.Show(Room.RoomName + " Chưa Được Đặt");
+                return;
+            }
+            frmTransfer frm = new frmTransfer(Room.Id);
+			frm.Show();
 		}
 
 		private void payRoomMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("Thanh Toán");
+			CkeckoutRoom();
 		}
 
 		private void viewBillMenuItem_Click(object? sender, EventArgs e)
 		{
-			MessageBox.Show("View Detail");
+			if (Room.Status == RoomStatus.Available)
+			{
+				MessageBox.Show("Phòng Này Chưa Được Đặt " + Room.RoomName);
+				return;
 
+			}
+			frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
+			frm.OnBookRoom += BookRoom;
+			frm.Show();
 		}
 
 		public void SetRoom(RoomViewModels room)
 		{
 			Room = room;
-
+			var Price = roomService.GetAllRooms().Where(x => x.Id == room.Id).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
 			lbName.Text = room.RoomName;
-			lbGia.Text = $"Giá: {room.Price.ToString("#,0")} VND";
+			lbGia.Text = $"Giá: {room.PricePerDay.ToString("#,0")} VND";
 			switch (room.Status)
 			{
 				case RoomStatus.Available:
@@ -85,7 +104,16 @@ namespace QuanLyPhong
 					break;
 			}
 		}
-
+		private void CkeckoutRoom()
+		{
+			if (Room.Status == RoomStatus.UnAvailable)
+			{
+				Room.Status = RoomStatus.Available;
+				roomService.UpdateRoom(Room);
+				MessageBox.Show($"Thanh toán {Room.RoomName} thành công!");
+				ptRoom.Image = Properties.Resources.Available;
+			}
+		}
 		private void BookRoom()
 		{
 			if (Room.Status == RoomStatus.Available)
@@ -96,7 +124,6 @@ namespace QuanLyPhong
 				ptRoom.Image = Properties.Resources.UnAvailable;
 			}
 		}
-
 		private void lbName_Click(object sender, EventArgs e)
 		{
 

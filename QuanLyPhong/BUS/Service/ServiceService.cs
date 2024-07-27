@@ -48,5 +48,9 @@ namespace BUS.Service
             }
                 return "Update failure";
         }
+        public async Task UpdateServiceStatusAuto()
+        {
+            await _serviceRepository.UpdateServiceStatusAuto();
+        }
     }
 }
