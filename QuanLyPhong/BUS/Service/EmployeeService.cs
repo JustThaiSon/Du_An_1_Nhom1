@@ -1,6 +1,7 @@
 ﻿using BUS.IService;
 using DAL.Entities;
 using DAL.IRepositories;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace BUS.Service
         public EmployeeService(IEmployeeRepository employeeRepo)
         {
             _employeeRepo = employeeRepo;
+        }
+
+        public EmployeeService()
+        {
+            _employeeRepo = new EmployeeRepository();
         }
 
         public List<Employee> GetAllEmployeeFromDb()
@@ -57,6 +63,10 @@ namespace BUS.Service
             }
         }
 
-        
+        public string GenerateEmployeeCode()
+        {
+            return _employeeRepo.GenerateEmployeeCode();
+        }
+
     }
 }

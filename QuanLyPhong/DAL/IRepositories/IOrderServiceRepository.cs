@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 namespace DAL.IRepositories
 {
 
-    public interface IOrderServiceRepository
-        {
-            OrderService GetById(Guid Id);
+	public interface IOrderServiceRepository
+	{
+		OrderService GetById(Guid Id);
+		List<OrderService> GetByOrderId(Guid Id);
+		List<OrderService> GetAllOrder();
+		bool CreateOrderSV(OrderService orderService);
+		bool UpdadateOrderSV(OrderService orderService);
+		bool DeleteOrderSV(Guid Id);
 
-            List<OrderService> GetAllOrder();
-            bool CreateOrderSV(OrderService orderService );
-            bool UpdadateOrderSV(OrderService orderService);
-            bool DeleteOrderSV(Guid Id);
-
-        }
-    }
+	}
+}
 

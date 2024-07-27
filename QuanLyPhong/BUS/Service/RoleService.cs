@@ -10,22 +10,20 @@ using System.Threading.Tasks;
 
 namespace BUS.Service
 {
-    public class CustomerService : ICustomerService
+    public class RoleService : IRoleService
     {
-        private ICustomerRepository _CustomerRepo;
-
-        public CustomerService()
+        private IRolesRepository _RolesRepository;
+        public RoleService()
         {
-            _CustomerRepo = new CustomerRepository();
+            _RolesRepository = new RoleRepository();
         }
-        public List<Customer> GetAllCustomerFromDb()
+        public List<Role> GetAllRoleFromDb()
         {
-            return _CustomerRepo.GetAllCustomer();
+            return _RolesRepository.GetAllRole();
         }
-
-        public string AddCustomer(Customer Customer)
+        public string AddRole(Role role)
         {
-            if (_CustomerRepo.CreateCustomer(Customer)) 
+            if (_RolesRepository.CreateRole(role))
             {
                 return "add success";
             }
@@ -34,10 +32,9 @@ namespace BUS.Service
                 return "add fail";
             }
         }
-
-        public string UpdateCustomer(Customer Customer)
+        public string UpdateRole(Role Customer)
         {
-            if (_CustomerRepo.UpdateCustomer(Customer))
+            if (_RolesRepository.UpdadateRole(Customer))
             {
                 return "Update success";
             }
@@ -46,9 +43,9 @@ namespace BUS.Service
                 return "Update fail";
             }
         }
-        public string RemoveCustomer(Guid Id)
+        public string RemoveRole(Guid Id)
         {
-            if (_CustomerRepo.DeleteCustomer(Id))
+            if (_RolesRepository.DeleteRole(Id))
             {
                 return "Delete success";
             }
@@ -57,7 +54,5 @@ namespace BUS.Service
                 return "Delete fail";
             }
         }
-
-        
     }
 }

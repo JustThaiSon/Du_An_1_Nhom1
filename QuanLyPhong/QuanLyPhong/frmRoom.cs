@@ -15,13 +15,13 @@ using System.Windows.Forms;
 
 namespace QuanLyPhong
 {
-    public partial class ListRoom : Form
+    public partial class frmRoom : Form
     {
         Guid IdCell = Guid.Empty;
         private IRoomService _roomService;
-        private IFloorService _floorService;
+        private BUS.IService.IFloorService _floorService;
         private IKindOfRoomService _kindOfRoomService;
-        public ListRoom()
+        public frmRoom()
         {
             InitializeComponent();
             _roomService = new RoomService();
@@ -60,7 +60,7 @@ namespace QuanLyPhong
 
         void loadDtg()
         {
-            dtgPhong.ColumnCount = 7;
+            dtgPhong.ColumnCount = 8;
             dtgPhong.Columns[0].Name = "Id";
             dtgPhong.Columns[0].Visible = false;
             dtgPhong.Columns[1].Name = "STT";
@@ -68,13 +68,14 @@ namespace QuanLyPhong
             dtgPhong.Columns[3].Name = "Status";
             dtgPhong.Columns[4].Name = "FloorName";
             dtgPhong.Columns[5].Name = "KindOFRoomName";
-            dtgPhong.Columns[6].Name = "Price";
+            dtgPhong.Columns[6].Name = "PricePerDay";
+            dtgPhong.Columns[7].Name = "PriceByHour";
             dtgPhong.Rows.Clear();
             int Count = 0;
             foreach (var item in _roomService.GetAllRooms())
             {
                 Count++;
-                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.Price);
+                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay,item.PriceByHour);
             }
         }
         void Clear()
@@ -83,7 +84,6 @@ namespace QuanLyPhong
             cbbStatus.SelectedIndex = -1;
             cbb_floor.SelectedIndex = -1;
             cbb_typeroom.SelectedIndex = -1;
-            tb_price.Clear();
         }
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -99,8 +99,7 @@ namespace QuanLyPhong
             if (string.IsNullOrWhiteSpace(tb_nameroom.Text) ||
                 cbbStatus.SelectedIndex == -1 ||
                 cbb_floor.SelectedIndex == -1 ||
-                cbb_typeroom.SelectedIndex == -1 ||
-                string.IsNullOrWhiteSpace(tb_price.Text))
+                cbb_typeroom.SelectedIndex == -1)
             {
                 return false;
             }
@@ -130,19 +129,12 @@ namespace QuanLyPhong
                 return;
             }
 
-            if (decimal.Parse(tb_price.Text) < 0)
-            {
-                MessageBox.Show(" The selling price must be greater than 0 VND!!!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                tb_price.Focus();
-                return;
-            }
             var Room = new RoomViewModels()
             {
                 RoomName = tb_nameroom.Text,
                 Status = Enum.TryParse(cbbStatus.Text, out RoomStatus status) ? status : RoomStatus.Unknown,
                 FloorId = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == cbb_floor.Text).Select(x => x.Id).FirstOrDefault(),
                 KindOfRoomId = _kindOfRoomService.GetAllKindOfRoomFromDb().Where(x => x.KindOfRoomName == cbb_typeroom.Text).Select(x => x.Id).FirstOrDefault(),
-                Price = decimal.Parse(tb_price.Text)
             };
             if (MessageBox.Show("Do you want to add this room?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -184,7 +176,6 @@ namespace QuanLyPhong
                 cbbStatus.Text = selected.Cells[3].Value?.ToString() ?? "";
                 cbb_floor.Text = selected.Cells[4].Value?.ToString() ?? "";
                 cbb_typeroom.Text = selected.Cells[5].Value?.ToString() ?? "";
-                tb_price.Text = selected.Cells[6].Value?.ToString() ?? "";
                 IdCell = Guid.Parse(selected.Cells[0].Value?.ToString() ?? "");
             }
             catch (Exception)
@@ -213,12 +204,6 @@ namespace QuanLyPhong
                 return;
             }
 
-            if (decimal.Parse(tb_price.Text) < 0)
-            {
-                MessageBox.Show(" The selling price must be greater than 0 VND!!!");
-                tb_price.Focus();
-                return;
-            }
             var Room = new RoomViewModels()
             {
                 Id = IdCell,
@@ -226,7 +211,6 @@ namespace QuanLyPhong
                 Status = Enum.TryParse(cbbStatus.Text, out RoomStatus status) ? status : RoomStatus.Unknown,
                 FloorId = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == cbb_floor.Text).Select(x => x.Id).FirstOrDefault(),
                 KindOfRoomId = _kindOfRoomService.GetAllKindOfRoomFromDb().Where(x => x.KindOfRoomName == cbb_typeroom.Text).Select(x => x.Id).FirstOrDefault(),
-                Price = decimal.Parse(tb_price.Text)
             };
             if (MessageBox.Show("Do you want to add this room?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -248,13 +232,13 @@ namespace QuanLyPhong
 
         private void btn_addFloor_Click(object sender, EventArgs e)
         {
-            AddFloor addFloor = new AddFloor();
+            frmFloor addFloor = new frmFloor();
             addFloor.Show();
         }
 
         private void btn_addTypeRoom_Click(object sender, EventArgs e)
         {
-            AddTypeRoom addTypeRoom = new AddTypeRoom();
+            frmKindOfRoom addTypeRoom = new frmKindOfRoom();
             addTypeRoom.Show();
         }
     }

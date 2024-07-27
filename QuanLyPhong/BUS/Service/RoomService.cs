@@ -55,8 +55,10 @@ namespace BUS.Service
                                FloorName = f.FloorName,
                                KindOfRoomId = k.Id,
                                KindOfRoomName = k.KindOfRoomName,
-                               Status = r.Status
-                           };
+                               Status = r.Status,
+							   PricePerDay = k.PricePerDay,
+                               PriceByHour = k.PriceByHour,
+						   };
             return RoomView.ToList();
         }
 

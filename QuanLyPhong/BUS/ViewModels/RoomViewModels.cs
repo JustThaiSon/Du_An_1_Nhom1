@@ -16,6 +16,7 @@ namespace BUS.ViewModels
         public string? FloorName { get; set; }
         public Guid KindOfRoomId { get; set; }
         public string? KindOfRoomName { get; set; }
-        public decimal Price { get; set; }
-    }
+		public decimal PricePerDay { get; set; }
+		public decimal PriceByHour { get; set; }
+	}
 }

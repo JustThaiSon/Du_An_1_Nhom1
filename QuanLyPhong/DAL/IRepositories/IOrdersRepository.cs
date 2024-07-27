@@ -17,7 +17,8 @@ namespace DAL.IRepositories
         bool UpdadateOrder(Orders orders);
         bool DeleteOrder(Guid Id);
 		string GenerateOrderCode();
+		List<Orders> GetByRoomId(Guid Id);
 
-    }
+	}
 
 }

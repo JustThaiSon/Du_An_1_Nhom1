@@ -205,12 +205,6 @@ namespace DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("PriceByHour")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PricePerDay")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.ToTable("KindOfRoom", (string)null);
@@ -372,6 +366,9 @@ namespace DAL.Migrations
 
                     b.Property<Guid>("KindOfRoomId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RoomName")
                         .HasMaxLength(50)

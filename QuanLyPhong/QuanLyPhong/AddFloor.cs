@@ -21,5 +21,10 @@ namespace QuanLyPhong
         {
 
         }
+
+        private void AddFloor_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

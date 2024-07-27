@@ -33,9 +33,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -54,502 +51,981 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges29 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges30 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges31 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges39 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges40 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges41 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges42 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges43 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges44 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(components);
-            tabPage2 = new TabPage();
-            tabPage1 = new TabPage();
-            guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            txtShare = new Guna.UI2.WinForms.Guna2TextBox();
-            label1 = new Label();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            cbb_CustomerGender = new Guna.UI2.WinForms.Guna2ComboBox();
-            guna2DataGridViewCustomer = new Guna.UI2.WinForms.Guna2DataGridView();
-            btn_Remove_Customer = new Guna.UI2.WinForms.Guna2Button();
-            btn_Edit_Customer = new Guna.UI2.WinForms.Guna2Button();
+            tabPage_EditCustomer = new TabPage();
+            NUD_edit_Point = new NumericUpDown();
+            guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            cbb_edit_Gender = new Guna.UI2.WinForms.Guna2ComboBox();
             label4 = new Label();
-            btn_clear = new Guna.UI2.WinForms.Guna2Button();
-            btn_add = new Guna.UI2.WinForms.Guna2Button();
-            label13 = new Label();
-            txtCustomerCCCD = new Guna.UI2.WinForms.Guna2TextBox();
-            label12 = new Label();
-            txt_CustomerphoneNum = new Guna.UI2.WinForms.Guna2TextBox();
-            label8 = new Label();
-            txt_CustomerAddress = new Guna.UI2.WinForms.Guna2TextBox();
-            label7 = new Label();
-            txtCustomerEmail = new Guna.UI2.WinForms.Guna2TextBox();
+            label19 = new Label();
+            lb_edit_Id = new Label();
+            btn_edit_Clear = new Guna.UI2.WinForms.Guna2Button();
+            label17 = new Label();
+            btn_edit_Edit = new Guna.UI2.WinForms.Guna2Button();
+            txt_edit_CustomerCode = new Guna.UI2.WinForms.Guna2TextBox();
+            label16 = new Label();
+            label5 = new Label();
+            txt_edit_Name = new Guna.UI2.WinForms.Guna2TextBox();
+            txt_edit_CCCD = new Guna.UI2.WinForms.Guna2TextBox();
+            label15 = new Label();
             label6 = new Label();
-            txtCustomerName = new Guna.UI2.WinForms.Guna2TextBox();
-            tabControl1 = new TabControl();
-            tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)guna2DataGridViewCustomer).BeginInit();
-            tabControl1.SuspendLayout();
+            txt_edit_Email = new Guna.UI2.WinForms.Guna2TextBox();
+            txt_edit_PhoneNumber = new Guna.UI2.WinForms.Guna2TextBox();
+            label14 = new Label();
+            label10 = new Label();
+            txt_edit_Adress = new Guna.UI2.WinForms.Guna2TextBox();
+            tabPage_ListCustomer = new TabPage();
+            btn_list_Add = new Guna.UI2.WinForms.Guna2Button();
+            dtGV_Customer = new DataGridView();
+            txtSearch = new Guna.UI2.WinForms.Guna2TextBox();
+            btn_Delete = new Guna.UI2.WinForms.Guna2Button();
+            bnt_list_edit = new Guna.UI2.WinForms.Guna2Button();
+            dataGridView1 = new DataGridView();
+            guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            tab_Customer = new TabControl();
+            tabPage_AddCustomer = new TabPage();
+            btn_add_Clear = new Guna.UI2.WinForms.Guna2Button();
+            btn_add_Add = new Guna.UI2.WinForms.Guna2Button();
+            txt_add_CCCD = new Guna.UI2.WinForms.Guna2TextBox();
+            NUD_add_Point = new NumericUpDown();
+            guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            cbb_add_Gender = new Guna.UI2.WinForms.Guna2ComboBox();
+            label1 = new Label();
+            label2 = new Label();
+            lb_add_Id = new Label();
+            label7 = new Label();
+            txt_add_CustomerCode = new Guna.UI2.WinForms.Guna2TextBox();
+            label8 = new Label();
+            label9 = new Label();
+            txt_add_Name = new Guna.UI2.WinForms.Guna2TextBox();
+            label11 = new Label();
+            label12 = new Label();
+            txt_add_Email = new Guna.UI2.WinForms.Guna2TextBox();
+            txt_add_PhoneNumber = new Guna.UI2.WinForms.Guna2TextBox();
+            label13 = new Label();
+            label20 = new Label();
+            txt_add_Adress = new Guna.UI2.WinForms.Guna2TextBox();
+            tabPage_EditCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_edit_Point).BeginInit();
+            tabPage_ListCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dtGV_Customer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            tab_Customer.SuspendLayout();
+            tabPage_AddCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_add_Point).BeginInit();
             SuspendLayout();
-            // 
-            // tabPage2
-            // 
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1426, 773);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
-            tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(guna2HtmlLabel3);
-            tabPage1.Controls.Add(txtShare);
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(guna2HtmlLabel1);
-            tabPage1.Controls.Add(cbb_CustomerGender);
-            tabPage1.Controls.Add(guna2DataGridViewCustomer);
-            tabPage1.Controls.Add(btn_Remove_Customer);
-            tabPage1.Controls.Add(btn_Edit_Customer);
-            tabPage1.Controls.Add(label4);
-            tabPage1.Controls.Add(btn_clear);
-            tabPage1.Controls.Add(btn_add);
-            tabPage1.Controls.Add(label13);
-            tabPage1.Controls.Add(txtCustomerCCCD);
-            tabPage1.Controls.Add(label12);
-            tabPage1.Controls.Add(txt_CustomerphoneNum);
-            tabPage1.Controls.Add(label8);
-            tabPage1.Controls.Add(txt_CustomerAddress);
-            tabPage1.Controls.Add(label7);
-            tabPage1.Controls.Add(txtCustomerEmail);
-            tabPage1.Controls.Add(label6);
-            tabPage1.Controls.Add(txtCustomerName);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1426, 773);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // guna2HtmlLabel3
-            // 
-            guna2HtmlLabel3.AutoSize = false;
-            guna2HtmlLabel3.BackColor = Color.Transparent;
-            guna2HtmlLabel3.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            guna2HtmlLabel3.ForeColor = SystemColors.Highlight;
-            guna2HtmlLabel3.Location = new Point(474, 21);
-            guna2HtmlLabel3.Name = "guna2HtmlLabel3";
-            guna2HtmlLabel3.Size = new Size(360, 50);
-            guna2HtmlLabel3.TabIndex = 80;
-            guna2HtmlLabel3.Text = "Create new";
-            // 
-            // txtShare
-            // 
-            txtShare.BorderRadius = 5;
-            txtShare.CustomizableEdges = customizableEdges1;
-            txtShare.DefaultText = "";
-            txtShare.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtShare.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtShare.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtShare.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtShare.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtShare.Font = new Font("Segoe UI", 9F);
-            txtShare.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtShare.Location = new Point(676, 413);
-            txtShare.Margin = new Padding(3, 4, 3, 4);
-            txtShare.Name = "txtShare";
-            txtShare.PasswordChar = '\0';
-            txtShare.PlaceholderText = "";
-            txtShare.SelectedText = "";
-            txtShare.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtShare.Size = new Size(451, 39);
-            txtShare.TabIndex = 79;
-            txtShare.TextChanged += txtShare_TextChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(570, 415);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 28);
-            label1.TabIndex = 78;
-            label1.Text = "Tìm kiếm";
-            label1.Click += label1_Click;
             // 
             // guna2HtmlLabel1
             // 
-            guna2HtmlLabel1.AutoSize = false;
             guna2HtmlLabel1.BackColor = Color.Transparent;
-            guna2HtmlLabel1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            guna2HtmlLabel1.ForeColor = SystemColors.Highlight;
-            guna2HtmlLabel1.Location = new Point(97, 393);
+            guna2HtmlLabel1.Font = new Font("Segoe UI", 28.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            guna2HtmlLabel1.ForeColor = Color.Blue;
+            guna2HtmlLabel1.Location = new Point(51, 38);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(360, 50);
-            guna2HtmlLabel1.TabIndex = 77;
-            guna2HtmlLabel1.Text = "Customer List";
+            guna2HtmlLabel1.Size = new Size(213, 64);
+            guna2HtmlLabel1.TabIndex = 2;
+            guna2HtmlLabel1.Text = "Customer";
             // 
-            // cbb_CustomerGender
+            // tabPage_EditCustomer
             // 
-            cbb_CustomerGender.BackColor = Color.Transparent;
-            cbb_CustomerGender.BorderRadius = 5;
-            cbb_CustomerGender.CustomizableEdges = customizableEdges3;
-            cbb_CustomerGender.DrawMode = DrawMode.OwnerDrawFixed;
-            cbb_CustomerGender.DropDownStyle = ComboBoxStyle.DropDownList;
-            cbb_CustomerGender.FocusedColor = Color.FromArgb(94, 148, 255);
-            cbb_CustomerGender.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            cbb_CustomerGender.Font = new Font("Segoe UI", 10F);
-            cbb_CustomerGender.ForeColor = Color.FromArgb(68, 88, 112);
-            cbb_CustomerGender.ItemHeight = 30;
-            cbb_CustomerGender.Location = new Point(63, 228);
-            cbb_CustomerGender.Name = "cbb_CustomerGender";
-            cbb_CustomerGender.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            cbb_CustomerGender.Size = new Size(379, 36);
-            cbb_CustomerGender.TabIndex = 68;
+            tabPage_EditCustomer.BackColor = Color.Gainsboro;
+            tabPage_EditCustomer.Controls.Add(NUD_edit_Point);
+            tabPage_EditCustomer.Controls.Add(guna2HtmlLabel4);
+            tabPage_EditCustomer.Controls.Add(cbb_edit_Gender);
+            tabPage_EditCustomer.Controls.Add(label4);
+            tabPage_EditCustomer.Controls.Add(label19);
+            tabPage_EditCustomer.Controls.Add(lb_edit_Id);
+            tabPage_EditCustomer.Controls.Add(btn_edit_Clear);
+            tabPage_EditCustomer.Controls.Add(label17);
+            tabPage_EditCustomer.Controls.Add(btn_edit_Edit);
+            tabPage_EditCustomer.Controls.Add(txt_edit_CustomerCode);
+            tabPage_EditCustomer.Controls.Add(label16);
+            tabPage_EditCustomer.Controls.Add(label5);
+            tabPage_EditCustomer.Controls.Add(txt_edit_Name);
+            tabPage_EditCustomer.Controls.Add(txt_edit_CCCD);
+            tabPage_EditCustomer.Controls.Add(label15);
+            tabPage_EditCustomer.Controls.Add(label6);
+            tabPage_EditCustomer.Controls.Add(txt_edit_Email);
+            tabPage_EditCustomer.Controls.Add(txt_edit_PhoneNumber);
+            tabPage_EditCustomer.Controls.Add(label14);
+            tabPage_EditCustomer.Controls.Add(label10);
+            tabPage_EditCustomer.Controls.Add(txt_edit_Adress);
+            tabPage_EditCustomer.Location = new Point(4, 29);
+            tabPage_EditCustomer.Name = "tabPage_EditCustomer";
+            tabPage_EditCustomer.Padding = new Padding(3);
+            tabPage_EditCustomer.Size = new Size(1414, 745);
+            tabPage_EditCustomer.TabIndex = 2;
+            tabPage_EditCustomer.Text = "Edit Customer";
             // 
-            // guna2DataGridViewCustomer
+            // NUD_edit_Point
             // 
-            dataGridViewCellStyle1.BackColor = Color.White;
-            guna2DataGridViewCustomer.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(100, 88, 255);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            guna2DataGridViewCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            guna2DataGridViewCustomer.ColumnHeadersHeight = 40;
-            guna2DataGridViewCustomer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            guna2DataGridViewCustomer.DefaultCellStyle = dataGridViewCellStyle3;
-            guna2DataGridViewCustomer.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridViewCustomer.Location = new Point(63, 459);
-            guna2DataGridViewCustomer.Name = "guna2DataGridViewCustomer";
-            guna2DataGridViewCustomer.RowHeadersVisible = false;
-            guna2DataGridViewCustomer.RowHeadersWidth = 51;
-            guna2DataGridViewCustomer.Size = new Size(1162, 308);
-            guna2DataGridViewCustomer.TabIndex = 76;
-            guna2DataGridViewCustomer.ThemeStyle.AlternatingRowsStyle.BackColor = Color.White;
-            guna2DataGridViewCustomer.ThemeStyle.AlternatingRowsStyle.Font = null;
-            guna2DataGridViewCustomer.ThemeStyle.AlternatingRowsStyle.ForeColor = Color.Empty;
-            guna2DataGridViewCustomer.ThemeStyle.AlternatingRowsStyle.SelectionBackColor = Color.Empty;
-            guna2DataGridViewCustomer.ThemeStyle.AlternatingRowsStyle.SelectionForeColor = Color.Empty;
-            guna2DataGridViewCustomer.ThemeStyle.BackColor = Color.White;
-            guna2DataGridViewCustomer.ThemeStyle.GridColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.BackColor = Color.FromArgb(100, 88, 255);
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.BorderStyle = DataGridViewHeaderBorderStyle.None;
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.Font = new Font("Segoe UI", 9F);
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.ForeColor = Color.White;
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.HeaightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            guna2DataGridViewCustomer.ThemeStyle.HeaderStyle.Height = 40;
-            guna2DataGridViewCustomer.ThemeStyle.ReadOnly = false;
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.BackColor = Color.White;
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.BorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.Font = new Font("Segoe UI", 9F);
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.ForeColor = Color.FromArgb(71, 69, 94);
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.Height = 29;
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.SelectionBackColor = Color.FromArgb(231, 229, 255);
-            guna2DataGridViewCustomer.ThemeStyle.RowsStyle.SelectionForeColor = Color.FromArgb(71, 69, 94);
-            guna2DataGridViewCustomer.CellClick += guna2DataGridViewCustomer_CellClick;
-            guna2DataGridViewCustomer.SelectionChanged += guna2DataGridViewCustomer_SelectionChanged;
+            NUD_edit_Point.Location = new Point(579, 354);
+            NUD_edit_Point.Maximum = new decimal(new int[] { 1000000000, 0, 0, 0 });
+            NUD_edit_Point.Name = "NUD_edit_Point";
+            NUD_edit_Point.Size = new Size(370, 27);
+            NUD_edit_Point.TabIndex = 150;
             // 
-            // btn_Remove_Customer
+            // guna2HtmlLabel4
             // 
-            btn_Remove_Customer.BorderRadius = 5;
-            btn_Remove_Customer.CustomizableEdges = customizableEdges5;
-            btn_Remove_Customer.DisabledState.BorderColor = Color.DarkGray;
-            btn_Remove_Customer.DisabledState.CustomBorderColor = Color.DarkGray;
-            btn_Remove_Customer.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn_Remove_Customer.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btn_Remove_Customer.FillColor = Color.FromArgb(100, 150, 250);
-            btn_Remove_Customer.Font = new Font("Segoe UI", 9F);
-            btn_Remove_Customer.ForeColor = Color.White;
-            btn_Remove_Customer.Location = new Point(1041, 331);
-            btn_Remove_Customer.Name = "btn_Remove_Customer";
-            btn_Remove_Customer.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btn_Remove_Customer.Size = new Size(180, 40);
-            btn_Remove_Customer.TabIndex = 75;
-            btn_Remove_Customer.Text = "Remove";
-            btn_Remove_Customer.Click += btn_Remove_Customer_Click;
+            guna2HtmlLabel4.BackColor = Color.Transparent;
+            guna2HtmlLabel4.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            guna2HtmlLabel4.ForeColor = Color.Blue;
+            guna2HtmlLabel4.Location = new Point(592, 18);
+            guna2HtmlLabel4.Name = "guna2HtmlLabel4";
+            guna2HtmlLabel4.Size = new Size(217, 47);
+            guna2HtmlLabel4.TabIndex = 111;
+            guna2HtmlLabel4.Text = "Edit Customer";
             // 
-            // btn_Edit_Customer
+            // cbb_edit_Gender
             // 
-            btn_Edit_Customer.BorderRadius = 5;
-            btn_Edit_Customer.CustomizableEdges = customizableEdges7;
-            btn_Edit_Customer.DisabledState.BorderColor = Color.DarkGray;
-            btn_Edit_Customer.DisabledState.CustomBorderColor = Color.DarkGray;
-            btn_Edit_Customer.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn_Edit_Customer.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btn_Edit_Customer.FillColor = Color.FromArgb(100, 150, 250);
-            btn_Edit_Customer.Font = new Font("Segoe UI", 9F);
-            btn_Edit_Customer.ForeColor = Color.White;
-            btn_Edit_Customer.Location = new Point(1041, 260);
-            btn_Edit_Customer.Name = "btn_Edit_Customer";
-            btn_Edit_Customer.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btn_Edit_Customer.Size = new Size(180, 40);
-            btn_Edit_Customer.TabIndex = 74;
-            btn_Edit_Customer.Text = "Edit";
-            btn_Edit_Customer.Click += btn_Edit_Customer_Click;
+            cbb_edit_Gender.BackColor = Color.Transparent;
+            cbb_edit_Gender.CustomizableEdges = customizableEdges1;
+            cbb_edit_Gender.DrawMode = DrawMode.OwnerDrawFixed;
+            cbb_edit_Gender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbb_edit_Gender.FocusedColor = Color.FromArgb(94, 148, 255);
+            cbb_edit_Gender.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cbb_edit_Gender.Font = new Font("Segoe UI", 10F);
+            cbb_edit_Gender.ForeColor = Color.FromArgb(68, 88, 112);
+            cbb_edit_Gender.ItemHeight = 30;
+            cbb_edit_Gender.Location = new Point(91, 489);
+            cbb_edit_Gender.Name = "cbb_edit_Gender";
+            cbb_edit_Gender.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            cbb_edit_Gender.Size = new Size(370, 36);
+            cbb_edit_Gender.TabIndex = 124;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(63, 81);
+            label4.Location = new Point(582, 303);
             label4.Name = "label4";
-            label4.Size = new Size(73, 28);
-            label4.TabIndex = 73;
-            label4.Text = "Name:";
+            label4.Size = new Size(66, 28);
+            label4.TabIndex = 127;
+            label4.Text = "Point:";
             // 
-            // btn_clear
+            // label19
             // 
-            btn_clear.BorderRadius = 5;
-            btn_clear.CustomizableEdges = customizableEdges9;
-            btn_clear.DisabledState.BorderColor = Color.DarkGray;
-            btn_clear.DisabledState.CustomBorderColor = Color.DarkGray;
-            btn_clear.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn_clear.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btn_clear.FillColor = Color.FromArgb(100, 150, 250);
-            btn_clear.Font = new Font("Segoe UI", 9F);
-            btn_clear.ForeColor = Color.White;
-            btn_clear.Location = new Point(1041, 123);
-            btn_clear.Name = "btn_clear";
-            btn_clear.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btn_clear.Size = new Size(180, 40);
-            btn_clear.TabIndex = 72;
-            btn_clear.Text = "Clear";
+            label19.AutoSize = true;
+            label19.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label19.Location = new Point(91, 80);
+            label19.Name = "label19";
+            label19.Size = new Size(47, 28);
+            label19.TabIndex = 108;
+            label19.Text = "ID -";
             // 
-            // btn_add
+            // lb_edit_Id
             // 
-            btn_add.BorderRadius = 5;
-            btn_add.CustomizableEdges = customizableEdges11;
-            btn_add.DisabledState.BorderColor = Color.DarkGray;
-            btn_add.DisabledState.CustomBorderColor = Color.DarkGray;
-            btn_add.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btn_add.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btn_add.FillColor = Color.FromArgb(100, 150, 250);
-            btn_add.Font = new Font("Segoe UI", 9F);
-            btn_add.ForeColor = Color.White;
-            btn_add.Location = new Point(1041, 192);
-            btn_add.Name = "btn_add";
-            btn_add.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            btn_add.Size = new Size(180, 40);
-            btn_add.TabIndex = 71;
-            btn_add.Text = "Add";
-            btn_add.Click += btn_add_Click;
+            lb_edit_Id.AutoSize = true;
+            lb_edit_Id.BackColor = Color.Transparent;
+            lb_edit_Id.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lb_edit_Id.ForeColor = Color.Red;
+            lb_edit_Id.Location = new Point(144, 80);
+            lb_edit_Id.Name = "lb_edit_Id";
+            lb_edit_Id.Size = new Size(52, 28);
+            lb_edit_Id.TabIndex = 109;
+            lb_edit_Id.Text = "-----";
             // 
-            // label13
+            // btn_edit_Clear
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label13.Location = new Point(63, 183);
-            label13.Name = "label13";
-            label13.Size = new Size(86, 28);
-            label13.TabIndex = 67;
-            label13.Text = "Gender:";
+            btn_edit_Clear.CustomizableEdges = customizableEdges3;
+            btn_edit_Clear.DisabledState.BorderColor = Color.DarkGray;
+            btn_edit_Clear.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_edit_Clear.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_edit_Clear.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_edit_Clear.Font = new Font("Segoe UI", 9F);
+            btn_edit_Clear.ForeColor = Color.White;
+            btn_edit_Clear.Location = new Point(1039, 187);
+            btn_edit_Clear.Name = "btn_edit_Clear";
+            btn_edit_Clear.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btn_edit_Clear.Size = new Size(184, 47);
+            btn_edit_Clear.TabIndex = 126;
+            btn_edit_Clear.Text = "Clear";
+            btn_edit_Clear.Click += btn_edit_Clear_Click;
             // 
-            // txtCustomerCCCD
+            // label17
             // 
-            txtCustomerCCCD.BorderRadius = 5;
-            txtCustomerCCCD.CustomizableEdges = customizableEdges13;
-            txtCustomerCCCD.DefaultText = "";
-            txtCustomerCCCD.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCustomerCCCD.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCustomerCCCD.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerCCCD.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerCCCD.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerCCCD.Font = new Font("Segoe UI", 9F);
-            txtCustomerCCCD.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerCCCD.Location = new Point(570, 225);
-            txtCustomerCCCD.Margin = new Padding(3, 4, 3, 4);
-            txtCustomerCCCD.Name = "txtCustomerCCCD";
-            txtCustomerCCCD.PasswordChar = '\0';
-            txtCustomerCCCD.PlaceholderText = "";
-            txtCustomerCCCD.SelectedText = "";
-            txtCustomerCCCD.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            txtCustomerCCCD.Size = new Size(372, 39);
-            txtCustomerCCCD.TabIndex = 66;
+            label17.AutoSize = true;
+            label17.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label17.Location = new Point(94, 158);
+            label17.Name = "label17";
+            label17.Size = new Size(160, 28);
+            label17.TabIndex = 110;
+            label17.Text = "Customer Code:";
             // 
-            // label12
+            // btn_edit_Edit
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label12.Location = new Point(570, 184);
-            label12.Name = "label12";
-            label12.Size = new Size(66, 28);
-            label12.TabIndex = 65;
-            label12.Text = "CCCD:";
+            btn_edit_Edit.CustomizableEdges = customizableEdges5;
+            btn_edit_Edit.DisabledState.BorderColor = Color.DarkGray;
+            btn_edit_Edit.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_edit_Edit.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_edit_Edit.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_edit_Edit.Font = new Font("Segoe UI", 9F);
+            btn_edit_Edit.ForeColor = Color.White;
+            btn_edit_Edit.Location = new Point(1039, 274);
+            btn_edit_Edit.Name = "btn_edit_Edit";
+            btn_edit_Edit.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btn_edit_Edit.Size = new Size(184, 47);
+            btn_edit_Edit.TabIndex = 125;
+            btn_edit_Edit.Text = "Edit Customer";
+            btn_edit_Edit.Click += btn_edit_Edit_Click;
             // 
-            // txt_CustomerphoneNum
+            // txt_edit_CustomerCode
             // 
-            txt_CustomerphoneNum.BorderRadius = 5;
-            txt_CustomerphoneNum.CustomizableEdges = customizableEdges15;
-            txt_CustomerphoneNum.DefaultText = "";
-            txt_CustomerphoneNum.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txt_CustomerphoneNum.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txt_CustomerphoneNum.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txt_CustomerphoneNum.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txt_CustomerphoneNum.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_CustomerphoneNum.Font = new Font("Segoe UI", 9F);
-            txt_CustomerphoneNum.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_CustomerphoneNum.Location = new Point(570, 123);
-            txt_CustomerphoneNum.Margin = new Padding(3, 4, 3, 4);
-            txt_CustomerphoneNum.Name = "txt_CustomerphoneNum";
-            txt_CustomerphoneNum.PasswordChar = '\0';
-            txt_CustomerphoneNum.PlaceholderText = "";
-            txt_CustomerphoneNum.SelectedText = "";
-            txt_CustomerphoneNum.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            txt_CustomerphoneNum.Size = new Size(372, 39);
-            txt_CustomerphoneNum.TabIndex = 59;
+            txt_edit_CustomerCode.CustomizableEdges = customizableEdges7;
+            txt_edit_CustomerCode.DefaultText = "";
+            txt_edit_CustomerCode.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_CustomerCode.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_CustomerCode.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_CustomerCode.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_CustomerCode.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_CustomerCode.Font = new Font("Segoe UI", 9F);
+            txt_edit_CustomerCode.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_CustomerCode.Location = new Point(91, 195);
+            txt_edit_CustomerCode.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_CustomerCode.Name = "txt_edit_CustomerCode";
+            txt_edit_CustomerCode.PasswordChar = '\0';
+            txt_edit_CustomerCode.PlaceholderText = "";
+            txt_edit_CustomerCode.ReadOnly = true;
+            txt_edit_CustomerCode.SelectedText = "";
+            txt_edit_CustomerCode.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            txt_edit_CustomerCode.Size = new Size(370, 39);
+            txt_edit_CustomerCode.TabIndex = 112;
             // 
-            // label8
+            // label16
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(570, 81);
-            label8.Name = "label8";
-            label8.Size = new Size(160, 28);
-            label8.TabIndex = 58;
-            label8.Text = "Phone Number:";
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label16.Location = new Point(94, 303);
+            label16.Name = "label16";
+            label16.Size = new Size(73, 28);
+            label16.TabIndex = 113;
+            label16.Text = "Name:";
             // 
-            // txt_CustomerAddress
+            // label5
             // 
-            txt_CustomerAddress.BorderRadius = 5;
-            txt_CustomerAddress.CustomizableEdges = customizableEdges17;
-            txt_CustomerAddress.DefaultText = "";
-            txt_CustomerAddress.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txt_CustomerAddress.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txt_CustomerAddress.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txt_CustomerAddress.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txt_CustomerAddress.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_CustomerAddress.Font = new Font("Segoe UI", 9F);
-            txt_CustomerAddress.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_CustomerAddress.Location = new Point(63, 337);
-            txt_CustomerAddress.Margin = new Padding(3, 4, 3, 4);
-            txt_CustomerAddress.Name = "txt_CustomerAddress";
-            txt_CustomerAddress.PasswordChar = '\0';
-            txt_CustomerAddress.PlaceholderText = "";
-            txt_CustomerAddress.SelectedText = "";
-            txt_CustomerAddress.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            txt_CustomerAddress.Size = new Size(379, 39);
-            txt_CustomerAddress.TabIndex = 57;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.Location = new Point(94, 448);
+            label5.Name = "label5";
+            label5.Size = new Size(86, 28);
+            label5.TabIndex = 123;
+            label5.Text = "Gender:";
             // 
-            // label7
+            // txt_edit_Name
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(63, 295);
-            label7.Name = "label7";
-            label7.Size = new Size(92, 28);
-            label7.TabIndex = 56;
-            label7.Text = "Address:";
+            txt_edit_Name.CustomizableEdges = customizableEdges9;
+            txt_edit_Name.DefaultText = "";
+            txt_edit_Name.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_Name.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_Name.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Name.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Name.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Name.Font = new Font("Segoe UI", 9F);
+            txt_edit_Name.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Name.Location = new Point(91, 342);
+            txt_edit_Name.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_Name.Name = "txt_edit_Name";
+            txt_edit_Name.PasswordChar = '\0';
+            txt_edit_Name.PlaceholderText = "";
+            txt_edit_Name.SelectedText = "";
+            txt_edit_Name.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            txt_edit_Name.Size = new Size(370, 39);
+            txt_edit_Name.TabIndex = 114;
             // 
-            // txtCustomerEmail
+            // txt_edit_CCCD
             // 
-            txtCustomerEmail.BorderRadius = 5;
-            txtCustomerEmail.CustomizableEdges = customizableEdges19;
-            txtCustomerEmail.DefaultText = "";
-            txtCustomerEmail.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCustomerEmail.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCustomerEmail.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerEmail.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerEmail.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerEmail.Font = new Font("Segoe UI", 9F);
-            txtCustomerEmail.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerEmail.Location = new Point(570, 337);
-            txtCustomerEmail.Margin = new Padding(3, 4, 3, 4);
-            txtCustomerEmail.Name = "txtCustomerEmail";
-            txtCustomerEmail.PasswordChar = '\0';
-            txtCustomerEmail.PlaceholderText = "";
-            txtCustomerEmail.SelectedText = "";
-            txtCustomerEmail.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            txtCustomerEmail.Size = new Size(372, 39);
-            txtCustomerEmail.TabIndex = 55;
+            txt_edit_CCCD.CustomizableEdges = customizableEdges11;
+            txt_edit_CCCD.DefaultText = "";
+            txt_edit_CCCD.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_CCCD.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_CCCD.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_CCCD.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_CCCD.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_CCCD.Font = new Font("Segoe UI", 9F);
+            txt_edit_CCCD.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_CCCD.Location = new Point(579, 485);
+            txt_edit_CCCD.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_CCCD.Name = "txt_edit_CCCD";
+            txt_edit_CCCD.PasswordChar = '\0';
+            txt_edit_CCCD.PlaceholderText = "";
+            txt_edit_CCCD.SelectedText = "";
+            txt_edit_CCCD.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txt_edit_CCCD.Size = new Size(370, 39);
+            txt_edit_CCCD.TabIndex = 122;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.Location = new Point(582, 593);
+            label15.Name = "label15";
+            label15.Size = new Size(69, 28);
+            label15.TabIndex = 115;
+            label15.Text = "Email:";
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(570, 295);
+            label6.Location = new Point(582, 448);
             label6.Name = "label6";
-            label6.Size = new Size(69, 28);
-            label6.TabIndex = 54;
-            label6.Text = "Email:";
+            label6.Size = new Size(66, 28);
+            label6.TabIndex = 121;
+            label6.Text = "CCCD:";
             // 
-            // txtCustomerName
+            // txt_edit_Email
             // 
-            txtCustomerName.BorderRadius = 5;
-            txtCustomerName.CustomizableEdges = customizableEdges21;
-            txtCustomerName.DefaultText = "";
-            txtCustomerName.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCustomerName.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCustomerName.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerName.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCustomerName.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerName.Font = new Font("Segoe UI", 9F);
-            txtCustomerName.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCustomerName.Location = new Point(63, 123);
-            txtCustomerName.Margin = new Padding(3, 4, 3, 4);
-            txtCustomerName.Name = "txtCustomerName";
-            txtCustomerName.PasswordChar = '\0';
-            txtCustomerName.PlaceholderText = "";
-            txtCustomerName.SelectedText = "";
-            txtCustomerName.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            txtCustomerName.Size = new Size(379, 39);
-            txtCustomerName.TabIndex = 52;
+            txt_edit_Email.CustomizableEdges = customizableEdges13;
+            txt_edit_Email.DefaultText = "";
+            txt_edit_Email.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_Email.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_Email.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Email.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Email.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Email.Font = new Font("Segoe UI", 9F);
+            txt_edit_Email.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Email.Location = new Point(579, 630);
+            txt_edit_Email.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_Email.Name = "txt_edit_Email";
+            txt_edit_Email.PasswordChar = '\0';
+            txt_edit_Email.PlaceholderText = "";
+            txt_edit_Email.SelectedText = "";
+            txt_edit_Email.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            txt_edit_Email.Size = new Size(370, 39);
+            txt_edit_Email.TabIndex = 116;
             // 
-            // tabControl1
+            // txt_edit_PhoneNumber
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(34, 113);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1434, 806);
-            tabControl1.TabIndex = 0;
+            txt_edit_PhoneNumber.CustomizableEdges = customizableEdges15;
+            txt_edit_PhoneNumber.DefaultText = "";
+            txt_edit_PhoneNumber.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_PhoneNumber.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_PhoneNumber.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_PhoneNumber.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_PhoneNumber.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_PhoneNumber.Font = new Font("Segoe UI", 9F);
+            txt_edit_PhoneNumber.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_PhoneNumber.Location = new Point(579, 195);
+            txt_edit_PhoneNumber.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_PhoneNumber.Name = "txt_edit_PhoneNumber";
+            txt_edit_PhoneNumber.PasswordChar = '\0';
+            txt_edit_PhoneNumber.PlaceholderText = "";
+            txt_edit_PhoneNumber.SelectedText = "";
+            txt_edit_PhoneNumber.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            txt_edit_PhoneNumber.Size = new Size(370, 39);
+            txt_edit_PhoneNumber.TabIndex = 120;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.Location = new Point(94, 593);
+            label14.Name = "label14";
+            label14.Size = new Size(92, 28);
+            label14.TabIndex = 117;
+            label14.Text = "Address:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(582, 158);
+            label10.Name = "label10";
+            label10.Size = new Size(160, 28);
+            label10.TabIndex = 119;
+            label10.Text = "Phone Number:";
+            // 
+            // txt_edit_Adress
+            // 
+            txt_edit_Adress.CustomizableEdges = customizableEdges17;
+            txt_edit_Adress.DefaultText = "";
+            txt_edit_Adress.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_edit_Adress.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_edit_Adress.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Adress.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_edit_Adress.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Adress.Font = new Font("Segoe UI", 9F);
+            txt_edit_Adress.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_edit_Adress.Location = new Point(91, 630);
+            txt_edit_Adress.Margin = new Padding(3, 4, 3, 4);
+            txt_edit_Adress.Name = "txt_edit_Adress";
+            txt_edit_Adress.PasswordChar = '\0';
+            txt_edit_Adress.PlaceholderText = "";
+            txt_edit_Adress.SelectedText = "";
+            txt_edit_Adress.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            txt_edit_Adress.Size = new Size(370, 39);
+            txt_edit_Adress.TabIndex = 118;
+            // 
+            // tabPage_ListCustomer
+            // 
+            tabPage_ListCustomer.BackColor = Color.Gainsboro;
+            tabPage_ListCustomer.Controls.Add(btn_list_Add);
+            tabPage_ListCustomer.Controls.Add(dtGV_Customer);
+            tabPage_ListCustomer.Controls.Add(txtSearch);
+            tabPage_ListCustomer.Controls.Add(btn_Delete);
+            tabPage_ListCustomer.Controls.Add(bnt_list_edit);
+            tabPage_ListCustomer.Controls.Add(dataGridView1);
+            tabPage_ListCustomer.Controls.Add(guna2HtmlLabel3);
+            tabPage_ListCustomer.Location = new Point(4, 29);
+            tabPage_ListCustomer.Name = "tabPage_ListCustomer";
+            tabPage_ListCustomer.Padding = new Padding(3);
+            tabPage_ListCustomer.Size = new Size(1414, 745);
+            tabPage_ListCustomer.TabIndex = 0;
+            tabPage_ListCustomer.Text = "List Customer";
+            // 
+            // btn_list_Add
+            // 
+            btn_list_Add.CustomizableEdges = customizableEdges19;
+            btn_list_Add.DisabledState.BorderColor = Color.DarkGray;
+            btn_list_Add.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_list_Add.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_list_Add.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_list_Add.Font = new Font("Segoe UI", 9F);
+            btn_list_Add.ForeColor = Color.White;
+            btn_list_Add.Location = new Point(626, 656);
+            btn_list_Add.Name = "btn_list_Add";
+            btn_list_Add.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            btn_list_Add.Size = new Size(184, 47);
+            btn_list_Add.TabIndex = 57;
+            btn_list_Add.Text = "Add Customer";
+            btn_list_Add.Click += btn_list_Add_Click;
+            // 
+            // dtGV_Customer
+            // 
+            dtGV_Customer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dtGV_Customer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtGV_Customer.Location = new Point(52, 162);
+            dtGV_Customer.Name = "dtGV_Customer";
+            dtGV_Customer.RowHeadersWidth = 51;
+            dtGV_Customer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtGV_Customer.Size = new Size(1311, 455);
+            dtGV_Customer.TabIndex = 56;
+            dtGV_Customer.CellClick += dtGV_Customer_CellClick;
+            // 
+            // txtSearch
+            // 
+            txtSearch.CustomizableEdges = customizableEdges21;
+            txtSearch.DefaultText = "";
+            txtSearch.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtSearch.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtSearch.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtSearch.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtSearch.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtSearch.Font = new Font("Segoe UI", 9F);
+            txtSearch.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtSearch.Location = new Point(915, 99);
+            txtSearch.Margin = new Padding(3, 4, 3, 4);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PasswordChar = '\0';
+            txtSearch.PlaceholderText = "Search in here";
+            txtSearch.SelectedText = "";
+            txtSearch.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            txtSearch.Size = new Size(448, 32);
+            txtSearch.TabIndex = 55;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // btn_Delete
+            // 
+            btn_Delete.CustomizableEdges = customizableEdges23;
+            btn_Delete.DisabledState.BorderColor = Color.DarkGray;
+            btn_Delete.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_Delete.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_Delete.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_Delete.Font = new Font("Segoe UI", 9F);
+            btn_Delete.ForeColor = Color.White;
+            btn_Delete.Location = new Point(1115, 656);
+            btn_Delete.Name = "btn_Delete";
+            btn_Delete.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            btn_Delete.Size = new Size(184, 47);
+            btn_Delete.TabIndex = 54;
+            btn_Delete.Text = "Delete Customer";
+            btn_Delete.Click += btn_Delete_Click;
+            // 
+            // bnt_list_edit
+            // 
+            bnt_list_edit.CustomizableEdges = customizableEdges25;
+            bnt_list_edit.DisabledState.BorderColor = Color.DarkGray;
+            bnt_list_edit.DisabledState.CustomBorderColor = Color.DarkGray;
+            bnt_list_edit.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            bnt_list_edit.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            bnt_list_edit.Font = new Font("Segoe UI", 9F);
+            bnt_list_edit.ForeColor = Color.White;
+            bnt_list_edit.Location = new Point(867, 656);
+            bnt_list_edit.Name = "bnt_list_edit";
+            bnt_list_edit.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            bnt_list_edit.Size = new Size(184, 47);
+            bnt_list_edit.TabIndex = 53;
+            bnt_list_edit.Text = "Edit Customer";
+            bnt_list_edit.Click += bnt_list_edit_Click;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.BackgroundColor = SystemColors.Control;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(52, 162);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1311, 455);
+            dataGridView1.TabIndex = 52;
+            // 
+            // guna2HtmlLabel3
+            // 
+            guna2HtmlLabel3.BackColor = Color.WhiteSmoke;
+            guna2HtmlLabel3.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            guna2HtmlLabel3.ForeColor = Color.Blue;
+            guna2HtmlLabel3.Location = new Point(545, 41);
+            guna2HtmlLabel3.Name = "guna2HtmlLabel3";
+            guna2HtmlLabel3.Size = new Size(211, 47);
+            guna2HtmlLabel3.TabIndex = 51;
+            guna2HtmlLabel3.Text = "List Customer";
+            // 
+            // tab_Customer
+            // 
+            tab_Customer.Controls.Add(tabPage_ListCustomer);
+            tab_Customer.Controls.Add(tabPage_EditCustomer);
+            tab_Customer.Controls.Add(tabPage_AddCustomer);
+            tab_Customer.Location = new Point(45, 129);
+            tab_Customer.Name = "tab_Customer";
+            tab_Customer.SelectedIndex = 0;
+            tab_Customer.Size = new Size(1422, 778);
+            tab_Customer.TabIndex = 3;
+            // 
+            // tabPage_AddCustomer
+            // 
+            tabPage_AddCustomer.BackColor = Color.Gainsboro;
+            tabPage_AddCustomer.Controls.Add(btn_add_Clear);
+            tabPage_AddCustomer.Controls.Add(btn_add_Add);
+            tabPage_AddCustomer.Controls.Add(txt_add_CCCD);
+            tabPage_AddCustomer.Controls.Add(NUD_add_Point);
+            tabPage_AddCustomer.Controls.Add(guna2HtmlLabel2);
+            tabPage_AddCustomer.Controls.Add(cbb_add_Gender);
+            tabPage_AddCustomer.Controls.Add(label1);
+            tabPage_AddCustomer.Controls.Add(label2);
+            tabPage_AddCustomer.Controls.Add(lb_add_Id);
+            tabPage_AddCustomer.Controls.Add(label7);
+            tabPage_AddCustomer.Controls.Add(txt_add_CustomerCode);
+            tabPage_AddCustomer.Controls.Add(label8);
+            tabPage_AddCustomer.Controls.Add(label9);
+            tabPage_AddCustomer.Controls.Add(txt_add_Name);
+            tabPage_AddCustomer.Controls.Add(label11);
+            tabPage_AddCustomer.Controls.Add(label12);
+            tabPage_AddCustomer.Controls.Add(txt_add_Email);
+            tabPage_AddCustomer.Controls.Add(txt_add_PhoneNumber);
+            tabPage_AddCustomer.Controls.Add(label13);
+            tabPage_AddCustomer.Controls.Add(label20);
+            tabPage_AddCustomer.Controls.Add(txt_add_Adress);
+            tabPage_AddCustomer.Location = new Point(4, 29);
+            tabPage_AddCustomer.Name = "tabPage_AddCustomer";
+            tabPage_AddCustomer.Padding = new Padding(3);
+            tabPage_AddCustomer.Size = new Size(1414, 745);
+            tabPage_AddCustomer.TabIndex = 3;
+            tabPage_AddCustomer.Text = "Add Customer";
+            // 
+            // btn_add_Clear
+            // 
+            btn_add_Clear.CustomizableEdges = customizableEdges27;
+            btn_add_Clear.DisabledState.BorderColor = Color.DarkGray;
+            btn_add_Clear.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_add_Clear.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_add_Clear.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_add_Clear.Font = new Font("Segoe UI", 9F);
+            btn_add_Clear.ForeColor = Color.White;
+            btn_add_Clear.Location = new Point(1041, 189);
+            btn_add_Clear.Name = "btn_add_Clear";
+            btn_add_Clear.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            btn_add_Clear.Size = new Size(184, 47);
+            btn_add_Clear.TabIndex = 152;
+            btn_add_Clear.Text = "Clear";
+            btn_add_Clear.Click += btn_add_Clear_Click;
+            // 
+            // btn_add_Add
+            // 
+            btn_add_Add.CustomizableEdges = customizableEdges29;
+            btn_add_Add.DisabledState.BorderColor = Color.DarkGray;
+            btn_add_Add.DisabledState.CustomBorderColor = Color.DarkGray;
+            btn_add_Add.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            btn_add_Add.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            btn_add_Add.Font = new Font("Segoe UI", 9F);
+            btn_add_Add.ForeColor = Color.White;
+            btn_add_Add.Location = new Point(1041, 276);
+            btn_add_Add.Name = "btn_add_Add";
+            btn_add_Add.ShadowDecoration.CustomizableEdges = customizableEdges30;
+            btn_add_Add.Size = new Size(184, 47);
+            btn_add_Add.TabIndex = 151;
+            btn_add_Add.Text = "Add Customer";
+            btn_add_Add.Click += btn_add_Add_Click;
+            // 
+            // txt_add_CCCD
+            // 
+            txt_add_CCCD.CustomizableEdges = customizableEdges31;
+            txt_add_CCCD.DefaultText = "";
+            txt_add_CCCD.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_CCCD.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_CCCD.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_CCCD.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_CCCD.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_CCCD.Font = new Font("Segoe UI", 9F);
+            txt_add_CCCD.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_CCCD.Location = new Point(581, 488);
+            txt_add_CCCD.Margin = new Padding(3, 4, 3, 4);
+            txt_add_CCCD.Name = "txt_add_CCCD";
+            txt_add_CCCD.PasswordChar = '\0';
+            txt_add_CCCD.PlaceholderText = "";
+            txt_add_CCCD.SelectedText = "";
+            txt_add_CCCD.ShadowDecoration.CustomizableEdges = customizableEdges32;
+            txt_add_CCCD.Size = new Size(370, 39);
+            txt_add_CCCD.TabIndex = 150;
+            // 
+            // NUD_add_Point
+            // 
+            NUD_add_Point.Location = new Point(581, 344);
+            NUD_add_Point.Maximum = new decimal(new int[] { -1530494976, 232830, 0, 0 });
+            NUD_add_Point.Name = "NUD_add_Point";
+            NUD_add_Point.Size = new Size(370, 27);
+            NUD_add_Point.TabIndex = 149;
+            // 
+            // guna2HtmlLabel2
+            // 
+            guna2HtmlLabel2.BackColor = Color.Transparent;
+            guna2HtmlLabel2.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            guna2HtmlLabel2.ForeColor = Color.Blue;
+            guna2HtmlLabel2.Location = new Point(594, 20);
+            guna2HtmlLabel2.Name = "guna2HtmlLabel2";
+            guna2HtmlLabel2.Size = new Size(221, 47);
+            guna2HtmlLabel2.TabIndex = 132;
+            guna2HtmlLabel2.Text = "Add Customer";
+            // 
+            // cbb_add_Gender
+            // 
+            cbb_add_Gender.BackColor = Color.Transparent;
+            cbb_add_Gender.CustomizableEdges = customizableEdges33;
+            cbb_add_Gender.DrawMode = DrawMode.OwnerDrawFixed;
+            cbb_add_Gender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbb_add_Gender.FocusedColor = Color.FromArgb(94, 148, 255);
+            cbb_add_Gender.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            cbb_add_Gender.Font = new Font("Segoe UI", 10F);
+            cbb_add_Gender.ForeColor = Color.FromArgb(68, 88, 112);
+            cbb_add_Gender.ItemHeight = 30;
+            cbb_add_Gender.Location = new Point(93, 491);
+            cbb_add_Gender.Name = "cbb_add_Gender";
+            cbb_add_Gender.ShadowDecoration.CustomizableEdges = customizableEdges34;
+            cbb_add_Gender.Size = new Size(370, 36);
+            cbb_add_Gender.TabIndex = 145;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(584, 305);
+            label1.Name = "label1";
+            label1.Size = new Size(66, 28);
+            label1.TabIndex = 148;
+            label1.Text = "Point:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(93, 82);
+            label2.Name = "label2";
+            label2.Size = new Size(47, 28);
+            label2.TabIndex = 129;
+            label2.Text = "ID -";
+            // 
+            // lb_add_Id
+            // 
+            lb_add_Id.AutoSize = true;
+            lb_add_Id.BackColor = Color.Transparent;
+            lb_add_Id.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lb_add_Id.ForeColor = Color.Red;
+            lb_add_Id.Location = new Point(146, 82);
+            lb_add_Id.Name = "lb_add_Id";
+            lb_add_Id.Size = new Size(36, 28);
+            lb_add_Id.TabIndex = 130;
+            lb_add_Id.Text = "---";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(96, 160);
+            label7.Name = "label7";
+            label7.Size = new Size(160, 28);
+            label7.TabIndex = 131;
+            label7.Text = "Customer Code:";
+            // 
+            // txt_add_CustomerCode
+            // 
+            txt_add_CustomerCode.CustomizableEdges = customizableEdges35;
+            txt_add_CustomerCode.DefaultText = "";
+            txt_add_CustomerCode.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_CustomerCode.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_CustomerCode.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_CustomerCode.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_CustomerCode.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_CustomerCode.Font = new Font("Segoe UI", 9F);
+            txt_add_CustomerCode.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_CustomerCode.Location = new Point(93, 197);
+            txt_add_CustomerCode.Margin = new Padding(3, 4, 3, 4);
+            txt_add_CustomerCode.Name = "txt_add_CustomerCode";
+            txt_add_CustomerCode.PasswordChar = '\0';
+            txt_add_CustomerCode.PlaceholderText = "";
+            txt_add_CustomerCode.ReadOnly = true;
+            txt_add_CustomerCode.SelectedText = "";
+            txt_add_CustomerCode.ShadowDecoration.CustomizableEdges = customizableEdges36;
+            txt_add_CustomerCode.Size = new Size(370, 39);
+            txt_add_CustomerCode.TabIndex = 133;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(96, 305);
+            label8.Name = "label8";
+            label8.Size = new Size(73, 28);
+            label8.TabIndex = 134;
+            label8.Text = "Name:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(96, 450);
+            label9.Name = "label9";
+            label9.Size = new Size(86, 28);
+            label9.TabIndex = 144;
+            label9.Text = "Gender:";
+            // 
+            // txt_add_Name
+            // 
+            txt_add_Name.CustomizableEdges = customizableEdges37;
+            txt_add_Name.DefaultText = "";
+            txt_add_Name.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_Name.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_Name.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Name.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Name.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Name.Font = new Font("Segoe UI", 9F);
+            txt_add_Name.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Name.Location = new Point(93, 344);
+            txt_add_Name.Margin = new Padding(3, 4, 3, 4);
+            txt_add_Name.Name = "txt_add_Name";
+            txt_add_Name.PasswordChar = '\0';
+            txt_add_Name.PlaceholderText = "";
+            txt_add_Name.SelectedText = "";
+            txt_add_Name.ShadowDecoration.CustomizableEdges = customizableEdges38;
+            txt_add_Name.Size = new Size(370, 39);
+            txt_add_Name.TabIndex = 135;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(584, 595);
+            label11.Name = "label11";
+            label11.Size = new Size(69, 28);
+            label11.TabIndex = 136;
+            label11.Text = "Email:";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.Location = new Point(584, 450);
+            label12.Name = "label12";
+            label12.Size = new Size(66, 28);
+            label12.TabIndex = 142;
+            label12.Text = "CCCD:";
+            // 
+            // txt_add_Email
+            // 
+            txt_add_Email.CustomizableEdges = customizableEdges39;
+            txt_add_Email.DefaultText = "";
+            txt_add_Email.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_Email.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_Email.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Email.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Email.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Email.Font = new Font("Segoe UI", 9F);
+            txt_add_Email.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Email.Location = new Point(581, 632);
+            txt_add_Email.Margin = new Padding(3, 4, 3, 4);
+            txt_add_Email.Name = "txt_add_Email";
+            txt_add_Email.PasswordChar = '\0';
+            txt_add_Email.PlaceholderText = "";
+            txt_add_Email.SelectedText = "";
+            txt_add_Email.ShadowDecoration.CustomizableEdges = customizableEdges40;
+            txt_add_Email.Size = new Size(370, 39);
+            txt_add_Email.TabIndex = 137;
+            // 
+            // txt_add_PhoneNumber
+            // 
+            txt_add_PhoneNumber.CustomizableEdges = customizableEdges41;
+            txt_add_PhoneNumber.DefaultText = "";
+            txt_add_PhoneNumber.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_PhoneNumber.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_PhoneNumber.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_PhoneNumber.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_PhoneNumber.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_PhoneNumber.Font = new Font("Segoe UI", 9F);
+            txt_add_PhoneNumber.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_PhoneNumber.Location = new Point(581, 197);
+            txt_add_PhoneNumber.Margin = new Padding(3, 4, 3, 4);
+            txt_add_PhoneNumber.Name = "txt_add_PhoneNumber";
+            txt_add_PhoneNumber.PasswordChar = '\0';
+            txt_add_PhoneNumber.PlaceholderText = "";
+            txt_add_PhoneNumber.SelectedText = "";
+            txt_add_PhoneNumber.ShadowDecoration.CustomizableEdges = customizableEdges42;
+            txt_add_PhoneNumber.Size = new Size(370, 39);
+            txt_add_PhoneNumber.TabIndex = 141;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.Location = new Point(96, 595);
+            label13.Name = "label13";
+            label13.Size = new Size(92, 28);
+            label13.TabIndex = 138;
+            label13.Text = "Address:";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label20.Location = new Point(584, 160);
+            label20.Name = "label20";
+            label20.Size = new Size(160, 28);
+            label20.TabIndex = 140;
+            label20.Text = "Phone Number:";
+            // 
+            // txt_add_Adress
+            // 
+            txt_add_Adress.CustomizableEdges = customizableEdges43;
+            txt_add_Adress.DefaultText = "";
+            txt_add_Adress.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txt_add_Adress.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txt_add_Adress.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Adress.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txt_add_Adress.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Adress.Font = new Font("Segoe UI", 9F);
+            txt_add_Adress.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txt_add_Adress.Location = new Point(93, 632);
+            txt_add_Adress.Margin = new Padding(3, 4, 3, 4);
+            txt_add_Adress.Name = "txt_add_Adress";
+            txt_add_Adress.PasswordChar = '\0';
+            txt_add_Adress.PlaceholderText = "";
+            txt_add_Adress.SelectedText = "";
+            txt_add_Adress.ShadowDecoration.CustomizableEdges = customizableEdges44;
+            txt_add_Adress.Size = new Size(370, 39);
+            txt_add_Adress.TabIndex = 139;
             // 
             // frmCustomer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1512, 945);
-            Controls.Add(tabControl1);
+            Controls.Add(guna2HtmlLabel1);
+            Controls.Add(tab_Customer);
             Name = "frmCustomer";
             Text = "Customer";
             Load += frmCustomer_Load;
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)guna2DataGridViewCustomer).EndInit();
-            tabControl1.ResumeLayout(false);
+            tabPage_EditCustomer.ResumeLayout(false);
+            tabPage_EditCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_edit_Point).EndInit();
+            tabPage_ListCustomer.ResumeLayout(false);
+            tabPage_ListCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dtGV_Customer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            tab_Customer.ResumeLayout(false);
+            tabPage_AddCustomer.ResumeLayout(false);
+            tabPage_AddCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_add_Point).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
         private Guna.UI2.WinForms.Guna2AnimateWindow guna2AnimateWindow1;
-        private TabPage tabPage2;
-        private TabPage tabPage1;
-        private Guna.UI2.WinForms.Guna2TextBox txtShare;
-        private Label label1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
-        private Guna.UI2.WinForms.Guna2ComboBox cbb_CustomerGender;
-        private Guna.UI2.WinForms.Guna2DataGridView guna2DataGridViewCustomer;
-        private Guna.UI2.WinForms.Guna2Button btn_Remove_Customer;
-        private Guna.UI2.WinForms.Guna2Button btn_Edit_Customer;
+        private TabPage tabPage_EditCustomer;
+        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
+        private Guna.UI2.WinForms.Guna2ComboBox cbb_edit_Gender;
         private Label label4;
-        private Guna.UI2.WinForms.Guna2Button btn_clear;
-        private Guna.UI2.WinForms.Guna2Button btn_add;
-        private Label label13;
-        private Guna.UI2.WinForms.Guna2TextBox txtCustomerCCCD;
-        private Label label12;
-        private Guna.UI2.WinForms.Guna2TextBox txt_CustomerphoneNum;
-        private Label label8;
-        private Guna.UI2.WinForms.Guna2TextBox txt_CustomerAddress;
-        private Label label7;
-        private Guna.UI2.WinForms.Guna2TextBox txtCustomerEmail;
+        private Label label19;
+        private Label lb_edit_Id;
+        private Guna.UI2.WinForms.Guna2Button btn_edit_Clear;
+        private Label label17;
+        private Guna.UI2.WinForms.Guna2Button btn_edit_Edit;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_CustomerCode;
+        private Label label16;
+        private Label label5;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_Name;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_CCCD;
+        private Label label15;
         private Label label6;
-        private Guna.UI2.WinForms.Guna2TextBox txtCustomerName;
-        private TabControl tabControl1;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_Email;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_PhoneNumber;
+        private Label label14;
+        private Label label10;
+        private Guna.UI2.WinForms.Guna2TextBox txt_edit_Adress;
+        private TabPage tabPage_ListCustomer;
+        private Guna.UI2.WinForms.Guna2Button btn_list_Add;
+        private DataGridView dtGV_Customer;
+        private Guna.UI2.WinForms.Guna2TextBox txtSearch;
+        private Guna.UI2.WinForms.Guna2Button btn_Delete;
+        private Guna.UI2.WinForms.Guna2Button bnt_list_edit;
+        private DataGridView dataGridView1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
+        private TabControl tab_Customer;
+        private TabPage tabPage_AddCustomer;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_CCCD;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
+        private Guna.UI2.WinForms.Guna2ComboBox cbb_add_Gender;
+        private Label label1;
+        private Label label2;
+        private Label lb_add_Id;
+        private Guna.UI2.WinForms.Guna2Button btn_add_Add;
+        private Label label7;
+        private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_CustomerCode;
+        private Label label8;
+        private Label label9;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_Name;
+        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox5;
+        private Label label11;
+        private Label label12;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_Email;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_PhoneNumber;
+        private Label label13;
+        private Label label20;
+        private Guna.UI2.WinForms.Guna2TextBox txt_add_Adress;
+        private NumericUpDown NUD_add_Point;
+        private NumericUpDown NUD_edit_Point;
+        private Guna.UI2.WinForms.Guna2Button btn_add_Clear;
     }
 }

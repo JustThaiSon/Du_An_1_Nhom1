@@ -16,6 +16,7 @@ namespace DAL.Entities
         public ServiceStatus Status { get; set; }
         public DateTime CreatedDate { get; set; }
         public string? Type { get; set; }
+        public int? Quantity { get; set; }
         public List<OrderService> OrderServices { get; set; }
     }
 }

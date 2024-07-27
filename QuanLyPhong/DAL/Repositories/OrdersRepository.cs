@@ -24,15 +24,17 @@ namespace DAL.Repositories
                 if (orders != null)
                 {
                     orders.Id = Guid.NewGuid();
-                    _context.Orders.Add(orders);
+                    orders.OrderCode = GenerateOrderCode();
+					_context.Orders.Add(orders);
                     _context.SaveChanges();
                     return true;
                 }
                 return false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+				Console.WriteLine(ex.ToString());
+				return false;
             }
         }
 
@@ -74,8 +76,23 @@ namespace DAL.Repositories
         {
             return _context.Orders.FirstOrDefault(x =>x.Id == Id);
         }
+		public string GenerateOrdersCode()
+		{
+			var maxCode = _context.Orders
+				.OrderByDescending(c => c.OrderCode)
+				.Select(c => c.OrderCode)
+				.FirstOrDefault();
 
-        public bool UpdadateOrder(Orders orders)
+			if (string.IsNullOrEmpty(maxCode))
+			{
+				return "OD0001";
+			}
+
+			int maxNumber = int.Parse(maxCode.Substring(2));
+
+			return $"OD{maxNumber + 1:D3}";
+		}
+		public bool UpdadateOrder(Orders orders)
         {
             var update = _context.Orders.FirstOrDefault(o => o.Id == orders.Id);
             if (update == null) return false;
@@ -95,5 +112,10 @@ namespace DAL.Repositories
             update.RoomId = orders.RoomId;
             return true;
         }
-    }
+
+		public List<Orders> GetByRoomId(Guid Id)
+		{
+			return _context.Orders.Where(x=>x.RoomId == Id).ToList();
+		}
+	}
 }

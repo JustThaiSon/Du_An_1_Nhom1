@@ -18,12 +18,12 @@ namespace QuanLyPhong
 	public partial class frmBookingRoom : Form
 	{
 		private IRoomService _roomService;
-		private IFloorService _floorService;
+		private BUS.IService.IFloorService _floorService;
 		private IKindOfRoomService _kindOfRoomService;
 		public frmBookingRoom()
 		{
 			_roomService = new RoomService();
-			_floorService = new FloorService();
+            _floorService = new FloorService();
 			_kindOfRoomService = new KindOfRoomService();
 			InitializeComponent();
 			LoadBookingRoom();
@@ -39,7 +39,7 @@ namespace QuanLyPhong
 			var floors = _floorService.GetAllFloorFromDb();
 			var rooms = _roomService.GetAllRooms();
 
-			// Extract numeric part from FloorName and sort by that numeric part
+			// Extract numeric part from FloorName and sort by that numeric partx
 			var sortedFloors = floors
 				.Select(floor => new
 				{
@@ -88,7 +88,10 @@ namespace QuanLyPhong
 
 					foreach (var room in roomsOnFloor)
 					{
-						var roomControl = new RoomControl();
+						var roomControl = new RoomControl
+						{
+							Margin = new Padding(30) 
+						};
 						roomControl.SetRoom(room);
 						floorFlowLayoutPanel.Controls.Add(roomControl);
 					}

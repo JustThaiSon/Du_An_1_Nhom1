@@ -20,7 +20,7 @@
 			base.Dispose(disposing);
 		}
 
-		#region Component Designer generated code
+        #region Component Designer generated code
 
 		/// <summary> 
 		/// Required method for Designer support - do not modify 
@@ -37,9 +37,10 @@
 			// ptRoom
 			// 
 			ptRoom.BackColor = Color.White;
-			ptRoom.Location = new Point(0, 12);
+			ptRoom.Location = new Point(0, 16);
+			ptRoom.Margin = new Padding(3, 4, 3, 4);
 			ptRoom.Name = "ptRoom";
-			ptRoom.Size = new Size(163, 103);
+			ptRoom.Size = new Size(186, 137);
 			ptRoom.SizeMode = PictureBoxSizeMode.Zoom;
 			ptRoom.TabIndex = 0;
 			ptRoom.TabStop = false;
@@ -47,9 +48,9 @@
 			// lbName
 			// 
 			lbName.AutoSize = true;
-			lbName.Location = new Point(31, 128);
+			lbName.Location = new Point(35, 171);
 			lbName.Name = "lbName";
-			lbName.Size = new Size(60, 15);
+			lbName.Size = new Size(77, 20);
 			lbName.TabIndex = 1;
 			lbName.Text = "Room 101";
 			lbName.Click += lbName_Click;
@@ -57,30 +58,31 @@
 			// lbGia
 			// 
 			lbGia.AutoSize = true;
-			lbGia.Location = new Point(18, 159);
+			lbGia.Location = new Point(13, 212);
 			lbGia.Name = "lbGia";
-			lbGia.Size = new Size(105, 15);
+			lbGia.Size = new Size(135, 20);
 			lbGia.TabIndex = 2;
 			lbGia.Text = "Price : 250000 VNĐ";
 			// 
 			// RoomControl
 			// 
-			AutoScaleDimensions = new SizeF(7F, 15F);
+			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = Color.White;
 			Controls.Add(lbGia);
 			Controls.Add(lbName);
 			Controls.Add(ptRoom);
+			Margin = new Padding(3, 4, 3, 4);
 			Name = "RoomControl";
-			Size = new Size(163, 200);
+			Size = new Size(186, 267);
 			((System.ComponentModel.ISupportInitialize)ptRoom).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
 
-		#endregion
+        #endregion
 
-		private PictureBox ptRoom;
+        private PictureBox ptRoom;
 		private Label lbName;
 		private Label lbGia;
 	}

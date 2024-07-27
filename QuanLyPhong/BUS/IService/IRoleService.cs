@@ -15,6 +15,5 @@ namespace BUS.IService
         string RemoveRole(Guid Id);
         string UpdateRole(Role role);
         List<Role> GetAllRoleFromDb();
-        List<Role> GetAllRole();
     }
 }
