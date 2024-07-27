@@ -177,7 +177,7 @@ namespace QuanLyPhong
             }
             if (endDate <= startDate)
             {
-                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.","Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var addVoucher = new Voucher()
@@ -215,6 +215,11 @@ namespace QuanLyPhong
             }
             LoadDtg();
             ClearForm();
+        }
+
+        private void frmVoucher_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

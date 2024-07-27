@@ -31,5 +31,10 @@ namespace QuanLyPhong
         {
 
         }
+
+        private void frmService_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

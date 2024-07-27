@@ -13,5 +13,7 @@ namespace BUS.IService
         string RemoveEmployee(Guid Id);
         string UpdateEmployee(Employee Employee);
         List<Employee> GetAllEmployeeFromDb();
+        public string GenerateEmployeeCode();
+
     }
 }

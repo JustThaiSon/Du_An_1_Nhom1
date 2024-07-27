@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240718071944_new")]
-    partial class @new
+    [Migration("20240723103758_New1")]
+    partial class New1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -390,7 +390,7 @@ namespace DAL.Migrations
                     b.ToTable("Rooms", (string)null);
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -501,7 +501,7 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DAL.Entities.Service", "Service")
+                    b.HasOne("DAL.Entities.Services", "Service")
                         .WithMany("OrderServices")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -618,7 +618,7 @@ namespace DAL.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Service", b =>
+            modelBuilder.Entity("DAL.Entities.Services", b =>
                 {
                     b.Navigation("OrderServices");
                 });

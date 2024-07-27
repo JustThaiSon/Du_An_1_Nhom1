@@ -43,11 +43,11 @@
             tb_search = new Guna.UI2.WinForms.Guna2TextBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
-            label1 = new Label();
-            label3 = new Label();
-            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
-            lb_numorderservice = new Panel();
             label4 = new Label();
+            lb_numorderservice = new Panel();
+            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
+            label3 = new Label();
+            label1 = new Label();
             panel1.SuspendLayout();
             guna2Panel1.SuspendLayout();
             SuspendLayout();
@@ -147,26 +147,25 @@
             guna2Panel1.Size = new Size(339, 209);
             guna2Panel1.TabIndex = 5;
             // 
-            // label1
+            // label4
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label1.Location = new Point(31, 58);
-            label1.Name = "label1";
-            label1.Size = new Size(100, 28);
-            label1.TabIndex = 0;
-            label1.Text = "Quantity:";
-            label1.Click += label1_Click;
+            label4.AutoSize = true;
+            label4.Location = new Point(135, 130);
+            label4.Name = "label4";
+            label4.Size = new Size(50, 20);
+            label4.TabIndex = 4;
+            label4.Text = "label4";
             // 
-            // label3
+            // lb_numorderservice
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label3.Location = new Point(31, 122);
-            label3.Name = "label3";
-            label3.Size = new Size(64, 28);
-            label3.TabIndex = 1;
-            label3.Text = "Total:";
+            lb_numorderservice.BackColor = Color.Red;
+            lb_numorderservice.Location = new Point(241, 41);
+            lb_numorderservice.Margin = new Padding(4, 0, 4, 0);
+            lb_numorderservice.Name = "lb_numorderservice";
+            lb_numorderservice.Padding = new Padding(11, 5, 11, 7);
+            lb_numorderservice.Size = new Size(35, 36);
+            lb_numorderservice.TabIndex = 3;
+            lb_numorderservice.Paint += panel2_Paint;
             // 
             // guna2Button1
             // 
@@ -187,27 +186,28 @@
             guna2Button1.TabIndex = 2;
             guna2Button1.Click += guna2Button1_Click;
             // 
-            // lb_numorderservice
+            // label3
             // 
-            lb_numorderservice.BackColor = Color.Red;
-            lb_numorderservice.Location = new Point(241, 41);
-            lb_numorderservice.Margin = new Padding(4, 0, 4, 0);
-            lb_numorderservice.Name = "lb_numorderservice";
-            lb_numorderservice.Padding = new Padding(11, 5, 11, 7);
-            lb_numorderservice.Size = new Size(35, 36);
-            lb_numorderservice.TabIndex = 3;
-            lb_numorderservice.Paint += panel2_Paint;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label3.Location = new Point(31, 122);
+            label3.Name = "label3";
+            label3.Size = new Size(64, 28);
+            label3.TabIndex = 1;
+            label3.Text = "Total:";
             // 
-            // label4
+            // label1
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(135, 130);
-            label4.Name = "label4";
-            label4.Size = new Size(50, 20);
-            label4.TabIndex = 4;
-            label4.Text = "label4";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label1.Location = new Point(31, 58);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 28);
+            label1.TabIndex = 0;
+            label1.Text = "Quantity:";
+            label1.Click += label1_Click;
             // 
-            // Service
+            // frmService
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -219,8 +219,9 @@
             Controls.Add(guna2Separator2);
             Controls.Add(guna2Separator1);
             Controls.Add(guna2HtmlLabel1);
-            Name = "Service";
+            Name = "frmService";
             Text = "Service";
+            Load += frmService_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             guna2Panel1.ResumeLayout(false);
