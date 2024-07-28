@@ -104,11 +104,11 @@ namespace QuanLyPhong
 
         private void TrangChu_Load(object sender, EventArgs e)
         {
-         
+
             labelManhanvien.Text = Session.EmployeeCode;
             labelTenNhanVien.Text = Session.Name;
 
-         
+
             if (Session.RoleCode == "emp")
             {
                 btn_Empolyee.Visible = false;
@@ -119,6 +119,23 @@ namespace QuanLyPhong
         private void picStatistical_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_logout_Click(object sender, EventArgs e)
+        {
+            Session.EmployeeCode = null;
+            Session.Name = null;
+            Session.RoleCode = null;
+
+            Login frmLogin = new Login();
+            frmLogin.Show();
+
+            this.Close();
         }
     }
 }
