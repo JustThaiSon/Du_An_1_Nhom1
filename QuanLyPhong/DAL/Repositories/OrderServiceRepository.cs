@@ -35,13 +35,14 @@ namespace DAL.Repositories
             }
         }
 
-        public bool DeleteOrderSV(Guid Id)
+        public bool DeleteOrderSV(Guid orderId, Guid serviceId)
         {
 
-            var delete = _context.OrderServices.Find(Id);
-            if (delete != null)
+			var orderService = _context.OrderServices
+			 .FirstOrDefault(os => os.OrderId == orderId && os.ServiceId == serviceId);
+			if (orderService != null)
             {
-                _context.OrderServices.Remove(delete);
+                _context.OrderServices.Remove(orderService);
                 _context.SaveChanges();
                 return true;
             }
@@ -50,7 +51,7 @@ namespace DAL.Repositories
 
         public List<OrderService> GetAllOrder()
         {
-            throw new NotImplementedException();
+            return _context.OrderServices.ToList();
         }
 
         public OrderService GetById(Guid Id)
@@ -66,7 +67,17 @@ namespace DAL.Repositories
 
 		public bool UpdadateOrderSV(OrderService orderService)
         {
-            throw new NotImplementedException();
-        }
+           var Exits = _context.OrderServices.FirstOrDefault(x=>x.OrderId == orderService.OrderId && x.ServiceId == orderService.ServiceId);
+           if (Exits == null) return false;
+			Exits.OrderId = orderService.OrderId;
+            Exits.ServiceId = orderService.ServiceId;
+            Exits.Quantity = orderService.Quantity;
+            Exits.Price = orderService.Price;
+            Exits.TotalPrice = orderService.TotalPrice;
+			_context.OrderServices.Update(Exits);
+			_context.SaveChanges();
+            return true;
+
+		}
     }
 }

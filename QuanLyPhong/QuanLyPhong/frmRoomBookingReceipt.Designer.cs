@@ -63,13 +63,19 @@
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges33 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges34 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges35 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoomBookingReceipt));
 			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges36 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges37 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRoomBookingReceipt));
+			Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges38 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
 			groupBox1 = new GroupBox();
 			dtgService = new DataGridView();
 			groupBox2 = new GroupBox();
 			dtgListOrders = new DataGridView();
 			groupBox3 = new GroupBox();
+			guna2HtmlLabel16 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+			txtPrepay = new Guna.UI2.WinForms.Guna2TextBox();
+			txtpoint = new Guna.UI2.WinForms.Guna2TextBox();
+			guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			rdHourly = new Guna.UI2.WinForms.Guna2RadioButton();
 			rddaily = new Guna.UI2.WinForms.Guna2RadioButton();
 			dtGioCheckout = new Guna.UI2.WinForms.Guna2DateTimePicker();
@@ -83,14 +89,12 @@
 			guna2HtmlLabel12 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			dt_checkout = new Guna.UI2.WinForms.Guna2DateTimePicker();
 			dt_checkin = new Guna.UI2.WinForms.Guna2DateTimePicker();
-			tb_orderCode = new Guna.UI2.WinForms.Guna2TextBox();
 			guna2HtmlLabel10 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel9 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel8 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-			guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
 			groupBox4 = new GroupBox();
 			btn_ClearCus = new Button();
@@ -189,6 +193,10 @@
 			// 
 			// groupBox3
 			// 
+			groupBox3.Controls.Add(guna2HtmlLabel16);
+			groupBox3.Controls.Add(txtPrepay);
+			groupBox3.Controls.Add(txtpoint);
+			groupBox3.Controls.Add(guna2HtmlLabel2);
 			groupBox3.Controls.Add(rdHourly);
 			groupBox3.Controls.Add(rddaily);
 			groupBox3.Controls.Add(dtGioCheckout);
@@ -202,14 +210,12 @@
 			groupBox3.Controls.Add(guna2HtmlLabel12);
 			groupBox3.Controls.Add(dt_checkout);
 			groupBox3.Controls.Add(dt_checkin);
-			groupBox3.Controls.Add(tb_orderCode);
 			groupBox3.Controls.Add(guna2HtmlLabel10);
 			groupBox3.Controls.Add(guna2HtmlLabel9);
 			groupBox3.Controls.Add(guna2HtmlLabel8);
 			groupBox3.Controls.Add(guna2HtmlLabel5);
 			groupBox3.Controls.Add(guna2HtmlLabel4);
 			groupBox3.Controls.Add(guna2HtmlLabel3);
-			groupBox3.Controls.Add(guna2HtmlLabel2);
 			groupBox3.Controls.Add(guna2HtmlLabel1);
 			groupBox3.Location = new Point(21, 71);
 			groupBox3.Margin = new Padding(3, 2, 3, 2);
@@ -220,6 +226,67 @@
 			groupBox3.TabStop = false;
 			groupBox3.Text = "Information Order";
 			// 
+			// guna2HtmlLabel16
+			// 
+			guna2HtmlLabel16.BackColor = Color.Transparent;
+			guna2HtmlLabel16.Location = new Point(34, 325);
+			guna2HtmlLabel16.Margin = new Padding(3, 2, 3, 2);
+			guna2HtmlLabel16.Name = "guna2HtmlLabel16";
+			guna2HtmlLabel16.Size = new Size(45, 17);
+			guna2HtmlLabel16.TabIndex = 43;
+			guna2HtmlLabel16.Text = "Prepay :";
+			// 
+			// txtPrepay
+			// 
+			txtPrepay.CustomizableEdges = customizableEdges1;
+			txtPrepay.DefaultText = "";
+			txtPrepay.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+			txtPrepay.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+			txtPrepay.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+			txtPrepay.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+			txtPrepay.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+			txtPrepay.Font = new Font("Segoe UI", 9F);
+			txtPrepay.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+			txtPrepay.Location = new Point(157, 315);
+			txtPrepay.Name = "txtPrepay";
+			txtPrepay.PasswordChar = '\0';
+			txtPrepay.PlaceholderText = "";
+			txtPrepay.SelectedText = "";
+			txtPrepay.ShadowDecoration.CustomizableEdges = customizableEdges2;
+			txtPrepay.Size = new Size(298, 27);
+			txtPrepay.TabIndex = 42;
+			// 
+			// txtpoint
+			// 
+			txtpoint.CustomizableEdges = customizableEdges3;
+			txtpoint.DefaultText = "";
+			txtpoint.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+			txtpoint.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+			txtpoint.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+			txtpoint.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+			txtpoint.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+			txtpoint.Font = new Font("Segoe UI", 9F);
+			txtpoint.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+			txtpoint.Location = new Point(157, 272);
+			txtpoint.Name = "txtpoint";
+			txtpoint.PasswordChar = '\0';
+			txtpoint.PlaceholderText = "";
+			txtpoint.SelectedText = "";
+			txtpoint.ShadowDecoration.CustomizableEdges = customizableEdges4;
+			txtpoint.Size = new Size(298, 27);
+			txtpoint.TabIndex = 41;
+			// 
+			// guna2HtmlLabel2
+			// 
+			guna2HtmlLabel2.BackColor = Color.Transparent;
+			guna2HtmlLabel2.Location = new Point(34, 282);
+			guna2HtmlLabel2.Margin = new Padding(3, 2, 3, 2);
+			guna2HtmlLabel2.Name = "guna2HtmlLabel2";
+			guna2HtmlLabel2.Size = new Size(37, 17);
+			guna2HtmlLabel2.TabIndex = 40;
+			guna2HtmlLabel2.Text = "Point :";
+			guna2HtmlLabel2.Click += guna2HtmlLabel2_Click;
+			// 
 			// rdHourly
 			// 
 			rdHourly.AutoSize = true;
@@ -228,7 +295,7 @@
 			rdHourly.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
 			rdHourly.CheckedState.InnerColor = Color.White;
 			rdHourly.CheckedState.InnerOffset = -4;
-			rdHourly.Location = new Point(253, 239);
+			rdHourly.Location = new Point(256, 199);
 			rdHourly.Name = "rdHourly";
 			rdHourly.Size = new Size(61, 19);
 			rdHourly.TabIndex = 39;
@@ -247,7 +314,7 @@
 			rddaily.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
 			rddaily.CheckedState.InnerColor = Color.White;
 			rddaily.CheckedState.InnerOffset = -4;
-			rddaily.Location = new Point(157, 239);
+			rddaily.Location = new Point(160, 199);
 			rddaily.Name = "rddaily";
 			rddaily.Size = new Size(51, 19);
 			rddaily.TabIndex = 38;
@@ -262,16 +329,16 @@
 			// 
 			dtGioCheckout.Checked = true;
 			dtGioCheckout.CustomFormat = "HH:mm";
-			dtGioCheckout.CustomizableEdges = customizableEdges1;
+			dtGioCheckout.CustomizableEdges = customizableEdges5;
 			dtGioCheckout.FillColor = Color.FromArgb(255, 192, 192);
 			dtGioCheckout.Font = new Font("Segoe UI", 9F);
 			dtGioCheckout.Format = DateTimePickerFormat.Time;
-			dtGioCheckout.Location = new Point(317, 105);
+			dtGioCheckout.Location = new Point(317, 63);
 			dtGioCheckout.Margin = new Padding(3, 2, 3, 2);
 			dtGioCheckout.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
 			dtGioCheckout.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
 			dtGioCheckout.Name = "dtGioCheckout";
-			dtGioCheckout.ShadowDecoration.CustomizableEdges = customizableEdges2;
+			dtGioCheckout.ShadowDecoration.CustomizableEdges = customizableEdges6;
 			dtGioCheckout.ShowUpDown = true;
 			dtGioCheckout.Size = new Size(138, 27);
 			dtGioCheckout.TabIndex = 37;
@@ -282,16 +349,16 @@
 			// 
 			DtGioCheckIn.Checked = true;
 			DtGioCheckIn.CustomFormat = "HH:mm";
-			DtGioCheckIn.CustomizableEdges = customizableEdges3;
+			DtGioCheckIn.CustomizableEdges = customizableEdges7;
 			DtGioCheckIn.FillColor = Color.FromArgb(255, 192, 192);
 			DtGioCheckIn.Font = new Font("Segoe UI", 9F);
 			DtGioCheckIn.Format = DateTimePickerFormat.Time;
-			DtGioCheckIn.Location = new Point(317, 68);
+			DtGioCheckIn.Location = new Point(317, 20);
 			DtGioCheckIn.Margin = new Padding(3, 2, 3, 2);
 			DtGioCheckIn.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
 			DtGioCheckIn.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
 			DtGioCheckIn.Name = "DtGioCheckIn";
-			DtGioCheckIn.ShadowDecoration.CustomizableEdges = customizableEdges4;
+			DtGioCheckIn.ShadowDecoration.CustomizableEdges = customizableEdges8;
 			DtGioCheckIn.ShowUpDown = true;
 			DtGioCheckIn.Size = new Size(138, 27);
 			DtGioCheckIn.TabIndex = 36;
@@ -300,7 +367,7 @@
 			// guna2HtmlLabel11
 			// 
 			guna2HtmlLabel11.BackColor = Color.Transparent;
-			guna2HtmlLabel11.Location = new Point(211, 226);
+			guna2HtmlLabel11.Location = new Point(215, 198);
 			guna2HtmlLabel11.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel11.Name = "guna2HtmlLabel11";
 			guna2HtmlLabel11.Size = new Size(3, 2);
@@ -310,7 +377,7 @@
 			// lbGiaRoom
 			// 
 			lbGiaRoom.BackColor = Color.Transparent;
-			lbGiaRoom.Location = new Point(157, 366);
+			lbGiaRoom.Location = new Point(157, 367);
 			lbGiaRoom.Margin = new Padding(3, 2, 3, 2);
 			lbGiaRoom.Name = "lbGiaRoom";
 			lbGiaRoom.Size = new Size(33, 17);
@@ -320,7 +387,7 @@
 			// cbbOrderType
 			// 
 			cbbOrderType.BackColor = Color.Transparent;
-			cbbOrderType.CustomizableEdges = customizableEdges5;
+			cbbOrderType.CustomizableEdges = customizableEdges9;
 			cbbOrderType.DrawMode = DrawMode.OwnerDrawFixed;
 			cbbOrderType.DropDownStyle = ComboBoxStyle.DropDownList;
 			cbbOrderType.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -328,17 +395,17 @@
 			cbbOrderType.Font = new Font("Segoe UI", 10F);
 			cbbOrderType.ForeColor = Color.FromArgb(68, 88, 112);
 			cbbOrderType.ItemHeight = 30;
-			cbbOrderType.Location = new Point(157, 179);
+			cbbOrderType.Location = new Point(157, 147);
 			cbbOrderType.Margin = new Padding(3, 2, 3, 2);
 			cbbOrderType.Name = "cbbOrderType";
-			cbbOrderType.ShadowDecoration.CustomizableEdges = customizableEdges6;
+			cbbOrderType.ShadowDecoration.CustomizableEdges = customizableEdges10;
 			cbbOrderType.Size = new Size(298, 36);
 			cbbOrderType.TabIndex = 32;
 			// 
 			// guna2HtmlLabel6
 			// 
 			guna2HtmlLabel6.BackColor = Color.Transparent;
-			guna2HtmlLabel6.Location = new Point(32, 189);
+			guna2HtmlLabel6.Location = new Point(31, 147);
 			guna2HtmlLabel6.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel6.Name = "guna2HtmlLabel6";
 			guna2HtmlLabel6.Size = new Size(61, 17);
@@ -347,7 +414,7 @@
 			// 
 			// tbvoucher
 			// 
-			tbvoucher.CustomizableEdges = customizableEdges7;
+			tbvoucher.CustomizableEdges = customizableEdges11;
 			tbvoucher.DefaultText = "";
 			tbvoucher.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tbvoucher.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -356,19 +423,19 @@
 			tbvoucher.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
 			tbvoucher.Font = new Font("Segoe UI", 9F);
 			tbvoucher.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-			tbvoucher.Location = new Point(157, 142);
+			tbvoucher.Location = new Point(157, 105);
 			tbvoucher.Name = "tbvoucher";
 			tbvoucher.PasswordChar = '\0';
 			tbvoucher.PlaceholderText = "";
 			tbvoucher.SelectedText = "";
-			tbvoucher.ShadowDecoration.CustomizableEdges = customizableEdges8;
+			tbvoucher.ShadowDecoration.CustomizableEdges = customizableEdges12;
 			tbvoucher.Size = new Size(298, 27);
 			tbvoucher.TabIndex = 31;
 			// 
 			// tb_note
 			// 
 			tb_note.BorderColor = SystemColors.ActiveBorder;
-			tb_note.CustomizableEdges = customizableEdges9;
+			tb_note.CustomizableEdges = customizableEdges13;
 			tb_note.DefaultText = "";
 			tb_note.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tb_note.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -377,19 +444,19 @@
 			tb_note.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
 			tb_note.Font = new Font("Segoe UI", 9F);
 			tb_note.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-			tb_note.Location = new Point(157, 283);
+			tb_note.Location = new Point(157, 229);
 			tb_note.Name = "tb_note";
 			tb_note.PasswordChar = '\0';
 			tb_note.PlaceholderText = "";
 			tb_note.SelectedText = "";
-			tb_note.ShadowDecoration.CustomizableEdges = customizableEdges10;
+			tb_note.ShadowDecoration.CustomizableEdges = customizableEdges14;
 			tb_note.Size = new Size(298, 27);
 			tb_note.TabIndex = 21;
 			// 
 			// guna2HtmlLabel12
 			// 
 			guna2HtmlLabel12.BackColor = Color.Transparent;
-			guna2HtmlLabel12.Location = new Point(32, 297);
+			guna2HtmlLabel12.Location = new Point(34, 239);
 			guna2HtmlLabel12.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel12.Name = "guna2HtmlLabel12";
 			guna2HtmlLabel12.Size = new Size(32, 17);
@@ -399,16 +466,16 @@
 			// dt_checkout
 			// 
 			dt_checkout.Checked = true;
-			dt_checkout.CustomizableEdges = customizableEdges11;
+			dt_checkout.CustomizableEdges = customizableEdges15;
 			dt_checkout.FillColor = Color.FromArgb(255, 192, 192);
 			dt_checkout.Font = new Font("Segoe UI", 9F);
 			dt_checkout.Format = DateTimePickerFormat.Short;
-			dt_checkout.Location = new Point(157, 105);
+			dt_checkout.Location = new Point(157, 63);
 			dt_checkout.Margin = new Padding(3, 2, 3, 2);
 			dt_checkout.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
 			dt_checkout.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
 			dt_checkout.Name = "dt_checkout";
-			dt_checkout.ShadowDecoration.CustomizableEdges = customizableEdges12;
+			dt_checkout.ShadowDecoration.CustomizableEdges = customizableEdges16;
 			dt_checkout.Size = new Size(134, 27);
 			dt_checkout.TabIndex = 12;
 			dt_checkout.Value = new DateTime(2024, 7, 24, 22, 24, 3, 83);
@@ -417,39 +484,19 @@
 			// dt_checkin
 			// 
 			dt_checkin.Checked = true;
-			dt_checkin.CustomizableEdges = customizableEdges13;
+			dt_checkin.CustomizableEdges = customizableEdges17;
 			dt_checkin.FillColor = Color.FromArgb(255, 192, 192);
 			dt_checkin.Font = new Font("Segoe UI", 9F);
 			dt_checkin.Format = DateTimePickerFormat.Short;
-			dt_checkin.Location = new Point(157, 68);
+			dt_checkin.Location = new Point(157, 20);
 			dt_checkin.Margin = new Padding(3, 2, 3, 2);
 			dt_checkin.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
 			dt_checkin.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
 			dt_checkin.Name = "dt_checkin";
-			dt_checkin.ShadowDecoration.CustomizableEdges = customizableEdges14;
+			dt_checkin.ShadowDecoration.CustomizableEdges = customizableEdges18;
 			dt_checkin.Size = new Size(134, 27);
 			dt_checkin.TabIndex = 11;
 			dt_checkin.Value = new DateTime(2024, 7, 24, 22, 24, 3, 83);
-			// 
-			// tb_orderCode
-			// 
-			tb_orderCode.CustomizableEdges = customizableEdges15;
-			tb_orderCode.DefaultText = "";
-			tb_orderCode.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-			tb_orderCode.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-			tb_orderCode.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-			tb_orderCode.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-			tb_orderCode.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-			tb_orderCode.Font = new Font("Segoe UI", 9F);
-			tb_orderCode.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-			tb_orderCode.Location = new Point(157, 31);
-			tb_orderCode.Name = "tb_orderCode";
-			tb_orderCode.PasswordChar = '\0';
-			tb_orderCode.PlaceholderText = "";
-			tb_orderCode.SelectedText = "";
-			tb_orderCode.ShadowDecoration.CustomizableEdges = customizableEdges16;
-			tb_orderCode.Size = new Size(298, 27);
-			tb_orderCode.TabIndex = 10;
 			// 
 			// guna2HtmlLabel10
 			// 
@@ -464,7 +511,7 @@
 			// guna2HtmlLabel9
 			// 
 			guna2HtmlLabel9.BackColor = Color.Transparent;
-			guna2HtmlLabel9.Location = new Point(32, 366);
+			guna2HtmlLabel9.Location = new Point(34, 367);
 			guna2HtmlLabel9.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel9.Name = "guna2HtmlLabel9";
 			guna2HtmlLabel9.Size = new Size(67, 17);
@@ -474,7 +521,7 @@
 			// guna2HtmlLabel8
 			// 
 			guna2HtmlLabel8.BackColor = Color.Transparent;
-			guna2HtmlLabel8.Location = new Point(31, 147);
+			guna2HtmlLabel8.Location = new Point(32, 105);
 			guna2HtmlLabel8.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel8.Name = "guna2HtmlLabel8";
 			guna2HtmlLabel8.Size = new Size(50, 17);
@@ -484,17 +531,17 @@
 			// guna2HtmlLabel5
 			// 
 			guna2HtmlLabel5.BackColor = Color.Transparent;
-			guna2HtmlLabel5.Location = new Point(32, 239);
+			guna2HtmlLabel5.Location = new Point(31, 199);
 			guna2HtmlLabel5.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel5.Name = "guna2HtmlLabel5";
-			guna2HtmlLabel5.Size = new Size(38, 17);
+			guna2HtmlLabel5.Size = new Size(65, 17);
 			guna2HtmlLabel5.TabIndex = 4;
-			guna2HtmlLabel5.Text = "Status:";
+			guna2HtmlLabel5.Text = "Rental type:";
 			// 
 			// guna2HtmlLabel4
 			// 
 			guna2HtmlLabel4.BackColor = Color.Transparent;
-			guna2HtmlLabel4.Location = new Point(31, 112);
+			guna2HtmlLabel4.Location = new Point(32, 70);
 			guna2HtmlLabel4.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel4.Name = "guna2HtmlLabel4";
 			guna2HtmlLabel4.Size = new Size(89, 17);
@@ -504,22 +551,12 @@
 			// guna2HtmlLabel3
 			// 
 			guna2HtmlLabel3.BackColor = Color.Transparent;
-			guna2HtmlLabel3.Location = new Point(31, 77);
+			guna2HtmlLabel3.Location = new Point(32, 35);
 			guna2HtmlLabel3.Margin = new Padding(3, 2, 3, 2);
 			guna2HtmlLabel3.Name = "guna2HtmlLabel3";
 			guna2HtmlLabel3.Size = new Size(79, 17);
 			guna2HtmlLabel3.TabIndex = 2;
 			guna2HtmlLabel3.Text = "Date Check In:";
-			// 
-			// guna2HtmlLabel2
-			// 
-			guna2HtmlLabel2.BackColor = Color.Transparent;
-			guna2HtmlLabel2.Location = new Point(31, 41);
-			guna2HtmlLabel2.Margin = new Padding(3, 2, 3, 2);
-			guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-			guna2HtmlLabel2.Size = new Size(67, 17);
-			guna2HtmlLabel2.TabIndex = 1;
-			guna2HtmlLabel2.Text = "Order Code:";
 			// 
 			// guna2HtmlLabel1
 			// 
@@ -633,7 +670,7 @@
 			// 
 			// tb_emailCus
 			// 
-			tb_emailCus.CustomizableEdges = customizableEdges17;
+			tb_emailCus.CustomizableEdges = customizableEdges19;
 			tb_emailCus.DefaultText = "";
 			tb_emailCus.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tb_emailCus.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -647,7 +684,7 @@
 			tb_emailCus.PasswordChar = '\0';
 			tb_emailCus.PlaceholderText = "";
 			tb_emailCus.SelectedText = "";
-			tb_emailCus.ShadowDecoration.CustomizableEdges = customizableEdges18;
+			tb_emailCus.ShadowDecoration.CustomizableEdges = customizableEdges20;
 			tb_emailCus.Size = new Size(271, 27);
 			tb_emailCus.TabIndex = 39;
 			// 
@@ -663,7 +700,7 @@
 			// 
 			// tb_Address
 			// 
-			tb_Address.CustomizableEdges = customizableEdges19;
+			tb_Address.CustomizableEdges = customizableEdges21;
 			tb_Address.DefaultText = "";
 			tb_Address.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tb_Address.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -677,7 +714,7 @@
 			tb_Address.PasswordChar = '\0';
 			tb_Address.PlaceholderText = "";
 			tb_Address.SelectedText = "";
-			tb_Address.ShadowDecoration.CustomizableEdges = customizableEdges20;
+			tb_Address.ShadowDecoration.CustomizableEdges = customizableEdges22;
 			tb_Address.Size = new Size(271, 27);
 			tb_Address.TabIndex = 37;
 			// 
@@ -703,7 +740,7 @@
 			// 
 			// tb_cccd
 			// 
-			tb_cccd.CustomizableEdges = customizableEdges21;
+			tb_cccd.CustomizableEdges = customizableEdges23;
 			tb_cccd.DefaultText = "";
 			tb_cccd.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tb_cccd.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -717,7 +754,7 @@
 			tb_cccd.PasswordChar = '\0';
 			tb_cccd.PlaceholderText = "";
 			tb_cccd.SelectedText = "";
-			tb_cccd.ShadowDecoration.CustomizableEdges = customizableEdges22;
+			tb_cccd.ShadowDecoration.CustomizableEdges = customizableEdges24;
 			tb_cccd.Size = new Size(271, 27);
 			tb_cccd.TabIndex = 35;
 			// 
@@ -733,7 +770,7 @@
 			// 
 			// tb_phoneCus
 			// 
-			tb_phoneCus.CustomizableEdges = customizableEdges23;
+			tb_phoneCus.CustomizableEdges = customizableEdges25;
 			tb_phoneCus.DefaultText = "";
 			tb_phoneCus.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tb_phoneCus.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -747,7 +784,7 @@
 			tb_phoneCus.PasswordChar = '\0';
 			tb_phoneCus.PlaceholderText = "";
 			tb_phoneCus.SelectedText = "";
-			tb_phoneCus.ShadowDecoration.CustomizableEdges = customizableEdges24;
+			tb_phoneCus.ShadowDecoration.CustomizableEdges = customizableEdges26;
 			tb_phoneCus.Size = new Size(271, 27);
 			tb_phoneCus.TabIndex = 33;
 			// 
@@ -763,7 +800,7 @@
 			// 
 			// tbCustomerName
 			// 
-			tbCustomerName.CustomizableEdges = customizableEdges25;
+			tbCustomerName.CustomizableEdges = customizableEdges27;
 			tbCustomerName.DefaultText = "";
 			tbCustomerName.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			tbCustomerName.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -777,7 +814,7 @@
 			tbCustomerName.PasswordChar = '\0';
 			tbCustomerName.PlaceholderText = "";
 			tbCustomerName.SelectedText = "";
-			tbCustomerName.ShadowDecoration.CustomizableEdges = customizableEdges26;
+			tbCustomerName.ShadowDecoration.CustomizableEdges = customizableEdges28;
 			tbCustomerName.Size = new Size(271, 27);
 			tbCustomerName.TabIndex = 31;
 			// 
@@ -806,7 +843,7 @@
 			// cbb_Customer
 			// 
 			cbb_Customer.BackColor = Color.Transparent;
-			cbb_Customer.CustomizableEdges = customizableEdges27;
+			cbb_Customer.CustomizableEdges = customizableEdges29;
 			cbb_Customer.DrawMode = DrawMode.OwnerDrawFixed;
 			cbb_Customer.DropDownStyle = ComboBoxStyle.DropDownList;
 			cbb_Customer.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -817,7 +854,7 @@
 			cbb_Customer.Location = new Point(101, 34);
 			cbb_Customer.Margin = new Padding(3, 2, 3, 2);
 			cbb_Customer.Name = "cbb_Customer";
-			cbb_Customer.ShadowDecoration.CustomizableEdges = customizableEdges28;
+			cbb_Customer.ShadowDecoration.CustomizableEdges = customizableEdges30;
 			cbb_Customer.Size = new Size(260, 36);
 			cbb_Customer.TabIndex = 30;
 			cbb_Customer.SelectedIndexChanged += cbb_Customer_SelectedIndexChanged;
@@ -865,7 +902,7 @@
 			// 
 			// txtStatus
 			// 
-			txtStatus.CustomizableEdges = customizableEdges29;
+			txtStatus.CustomizableEdges = customizableEdges31;
 			txtStatus.DefaultText = "";
 			txtStatus.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
 			txtStatus.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -880,7 +917,7 @@
 			txtStatus.PlaceholderText = "";
 			txtStatus.ReadOnly = true;
 			txtStatus.SelectedText = "";
-			txtStatus.ShadowDecoration.CustomizableEdges = customizableEdges30;
+			txtStatus.ShadowDecoration.CustomizableEdges = customizableEdges32;
 			txtStatus.Size = new Size(194, 27);
 			txtStatus.TabIndex = 40;
 			// 
@@ -930,11 +967,11 @@
 			// cbbnum_quantitySer
 			// 
 			cbbnum_quantitySer.BackColor = Color.Transparent;
-			cbbnum_quantitySer.CustomizableEdges = customizableEdges31;
+			cbbnum_quantitySer.CustomizableEdges = customizableEdges33;
 			cbbnum_quantitySer.Font = new Font("Segoe UI", 9F);
 			cbbnum_quantitySer.Location = new Point(128, 86);
 			cbbnum_quantitySer.Name = "cbbnum_quantitySer";
-			cbbnum_quantitySer.ShadowDecoration.CustomizableEdges = customizableEdges32;
+			cbbnum_quantitySer.ShadowDecoration.CustomizableEdges = customizableEdges34;
 			cbbnum_quantitySer.Size = new Size(89, 27);
 			cbbnum_quantitySer.TabIndex = 26;
 			cbbnum_quantitySer.ValueChanged += cbbnum_quantitySer_ValueChanged;
@@ -962,7 +999,7 @@
 			// cbb_NameService
 			// 
 			cbb_NameService.BackColor = Color.Transparent;
-			cbb_NameService.CustomizableEdges = customizableEdges33;
+			cbb_NameService.CustomizableEdges = customizableEdges35;
 			cbb_NameService.DrawMode = DrawMode.OwnerDrawFixed;
 			cbb_NameService.DropDownStyle = ComboBoxStyle.DropDownList;
 			cbb_NameService.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -973,9 +1010,10 @@
 			cbb_NameService.Location = new Point(128, 20);
 			cbb_NameService.Margin = new Padding(3, 2, 3, 2);
 			cbb_NameService.Name = "cbb_NameService";
-			cbb_NameService.ShadowDecoration.CustomizableEdges = customizableEdges34;
+			cbb_NameService.ShadowDecoration.CustomizableEdges = customizableEdges36;
 			cbb_NameService.Size = new Size(195, 36);
 			cbb_NameService.TabIndex = 23;
+			cbb_NameService.SelectedIndexChanged += cbb_NameService_SelectedIndexChanged_1;
 			// 
 			// guna2HtmlLabel25
 			// 
@@ -1028,7 +1066,7 @@
 			// btn_Back
 			// 
 			btn_Back.BackColor = Color.Transparent;
-			btn_Back.CustomizableEdges = customizableEdges35;
+			btn_Back.CustomizableEdges = customizableEdges37;
 			btn_Back.DisabledState.BorderColor = Color.DarkGray;
 			btn_Back.DisabledState.CustomBorderColor = Color.DarkGray;
 			btn_Back.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -1041,7 +1079,7 @@
 			btn_Back.Location = new Point(52, 16);
 			btn_Back.Margin = new Padding(3, 2, 3, 2);
 			btn_Back.Name = "btn_Back";
-			btn_Back.ShadowDecoration.CustomizableEdges = customizableEdges36;
+			btn_Back.ShadowDecoration.CustomizableEdges = customizableEdges38;
 			btn_Back.Size = new Size(159, 42);
 			btn_Back.TabIndex = 35;
 			btn_Back.Text = "BACK";
@@ -1078,6 +1116,7 @@
 			btnSave.TabIndex = 38;
 			btnSave.Text = "Save";
 			btnSave.UseVisualStyleBackColor = false;
+			btnSave.Click += btnSave_Click;
 			// 
 			// frmRoomBookingReceipt
 			// 
@@ -1126,7 +1165,6 @@
 		private GroupBox groupBox3;
 		private GroupBox groupBox4;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
@@ -1135,7 +1173,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel10;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbRoomName;
         private Guna.UI2.WinForms.Guna2DateTimePicker dt_checkin;
-        private Guna.UI2.WinForms.Guna2TextBox tb_orderCode;
         private Guna.UI2.WinForms.Guna2DateTimePicker dt_checkout;
         private Guna.UI2.WinForms.Guna2TextBox tb_note;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel12;
@@ -1187,5 +1224,9 @@
 		private Guna.UI2.WinForms.Guna2RadioButton rddaily;
 		private Button btnSave;
 		private DataGridView dtgListOrders;
+		private Guna.UI2.WinForms.Guna2TextBox txtpoint;
+		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
+		private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel16;
+		private Guna.UI2.WinForms.Guna2TextBox txtPrepay;
 	}
 }

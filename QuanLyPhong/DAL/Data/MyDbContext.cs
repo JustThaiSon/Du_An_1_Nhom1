@@ -19,7 +19,7 @@ namespace DAL.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=LAPTOP-APKREC8K\\SQLEXPRESS;Initial Catalog=DuAn1_21;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-APKREC8K\\SQLEXPRESS;Initial Catalog=DuAn1_222;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }
@@ -31,7 +31,6 @@ namespace DAL.Data
             modelBuilder.ApplyConfiguration(new HistoryPointConfigruation());
             modelBuilder.ApplyConfiguration(new KindOfRoomConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfigration());
-            modelBuilder.ApplyConfiguration(new OrderDetailsConfigruation());
             modelBuilder.ApplyConfiguration(new OrderServiceConfigruation());
             modelBuilder.ApplyConfiguration(new RoleConfigruation());
             modelBuilder.ApplyConfiguration(new RoomConfigruation());
@@ -43,7 +42,6 @@ namespace DAL.Data
         public DbSet<Floor> Floors { get; set; }
         public DbSet<HistoryPoints> HistoryPoints { get; set; }
         public DbSet<KindOfRoom> KindOfRooms { get; set; }
-        public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderService> OrderServices { get; set; }
         public DbSet<Role> Roles { get; set; }

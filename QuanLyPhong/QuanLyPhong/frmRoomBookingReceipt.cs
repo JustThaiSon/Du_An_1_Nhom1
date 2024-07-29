@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TheArtOfDevHtmlRenderer.Adapters;
+using static Guna.UI2.Native.WinApi;
 using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
 using OrderService = DAL.Entities.OrderService;
 
@@ -30,10 +31,17 @@ namespace QuanLyPhong
 		private List<OrderService> _temporaryServices;
 		private IKindOfRoomService _kindOfRoomService;
 		private IOrderService _orderService;
+
 		private decimal RoomPrice { get; set; }
 		private decimal TotalPriceOrderService { get; set; }
 		private decimal TotalAmount { get; set; }
+		private decimal TotalPriceRoom { get; set; }
 		public Guid RoomId { get; set; }
+		public Guid OrderId { get; set; }
+		private ContextMenuStrip contextMenuStrip;
+		private ToolStripMenuItem toolStripEdit;
+		private ToolStripMenuItem toolStripDelete;
+
 		public frmRoomBookingReceipt(Guid RoomId)
 		{
 			InitializeComponent();
@@ -46,7 +54,66 @@ namespace QuanLyPhong
 			_orderService = new OrderServicess();
 			this.RoomId = RoomId;
 			Load();
+			contextMenuStrip = new ContextMenuStrip();
 		}
+		private void MenuStrip()
+		{
+			contextMenuStrip = new ContextMenuStrip();
+			toolStripEdit = new ToolStripMenuItem("Edit");
+			toolStripDelete = new ToolStripMenuItem("Delete");
+
+			toolStripEdit.Click += ToolStripEdit_Click;
+			toolStripDelete.Click += ToolStripDelete_Click;
+
+			contextMenuStrip.Items.AddRange(new ToolStripItem[] { toolStripEdit, toolStripDelete });
+
+			dtgService.ContextMenuStrip = contextMenuStrip;
+		}
+
+		private void ToolStripDelete_Click(object? sender, EventArgs e)
+		{
+			if (dtgService.SelectedRows.Count > 0)
+			{
+				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
+				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
+				var serviceToRemove = _temporaryServices.FirstOrDefault(s => s.ServiceId == serviceId);
+
+				if (serviceToRemove != null)
+				{
+					TotalPriceOrderService = TotalPriceOrderService - serviceToRemove.TotalPrice;
+					_temporaryServices.Remove(serviceToRemove);
+					LoadDataGridViewService();
+					TotalPrice();
+				}
+			}
+		}
+
+		private void ToolStripEdit_Click(object? sender, EventArgs e)
+		{
+			if (dtgService.SelectedRows.Count > 0)
+			{
+				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
+				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
+				var serviceToUpdate = _temporaryServices.FirstOrDefault(x => x.ServiceId == serviceId);
+				if (serviceToUpdate != null)
+				{
+					int newQuantity = Convert.ToInt32(selectedRow.Cells["Quantity"].Value);
+					decimal price = Convert.ToDecimal(selectedRow.Cells["Price"].Value);
+
+					decimal newTotalPrice = newQuantity * price;
+
+					serviceToUpdate.Quantity = newQuantity;
+					serviceToUpdate.TotalPrice = newTotalPrice;
+
+					selectedRow.Cells["Quantity"].Value = newQuantity;
+					selectedRow.Cells["TotalPrice"].Value = newTotalPrice.ToString("0");
+
+					MessageBox.Show("Update Thành Công");
+					LoadDataGridViewService();
+				}
+			}
+		}
+
 		void Load()
 		{
 			loadNameroom();
@@ -57,6 +124,8 @@ namespace QuanLyPhong
 			LoadTime();
 			LoadBookingDetails();
 			LoadPrice();
+			MenuStrip();
+			LoadDtgOrders();
 		}
 
 
@@ -103,8 +172,8 @@ namespace QuanLyPhong
 
 			dt_checkin.ShowUpDown = true;
 			dt_checkin.Value = vietnamTime;
-			//dt_checkout.ShowUpDown = true;
-			//dt_checkout.Value = vietnamTime;
+			dt_checkout.ShowUpDown = true;
+			dt_checkout.Value = vietnamTime;
 		}
 		void loadNameroom()
 		{
@@ -138,14 +207,6 @@ namespace QuanLyPhong
 
 		private void btn_checkin_Click(object sender, EventArgs e)
 		{
-			//TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
-
-			//DateTime utcNow = DateTime.UtcNow;
-
-			//DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, vietnamTimeZone);
-
-			//DtGioCheckIn.Value = vietnamTime;
-			//dt_checkout.Value = vietnamTime;
 			var selectedCustomerName = cbb_Customer.SelectedItem?.ToString();
 			if (string.IsNullOrEmpty(selectedCustomerName))
 			{
@@ -159,6 +220,19 @@ namespace QuanLyPhong
 				MessageBox.Show("Selected customer does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+			decimal point = 0;
+
+			if (!string.IsNullOrEmpty(txtpoint.Text) && decimal.TryParse(txtpoint.Text, out decimal parsedPoint))
+			{
+				point = parsedPoint;
+			}
+
+			decimal prepay = 0;
+			if (!string.IsNullOrEmpty(txtPrepay.Text) && decimal.TryParse(txtPrepay.Text, out decimal parsedPrepay))
+			{
+				prepay = parsedPrepay;
+			}
+
 
 			var newOrder = new Orders
 			{
@@ -166,9 +240,13 @@ namespace QuanLyPhong
 				CustomerId = selectedCustomer.Id,
 				DateCreated = DtGioCheckIn.Value,
 				DatePayment = null,
+				Note = tb_note.Text,
+				Prepay = prepay,
+				TotalPricePoint = TotalPriceRoom - point,
+				Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
 				OrderType = (OrderType)cbbOrderType.SelectedItem,
-				ToTalPrice = TotalAmount,
-
+				ToTalPrice = TotalPriceRoom,
+				ToTal = TotalAmount,
 			};
 
 			if (MessageBox.Show("Do you want to add this Order?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -179,6 +257,7 @@ namespace QuanLyPhong
 			foreach (var service in _temporaryServices)
 			{
 				service.OrderId = newOrder.Id;
+				Guid OrderId = service.OrderId;
 				string serviceResult = _orderServiceService.AddOrderService(service);
 			}
 			OnBookRoom?.Invoke();
@@ -188,7 +267,7 @@ namespace QuanLyPhong
 		private void cbbnum_quantitySer_ValueChanged(object sender, EventArgs e)
 
 		{
-			
+
 		}
 
 		private void cbb_NameService_SelectedIndexChanged(object sender, EventArgs e)
@@ -256,63 +335,60 @@ namespace QuanLyPhong
 		}
 
 
-        private void btn_AddService_Click(object sender, EventArgs e)
-        {
-            var selectedServiceName = cbb_NameService.SelectedItem.ToString();
-            var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == selectedServiceName);
+		private void btn_AddService_Click(object sender, EventArgs e)
+		{
+			var selectedServiceName = cbb_NameService.SelectedItem.ToString();
+			var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == selectedServiceName);
 
-            if (selectedService != null)
-            {
-                // ckeck stt còn hàng
-                if (selectedService.Status == ServiceStatus.OutOfStock)
-                {
-                    MessageBox.Show("The selected service is out of stock and cannot be added to the order.", "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+			if (selectedService != null)
+			{
+				if (selectedService.Status == ServiceStatus.OutOfStock)
+				{
+					MessageBox.Show("The selected service is out of stock and cannot be added to the order.", "Out of Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
 
-                int quantityToAdd = (int)cbbnum_quantitySer.Value;
+				int quantityToAdd = (int)cbbnum_quantitySer.Value;
 
-                // xem số lượng có đủ ko
-                if (selectedService.Quantity < quantityToAdd)
-                {
-                    MessageBox.Show("Không còn đủ số lượng sản phẩm.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+				if (selectedService.Quantity < quantityToAdd)
+				{
+					MessageBox.Show("Không còn đủ số lượng sản phẩm.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
 
-                var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
+				var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
 
-                if (existingOrderService != null)
-                {
-                    existingOrderService.Quantity += quantityToAdd;
-                    existingOrderService.TotalPrice = existingOrderService.Price * existingOrderService.Quantity;
-                }
-                else
-                {
-                    var orderService = new OrderService()
-                    {
-                        ServiceId = selectedService.Id,
-                        Quantity = quantityToAdd,
-                        Price = selectedService.Price,
-                        TotalPrice = selectedService.Price * quantityToAdd,
-                    };
-                    _temporaryServices.Add(orderService);
-                }
+				if (existingOrderService != null)
+				{
+					existingOrderService.Quantity += quantityToAdd;
+					existingOrderService.TotalPrice = existingOrderService.Price * existingOrderService.Quantity;
+				}
+				else
+				{
+					var orderService = new OrderService()
+					{
+						ServiceId = selectedService.Id,
+						Quantity = quantityToAdd,
+						Price = selectedService.Price,
+						TotalPrice = selectedService.Price * quantityToAdd,
+					};
+					_temporaryServices.Add(orderService);
+				}
 
-                // Update the quantity in the database
-                selectedService.Quantity -= quantityToAdd;
-                _serviceSevice.UpdateService(selectedService);
+				selectedService.Quantity -= quantityToAdd;
+				_serviceSevice.UpdateService(selectedService);
 				_serviceSevice.UpdateServiceStatusAuto();
 
-                MessageBox.Show("Service added successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadDataGridViewService();
-            }
-            else
-            {
-                MessageBox.Show("Selected service not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+				MessageBox.Show("Service added successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				LoadDataGridViewService();
+			}
+			else
+			{
+				MessageBox.Show("Selected service not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
 
-        void LoadDataGridViewService()
+		void LoadDataGridViewService()
 		{
 			dtgService.ColumnCount = 6;
 			dtgService.Columns[0].Name = "Id";
@@ -322,13 +398,14 @@ namespace QuanLyPhong
 			dtgService.Columns[3].Name = "Quantity";
 			dtgService.Columns[4].Name = "Price";
 			dtgService.Columns[5].Name = "TotalPrice";
+
 			dtgService.Rows.Clear();
 			int Count = 0;
 			foreach (var item in _temporaryServices)
 			{
 				Count++;
-				dtgService.Rows.Add(item.ServiceId, Count, _serviceSevice.GetAllServiceFromDb().Where(x => x.Id == item.ServiceId).Select(x => x.Name).FirstOrDefault(), item.Quantity, item.Price, item.TotalPrice);
-				TotalPriceOrderService += item.TotalPrice;
+				dtgService.Rows.Add(item.ServiceId, Count, _serviceSevice.GetAllServiceFromDb().Where(x => x.Id == item.ServiceId).Select(x => x.Name).FirstOrDefault(), item.Quantity, item.Price, item.TotalPrice.ToString("0"));
+				TotalPriceOrderService = _temporaryServices.Sum(s => s.TotalPrice);
 
 			}
 			TotalPrice();
@@ -340,20 +417,18 @@ namespace QuanLyPhong
 			TimeSpan timeSpanDays = dt_checkout.Value.Date - dt_checkin.Value.Date;
 			var room = _roomService.GetAllRooms().Where(x => x.Id == RoomId).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
 
-			decimal totalPrice = 0;
-
 			if (rddaily.Checked)
 			{
-				totalPrice = room.PricePerDay * (decimal)timeSpanDays.TotalDays;
+				TotalPriceRoom = room.PricePerDay * (decimal)timeSpanDays.TotalDays;
 			}
 			else if (rdHourly.Checked)
 			{
 				decimal totalHours = (decimal)timeSpanHours.TotalHours;
 				decimal roundedHours = Math.Ceiling(totalHours);
-				totalPrice = room.PriceByHour * roundedHours;
+				TotalPriceRoom = room.PriceByHour * roundedHours;
 			}
 
-			TotalAmount = totalPrice + TotalPriceOrderService;
+			TotalAmount = TotalPriceRoom + TotalPriceOrderService;
 			lbTotalPrice.Text = TotalAmount.ToString("0") + " VNĐ";
 		}
 
@@ -419,13 +494,23 @@ namespace QuanLyPhong
 								break;
 						}
 					}
-
+					if (currentOrder.Rentaltype == RentalTypeEnum.Daily)
+					{
+						rddaily.Checked = true;
+					}
+					else
+					{
+						rdHourly.Checked = true;
+					}
+					OrderId = currentOrder.Id;
+					txtPrepay.Text = currentOrder.Prepay.ToString();
+					txtpoint.Text = currentOrder.TotalPricePoint.ToString();
+					tb_note.Text = currentOrder.Note;
 					if (currentOrder.DateCreated.HasValue)
 					{
 						DtGioCheckIn.Value = currentOrder.DateCreated.Value;
 						dt_checkin.Value = currentOrder.DateCreated.Value;
 					}
-
 					_temporaryServices = _orderServiceService.GetOrderServicesByOrderId(currentOrder.Id);
 					LoadDataGridViewService();
 					TotalPrice();
@@ -449,10 +534,121 @@ namespace QuanLyPhong
 			rdFemale.Checked = false;
 		}
 
+		void LoadDtg()
+		{
 
+		}
 		private void dtgListOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 
+		}
+
+		private void guna2HtmlLabel2_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			var selectedCustomerName = cbb_Customer.SelectedItem?.ToString();
+			if (string.IsNullOrEmpty(selectedCustomerName))
+			{
+				MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			var selectedCustomer = _customerService.GetAllCustomerFromDb().FirstOrDefault(c => c.Name == selectedCustomerName);
+			if (selectedCustomer == null)
+			{
+				MessageBox.Show("Selected customer does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			decimal point = 0;
+
+			if (!string.IsNullOrEmpty(txtpoint.Text) && decimal.TryParse(txtpoint.Text, out decimal parsedPoint))
+			{
+				point = parsedPoint;
+			}
+
+			decimal prepay = 0;
+			if (!string.IsNullOrEmpty(txtPrepay.Text) && decimal.TryParse(txtPrepay.Text, out decimal parsedPrepay))
+			{
+				prepay = parsedPrepay;
+			}
+
+
+			var newOrder = new Orders
+			{
+				Id = OrderId,
+				RoomId = RoomId,
+				CustomerId = selectedCustomer.Id,
+				DateCreated = DtGioCheckIn.Value,
+				DatePayment = null,
+				Prepay = prepay,
+				Note = tb_note.Text,
+				TotalPricePoint = TotalPriceRoom - point,
+				Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
+				OrderType = (OrderType)cbbOrderType.SelectedItem,
+				ToTalPrice = TotalPriceRoom,
+				ToTal = TotalAmount,
+			};
+
+			if (MessageBox.Show("Do you want to Update this Order?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				string result = _orderService.UpdateOrders(newOrder);
+				MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			var currentServices = _orderServiceService.GetOrderServicesByOrderId(newOrder.Id);
+
+			var servicesToDelete = currentServices.Where(s => !_temporaryServices.Any(ts => ts.ServiceId == s.ServiceId)).ToList();
+			foreach (var service in servicesToDelete)
+			{
+				string deleteResult = _orderServiceService.RemoveOrderServicee(service.OrderId, service.ServiceId);
+			}
+
+			foreach (var service in _temporaryServices)
+			{
+				service.OrderId = newOrder.Id;
+				string updateServiceResult = _orderServiceService.UpdateOrderService(service);
+				if (updateServiceResult == "Update failcure")
+				{
+					string addServiceResult = _orderServiceService.AddOrderService(service);
+				}
+			}
+			this.Close();
+		}
+		private void cbb_NameService_SelectedIndexChanged_1(object sender, EventArgs e)
+		{
+			var selectedServiceName = cbb_NameService.SelectedItem.ToString();
+			var selectedService = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Name == selectedServiceName);
+			lbGia.Text = selectedService.Price.ToString();
+			txtStatus.Text = selectedService.Status.ToString();
+		}
+		void LoadDtgOrders()
+		{
+			dtgListOrders.ColumnCount = 13;
+			dtgListOrders.Columns[0].Name = "Id";
+			dtgListOrders.Columns[0].Visible = false;
+			dtgListOrders.Columns[1].Name = "STT";
+			dtgListOrders.Columns[2].Name = "OrderCode";
+			dtgListOrders.Columns[3].Name = "DateCreated";
+			dtgListOrders.Columns[4].Name = "Note";
+			dtgListOrders.Columns[5].Name = "Rentaltype";
+			dtgListOrders.Columns[6].Name = "Employee";
+			dtgListOrders.Columns[7].Name = "Customer";
+			dtgListOrders.Columns[8].Name = "Prepay";
+			dtgListOrders.Columns[9].Name = "OrderType";
+			dtgListOrders.Columns[10].Name = "Room";
+			dtgListOrders.Columns[11].Name = "Floor";
+			dtgListOrders.Columns[12].Name = "KindOFRoom";
+
+			dtgListOrders.Rows.Clear();
+			int Count = 0;
+			foreach (var item in _orderService.GetAllOrdersViewModels())
+			{
+				Count++;
+				dtgListOrders.Rows.Add(item.Id, Count, item.OrderCode, item.DateCreated, item.Note, item.Rentaltype, item.EmployeeName, item.CustomerName, item.Prepay, item.OrderType, item.RoomName, item.FloorName, item.KindOfRoomName);
+			}
 		}
 	}
 }

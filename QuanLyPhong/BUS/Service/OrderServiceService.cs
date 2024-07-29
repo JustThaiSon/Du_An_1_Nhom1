@@ -65,9 +65,9 @@ namespace BUS.Service
 			return _orderServiceRepository.GetByOrderId(Id);
 		}
 
-		public string RemoveOrderServicee(Guid Id)
+		public string RemoveOrderServicee(Guid orderId, Guid serviceId)
 		{
-			if (_orderServiceRepository.DeleteOrderSV(Id))
+			if (_orderServiceRepository.DeleteOrderSV(orderId, serviceId))
 			{
 				return "Delete success";
 			}
@@ -76,20 +76,24 @@ namespace BUS.Service
 
 		public string UpdateOrderService(OrderService orderService)
 		{
-			var updateOrderService = _orderServiceRepository.GetById(orderService.OrderId);
-			updateOrderService.Quantity = orderService.Quantity;
-			updateOrderService.Price = orderService.Price;
-			updateOrderService.TotalPrice = orderService.TotalPrice;
-			if (_orderServiceRepository.UpdadateOrderSV(updateOrderService))
+			//var updateOrderService = _orderServiceRepository.GetById(orderService.OrderId);
+			//updateOrderService.Quantity = orderService.Quantity;
+			//updateOrderService.Price = orderService.Price;
+			//updateOrderService.TotalPrice = orderService.TotalPrice;
+			if (_orderServiceRepository.UpdadateOrderSV(orderService))
 			{
 				return "Update success";
 			}
 			return "Update failcure";
 		}
 
-		public string UpdateOrderService(IOrderService orderService)
-		{
-			throw new NotImplementedException();
-		}
+		//public string UpdateOrderService(OrderService orderService)
+		//{
+		//	if (_orderServiceRepository.UpdadateOrderSV(orderService))
+		//	{
+		//		return "update success";
+		//	}
+		//	return "update failure";
+		//}
 	}
 }

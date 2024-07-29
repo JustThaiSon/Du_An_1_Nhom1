@@ -16,15 +16,17 @@ namespace DAL.Entities
         public DateTime? DatePayment { get; set; }
         public decimal ToTalPrice { get; set; }
         public string? Note { get; set; }
+        public RentalTypeEnum? Rentaltype { get; set; }
         public Guid? EmployeeId { get; set; }
         public Guid? CustomerId { get; set; }
         public decimal? TotalDiscount { get; set; }
+        public decimal? TotalPricePoint { get; set; }
+        public decimal? Prepay { get; set; }
         public decimal? ToTal { get; set; }
         public OrderType? OrderType { get; set; }
         public Guid? VoucherId { get; set; }
         public Guid? HistoryPointId {  get; set; }
         public Guid? RoomId {  get; set; }
-        public List<OrderDetails>? OrderDetails { get; set; }
         public List<OrderService>? OrderService { get; set; }
         public Employee? Employee { get; set; }
         public Customer? Customer { get; set; }

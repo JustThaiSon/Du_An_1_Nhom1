@@ -1,4 +1,5 @@
-﻿using DAL.Entities;
+﻿using BUS.ViewModels;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace BUS.IService
 	{
 		string AddOrders(Orders Orders);
 		string RemoveOrders(Guid Id);
-		string UpdateKindOfRoom(Orders Orders);
+		string UpdateOrders(Orders Orders);
 		List<Orders> GetAllOrdersFromDb();
 		List<Orders> GetByRoomId(Guid Id);
+		List<OrderViewModel> GetAllOrdersViewModels();
 	}
 }

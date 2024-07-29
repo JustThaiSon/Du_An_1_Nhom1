@@ -70,7 +70,11 @@ namespace QuanLyPhong
                 }
                 ChuyenPhong(RoomId, newroom.Id);
             }
-        }
+            else
+            {
+				MessageBox.Show("Không Có Phòng Mào Trống");
+			}
+		}
         public void ChuyenPhong(Guid IdRoomCu , Guid IdRoomMoi)
         {
 

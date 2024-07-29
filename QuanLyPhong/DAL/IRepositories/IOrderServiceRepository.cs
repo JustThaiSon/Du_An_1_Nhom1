@@ -15,7 +15,7 @@ namespace DAL.IRepositories
 		List<OrderService> GetAllOrder();
 		bool CreateOrderSV(OrderService orderService);
 		bool UpdadateOrderSV(OrderService orderService);
-		bool DeleteOrderSV(Guid Id);
+		bool DeleteOrderSV(Guid orderId, Guid serviceId);
 
 	}
 }

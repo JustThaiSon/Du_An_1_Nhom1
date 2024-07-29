@@ -64,7 +64,7 @@ namespace DAL.Repositories
 
             int maxNumber = int.Parse(maxCode.Substring(2));
 
-            return $"CM{maxNumber + 1:D6}";
+            return $"OD{maxNumber + 1:D6}";
         }
 
         public List<Orders> GetAllOrder()
@@ -96,12 +96,15 @@ namespace DAL.Repositories
         {
             var update = _context.Orders.FirstOrDefault(o => o.Id == orders.Id);
             if (update == null) return false;
-            update.OrderCode = orders.OrderCode;
+            update.Id = orders.Id;
             update.PayMents = orders.PayMents;
             update.DateCreated = orders.DateCreated;
             update.DatePayment = orders.DatePayment;
             update.ToTalPrice = orders.ToTalPrice;
             update.Note = orders.Note;
+            update.Prepay = orders.Prepay;
+            update.TotalPricePoint= orders.TotalPricePoint;
+            update.Rentaltype= orders.Rentaltype;
             update.EmployeeId = orders.EmployeeId;
             update.CustomerId = orders.CustomerId;
             update.TotalDiscount = orders.TotalDiscount;
@@ -110,6 +113,7 @@ namespace DAL.Repositories
             update.VoucherId = orders.VoucherId;
             update.HistoryPointId = orders.HistoryPointId;
             update.RoomId = orders.RoomId;
+            _context.SaveChanges();
             return true;
         }
 
