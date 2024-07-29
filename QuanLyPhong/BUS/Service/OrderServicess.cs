@@ -61,10 +61,6 @@ namespace BUS.Service
 						join fl in _floorRepository.GetAllFloor() on r.FloorId equals fl.Id
 						join emp in _employeeRepository.GetAllEmployee() on o.EmployeeId equals emp.Id into empJoin
 						from emp in empJoin.DefaultIfEmpty()
-							//join v in _voucherRepository.GetAllVouchers() on o.VoucherId equals v.Id into vJoin
-							//from v in vJoin.DefaultIfEmpty()
-							//join htp in _historyPointsRepository.GetAllHistoryPoints() on o.HistoryPointId equals htp.Id into htsJoin
-							//from htp in htsJoin.DefaultIfEmpty()
 						where o.Id == OrderId
 						select new OrderViewModel
 						{
@@ -84,20 +80,18 @@ namespace BUS.Service
 							TotalPricePoint = o.TotalPricePoint,
 							ToTal = o.ToTal,
 							OrderType = o.OrderType,
-							//VoucherId = v.Id,
-							//HistoryPointId = htp.Id,
 							RoomId = r.Id,
 							RoomName = r.RoomName,
 							CustomerName = ctm.Name,
-							//EmployeeName = emp.Name,
+							KindOfRoomId = kof.Id,
 							KindOfRoomName = kof.KindOfRoomName,
 							FloorName = fl.FloorName,
 							PriceByHour = kof.PriceByHour,
 							PricePerDay = kof.PricePerDay,
+							ToTalTime = o.DatePayment - o.DateCreated,
 						};
 			return query.ToList();
 		}
-
 		public List<Orders> GetByRoomId(Guid Id)
 		{
 			return _ordersRepository.GetByRoomId(Id);

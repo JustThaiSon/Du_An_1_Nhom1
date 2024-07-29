@@ -28,11 +28,6 @@ namespace BUS.ViewModels
 		public string? ServiceName { get; set; }
 		public decimal? ToTal { get; set; }
 		public OrderType? OrderType { get; set; }
-		public Guid VoucherId { get; set; }
-		public string? VoucherCode { get; set; }
-		public string? VoucherName { get; set; }
-		public Guid HistoryPointId { get; set; }
-		public int HistoryPoint { get; set; }
 		public Guid RoomId { get; set; }
 		public string? RoomName { get; set; }
 		public Guid FloorId { get; set; }
@@ -41,5 +36,6 @@ namespace BUS.ViewModels
 		public string? KindOfRoomName { get; set; }
 		public decimal PricePerDay { get; set; }
 		public decimal PriceByHour { get; set; }
+		public TimeSpan? ToTalTime { get; set; }
 	}
 }
