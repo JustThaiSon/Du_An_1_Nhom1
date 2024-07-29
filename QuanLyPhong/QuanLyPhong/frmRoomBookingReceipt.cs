@@ -1,5 +1,6 @@
 ﻿using BUS.IService;
 using BUS.Service;
+using DAL.Data;
 using DAL.Entities;
 using DAL.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -243,6 +244,7 @@ namespace QuanLyPhong
 				Note = tb_note.Text,
 				Prepay = prepay,
 				TotalPricePoint = TotalPriceRoom - point,
+				EmployeeId = Session.UserId,
 				Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
 				OrderType = (OrderType)cbbOrderType.SelectedItem,
 				ToTalPrice = TotalPriceRoom,
@@ -587,6 +589,7 @@ namespace QuanLyPhong
 				Prepay = prepay,
 				Note = tb_note.Text,
 				TotalPricePoint = TotalPriceRoom - point,
+				EmployeeId = Session.UserId,
 				Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
 				OrderType = (OrderType)cbbOrderType.SelectedItem,
 				ToTalPrice = TotalPriceRoom,
@@ -626,7 +629,7 @@ namespace QuanLyPhong
 		}
 		void LoadDtgOrders()
 		{
-			dtgListOrders.ColumnCount = 13;
+            dtgListOrders.ColumnCount = 13;
 			dtgListOrders.Columns[0].Name = "Id";
 			dtgListOrders.Columns[0].Visible = false;
 			dtgListOrders.Columns[1].Name = "STT";
@@ -644,10 +647,20 @@ namespace QuanLyPhong
 
 			dtgListOrders.Rows.Clear();
 			int Count = 0;
-			foreach (var item in _orderService.GetAllOrdersViewModels())
+			decimal PriceRoom = 0;
+			foreach (var item in _orderService.GetOrdersViewModels(OrderId))
 			{
+                if (item.Rentaltype == RentalTypeEnum.Daily)
+                {
+					PriceRoom = item.PricePerDay;
+				}
+				else
+				{
+					PriceRoom = item.PriceByHour;
+
+				}
 				Count++;
-				dtgListOrders.Rows.Add(item.Id, Count, item.OrderCode, item.DateCreated, item.Note, item.Rentaltype, item.EmployeeName, item.CustomerName, item.Prepay, item.OrderType, item.RoomName, item.FloorName, item.KindOfRoomName);
+				dtgListOrders.Rows.Add(item.Id, Count, item.OrderCode, item.DateCreated, item.Note,item.KindOfRoomName, PriceRoom, item.RoomName,item.CustomerName,item.Rentaltype,item.FloorName,item.EmployeeName);
 			}
 		}
 	}

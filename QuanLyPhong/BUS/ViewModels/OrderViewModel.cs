@@ -37,14 +37,9 @@ namespace BUS.ViewModels
 		public string? RoomName { get; set; }
 		public Guid FloorId { get; set; }
 		public string? FloorName { get; set; }
-		public Guid KindOfRoomId { get; set; } 
+		public Guid KindOfRoomId { get; set; }
 		public string? KindOfRoomName { get; set; }
 		public decimal PricePerDay { get; set; }
 		public decimal PriceByHour { get; set; }
-		public int QuantityService { get; set; }
-		public decimal PriceService { get; set; }
-		public decimal TotalPriceService { get; set; }
-
-		public string? NameService { get; set; }
 	}
 }

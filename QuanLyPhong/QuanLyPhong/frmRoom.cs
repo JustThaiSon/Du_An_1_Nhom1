@@ -4,13 +4,7 @@ using BUS.ViewModels;
 using DAL.Entities;
 using DAL.Enums;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLyPhong
@@ -19,8 +13,9 @@ namespace QuanLyPhong
     {
         Guid IdCell = Guid.Empty;
         private IRoomService _roomService;
-        private BUS.IService.IFloorService _floorService;
+        private IFloorService _floorService;
         private IKindOfRoomService _kindOfRoomService;
+
         public frmRoom()
         {
             InitializeComponent();
@@ -39,22 +34,20 @@ namespace QuanLyPhong
             cbbStatus.DataSource = Enum.GetValues(typeof(RoomStatus));
             cbbStatus.SelectedItem = RoomStatus.Unknown;
         }
+
         void LoadCbbFloor()
         {
             var floors = _floorService.GetAllFloorFromDb();
-
             cbb_floor.DataSource = floors;
             cbb_floor.DisplayMember = "FloorName";
-
             cbb_floor.SelectedIndex = -1;
         }
+
         void LoadCbbKindOfRoom()
         {
             var kindsOfRoom = _kindOfRoomService.GetAllKindOfRoomFromDb();
-
             cbb_typeroom.DataSource = kindsOfRoom;
             cbb_typeroom.DisplayMember = "KindOfRoomName";
-
             cbb_typeroom.SelectedIndex = -1;
         }
 
@@ -75,9 +68,10 @@ namespace QuanLyPhong
             foreach (var item in _roomService.GetAllRooms())
             {
                 Count++;
-                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay,item.PriceByHour);
+                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay, item.PriceByHour);
             }
         }
+
         void Clear()
         {
             tb_nameroom.Clear();
@@ -85,6 +79,7 @@ namespace QuanLyPhong
             cbb_floor.SelectedIndex = -1;
             cbb_typeroom.SelectedIndex = -1;
         }
+
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -94,6 +89,7 @@ namespace QuanLyPhong
         {
 
         }
+
         bool Validate()
         {
             if (string.IsNullOrWhiteSpace(tb_nameroom.Text) ||
@@ -105,6 +101,7 @@ namespace QuanLyPhong
             }
             return true;
         }
+
         bool ValidateName()
         {
             var Exists = _roomService.GetAllRoomsFromDb().Any(x => x.RoomName == tb_nameroom.Text);
@@ -117,15 +114,15 @@ namespace QuanLyPhong
 
         private void btn_addRoom_Click(object sender, EventArgs e)
         {
-
             if (!Validate())
             {
-                MessageBox.Show("Not be empty", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không được để trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (!ValidateName())
             {
-                MessageBox.Show("Room name already exists", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tên phòng đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -136,28 +133,32 @@ namespace QuanLyPhong
                 FloorId = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == cbb_floor.Text).Select(x => x.Id).FirstOrDefault(),
                 KindOfRoomId = _kindOfRoomService.GetAllKindOfRoomFromDb().Where(x => x.KindOfRoomName == cbb_typeroom.Text).Select(x => x.Id).FirstOrDefault(),
             };
-            if (MessageBox.Show("Do you want to add this room?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            if (MessageBox.Show("Bạn có muốn thêm phòng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _roomService.AddRoom(Room);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(result, "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
             loadDtg();
             Clear();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnRemove_Click(object sender, EventArgs e)
         {
             var exists = _roomService.GetAllRoomsFromDb().Any(x => x.Id == IdCell);
             if (!exists)
             {
-                MessageBox.Show("Room not exists");
+                MessageBox.Show("Phòng không tồn tại");
                 return;
             }
-            if (MessageBox.Show("Do you want to delete this room?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            if (MessageBox.Show("Bạn có muốn xóa phòng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _roomService.RemoveRoom(IdCell);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(result, "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
             loadDtg();
             Clear();
         }
@@ -180,7 +181,6 @@ namespace QuanLyPhong
             }
             catch (Exception)
             {
-
                 return;
             }
         }
@@ -190,17 +190,19 @@ namespace QuanLyPhong
             var exists = _roomService.GetAllRoomsFromDb().Any(x => x.Id == IdCell);
             if (!exists)
             {
-                MessageBox.Show("Room not exists");
+                MessageBox.Show("Phòng không tồn tại");
                 return;
             }
+
             if (!Validate())
             {
-                MessageBox.Show("Not be empty", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Không được để trống", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             if (!exists && !ValidateName())
             {
-                MessageBox.Show("Room name already exists", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Tên phòng đã tồn tại", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -212,11 +214,13 @@ namespace QuanLyPhong
                 FloorId = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == cbb_floor.Text).Select(x => x.Id).FirstOrDefault(),
                 KindOfRoomId = _kindOfRoomService.GetAllKindOfRoomFromDb().Where(x => x.KindOfRoomName == cbb_typeroom.Text).Select(x => x.Id).FirstOrDefault(),
             };
-            if (MessageBox.Show("Do you want to add this room?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            if (MessageBox.Show("Bạn có muốn cập nhật phòng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _roomService.UpdateRoom(Room);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(result, "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
             loadDtg();
             Clear();
         }
@@ -227,12 +231,13 @@ namespace QuanLyPhong
             {
                 e.Handled = true;
             }
-
         }
 
         private void btn_addFloor_Click(object sender, EventArgs e)
         {
             frmFloor addFloor = new frmFloor();
+            // Đăng ký sự kiện FloorUpdated
+            addFloor.FloorUpdated += new frmFloor.FloorUpdatedEventHandler(OnFloorUpdated);
             addFloor.Show();
         }
 
@@ -240,6 +245,17 @@ namespace QuanLyPhong
         {
             frmKindOfRoom addTypeRoom = new frmKindOfRoom();
             addTypeRoom.Show();
+        }
+
+        private void frmRoom_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        // Xử lý sự kiện FloorUpdated
+        private void OnFloorUpdated(object sender, EventArgs e)
+        {
+            LoadCbbFloor();
         }
     }
 }

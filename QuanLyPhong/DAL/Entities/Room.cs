@@ -14,7 +14,6 @@ namespace DAL.Entities
         public RoomStatus Status { get; set; }
         public Guid FloorId { get; set; }
         public Guid KindOfRoomId { get; set; }
-       
         public Floor? Floor { get; set; }
         public KindOfRoom? KindOfRoom { get; set; }
         public List<Orders>? Orders { get; set; }

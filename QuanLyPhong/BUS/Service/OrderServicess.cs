@@ -24,7 +24,7 @@ namespace BUS.Service
 		private readonly ICustomerRepository _customerRepository;
 		private readonly IHistoryPointsRepository _historyPointsRepository;
 		public OrderServicess()
-        {
+		{
 			_ordersRepository = new OrdersRepository();
 			_serviceRepository = new ServiceRepository();
 			_roomRepository = new RoomRepository();
@@ -36,10 +36,10 @@ namespace BUS.Service
 			_customerRepository = new CustomerRepository();
 			_historyPointsRepository = new HistoryPointsRepository();
 		}
-        public string AddOrders(Orders Orders)
+		public string AddOrders(Orders Orders)
 		{
-            if (_ordersRepository.CreateOrder(Orders))
-            {
+			if (_ordersRepository.CreateOrder(Orders))
+			{
 				return "add success";
 			}
 			else
@@ -52,52 +52,50 @@ namespace BUS.Service
 			return _ordersRepository.GetAllOrder();
 		}
 
-		public List<OrderViewModel> GetAllOrdersViewModels()
+		public List<OrderViewModel> GetOrdersViewModels(Guid OrderId)
 		{
-			var getAll = from o in _ordersRepository.GetAllOrder()
-						 join
-						 os in _orderServiceRepository.GetAllOrder() on o.Id equals os.OrderId
-						 join sv in _serviceRepository.GetAllService() on os.ServiceId equals sv.Id
-						 join ctm in _customerRepository.GetAllCustomer() on o.CustomerId equals ctm.Id
-						 join r in _roomRepository.GetAllRoom() on o.RoomId equals r.Id
-						 join kof in _kindOfRoomRepository.GetAllKindOfRoom() on r.KindOfRoomId equals kof.Id
-						 join fl in _floorRepository.GetAllFloor() on r.FloorId equals fl.Id
-						 join emp in _employeeRepository.GetAllEmployee() on o.EmployeeId equals emp.Id
-						 join v in _voucherRepository.GetAllVouchers() on o.VoucherId equals v.Id
-						 join htp in _historyPointsRepository.GetAllHistoryPoints() on o.HistoryPointId equals htp.Id
-						 select new OrderViewModel
-						 {
-							 Id = o.Id,
-							 OrderCode = o.OrderCode,
-							 PayMents = o.PayMents,
-							 DateCreated = o.DateCreated,
-							 DatePayment = o.DatePayment,
-							 ToTalPrice = o.ToTalPrice,
-							 Note = o.Note,
-							 Prepay = o.Prepay,
-							 Rentaltype = o.Rentaltype,
-							 EmployeeId = emp.Id,
-							 CustomerId = ctm.Id,
-							 TotalDiscount = o.TotalDiscount,
-							 TotalPricePoint = o.TotalPricePoint,
-							 ToTal = o.ToTal,
-							 OrderType = o.OrderType,
-							 VoucherId = v.Id,
-							 HistoryPointId = htp.Id,
-							 RoomId = r.Id,
-							 CustomerName = ctm.Name,
-							 EmployeeName = emp.Name,
-							 QuantityService = os.Quantity,
-							 PriceService = os.Price,
-							 TotalPriceService = os.TotalPrice,
-							 RoomName = r.RoomName,
-							 KindOfRoomName = kof.KindOfRoomName,
-							 FloorName = fl.FloorName,
-							 PriceByHour = kof.PriceByHour,
-							 PricePerDay = kof.PricePerDay,
-							 NameService = sv.Name
-						 };
-			return getAll.ToList();
+			var query = from o in _ordersRepository.GetAllOrder()
+						join ctm in _customerRepository.GetAllCustomer() on o.CustomerId equals ctm.Id
+						join r in _roomRepository.GetAllRoom() on o.RoomId equals r.Id
+						join kof in _kindOfRoomRepository.GetAllKindOfRoom() on r.KindOfRoomId equals kof.Id
+						join fl in _floorRepository.GetAllFloor() on r.FloorId equals fl.Id
+						join emp in _employeeRepository.GetAllEmployee() on o.EmployeeId equals emp.Id into empJoin
+						from emp in empJoin.DefaultIfEmpty()
+							//join v in _voucherRepository.GetAllVouchers() on o.VoucherId equals v.Id into vJoin
+							//from v in vJoin.DefaultIfEmpty()
+							//join htp in _historyPointsRepository.GetAllHistoryPoints() on o.HistoryPointId equals htp.Id into htsJoin
+							//from htp in htsJoin.DefaultIfEmpty()
+						where o.Id == OrderId
+						select new OrderViewModel
+						{
+							Id = o.Id,
+							OrderCode = o.OrderCode,
+							PayMents = o.PayMents,
+							DateCreated = o.DateCreated,
+							DatePayment = o.DatePayment,
+							ToTalPrice = o.ToTalPrice,
+							Note = o.Note,
+							Prepay = o.Prepay,
+							Rentaltype = o.Rentaltype,
+							EmployeeId = emp != null ? emp.Id : Guid.Empty,
+							EmployeeName = emp != null ? emp.Name : null,
+							CustomerId = ctm.Id,
+							TotalDiscount = o.TotalDiscount,
+							TotalPricePoint = o.TotalPricePoint,
+							ToTal = o.ToTal,
+							OrderType = o.OrderType,
+							//VoucherId = v.Id,
+							//HistoryPointId = htp.Id,
+							RoomId = r.Id,
+							RoomName = r.RoomName,
+							CustomerName = ctm.Name,
+							//EmployeeName = emp.Name,
+							KindOfRoomName = kof.KindOfRoomName,
+							FloorName = fl.FloorName,
+							PriceByHour = kof.PriceByHour,
+							PricePerDay = kof.PricePerDay,
+						};
+			return query.ToList();
 		}
 
 		public List<Orders> GetByRoomId(Guid Id)

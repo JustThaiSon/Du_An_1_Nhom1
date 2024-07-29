@@ -1,13 +1,5 @@
-﻿using BUS.IService;
-using BUS.Service;
+﻿using DAL.Data;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLyPhong
@@ -21,10 +13,9 @@ namespace QuanLyPhong
         private int picVoucherOriginalLeft;
         private int picServiceOriginalLeft;
         private int picStatisticalOriginalLeft;
-       
+
         public TrangChu()
         {
-
             InitializeComponent();
             picListOriginalLeft = picList.Left;
             picOrderOriginalLeft = picOrder.Left;
@@ -34,6 +25,7 @@ namespace QuanLyPhong
             picServiceOriginalLeft = picService.Left;
             picStatisticalOriginalLeft = picStatistical.Left;
         }
+
         private Form currentFormChild;
         private void OpenChillFrom(Form childForm)
         {
@@ -74,7 +66,6 @@ namespace QuanLyPhong
             ResetAllPictures();
             picOrder.Left = btn_Order.Left + 30;
             OpenChillFrom(new frmBookingRoom());
-
         }
 
         private void btn_Customer_Click(object sender, EventArgs e)
@@ -82,7 +73,6 @@ namespace QuanLyPhong
             ResetAllPictures();
             picCust.Left = btn_Customer.Left + 30;
             OpenChillFrom(new frmCustomer());
-
         }
 
         private void btn_Empolyee_Click(object sender, EventArgs e)
@@ -90,7 +80,6 @@ namespace QuanLyPhong
             ResetAllPictures();
             picEmployee.Left = btn_Empolyee.Left + 30;
             OpenChillFrom(new frmNhanVien());
-
         }
 
         private void btn_Vocher_Click(object sender, EventArgs e)
@@ -107,7 +96,6 @@ namespace QuanLyPhong
             OpenChillFrom(new frmService());
         }
 
-
         private void btn_Statistical_Click(object sender, EventArgs e)
         {
             ResetAllPictures();
@@ -117,6 +105,37 @@ namespace QuanLyPhong
         private void TrangChu_Load(object sender, EventArgs e)
         {
 
+            labelManhanvien.Text = Session.EmployeeCode;
+            labelTenNhanVien.Text = Session.Name;
+
+
+            if (Session.RoleCode == "emp")
+            {
+                btn_Empolyee.Visible = false;
+                picEmployee.Visible = false;
+            }
+        }
+
+        private void picStatistical_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void guna2CirclePictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_logout_Click(object sender, EventArgs e)
+        {
+            Session.EmployeeCode = null;
+            Session.Name = null;
+            Session.RoleCode = null;
+
+            Login frmLogin = new Login();
+            frmLogin.Show();
+
+            this.Close();
         }
     }
 }
