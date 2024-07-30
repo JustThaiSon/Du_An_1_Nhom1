@@ -668,5 +668,10 @@ namespace QuanLyPhong
             cbb_NameService.SelectedItem = -1;
             txtStatus.Text = "";
         }
+
+        private void guna2HtmlLabel2_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

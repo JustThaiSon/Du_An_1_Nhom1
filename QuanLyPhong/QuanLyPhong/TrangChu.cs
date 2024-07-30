@@ -13,6 +13,9 @@ namespace QuanLyPhong
         private int picVoucherOriginalLeft;
         private int picServiceOriginalLeft;
         private int picStatisticalOriginalLeft;
+        private int picBookingOriginalLeft;
+
+
 
         public TrangChu()
         {
@@ -24,6 +27,7 @@ namespace QuanLyPhong
             picVoucherOriginalLeft = picVoucher.Left;
             picServiceOriginalLeft = picService.Left;
             picStatisticalOriginalLeft = picStatistical.Left;
+            picBookingOriginalLeft = picBooking.Left;
         }
 
         private Form currentFormChild;
@@ -48,6 +52,7 @@ namespace QuanLyPhong
             picVoucher.Left = picVoucherOriginalLeft;
             picService.Left = picServiceOriginalLeft;
             picStatistical.Left = picStatisticalOriginalLeft;
+            picBooking.Left = picBookingOriginalLeft;
         }
         private void btn_Exit_Click_2(object sender, EventArgs e)
         {
@@ -60,12 +65,18 @@ namespace QuanLyPhong
             picList.Left = btn_ListRoom.Left + 30;
             OpenChillFrom(new frmRoom());
         }
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            ResetAllPictures();
+            picBooking.Left = guna2Button1.Left + 30;
+            OpenChillFrom(new frmBookingRoom());
+        }
 
         private void btn_Order_Click(object sender, EventArgs e)
         {
             ResetAllPictures();
             picOrder.Left = btn_Order.Left + 30;
-            OpenChillFrom(new frmBookingRoom());
+            OpenChillFrom(new frmQuanLyOrder());
         }
 
         private void btn_Customer_Click(object sender, EventArgs e)
@@ -137,5 +148,7 @@ namespace QuanLyPhong
 
             this.Close();
         }
+
+       
     }
 }
