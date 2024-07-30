@@ -1,4 +1,6 @@
-﻿using BUS.IService;
+﻿using AForge.Video;
+using AForge.Video.DirectShow;
+using BUS.IService;
 using BUS.Service;
 using DAL.Data;
 using DAL.Entities;
@@ -11,11 +13,17 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using TheArtOfDevHtmlRenderer.Adapters;
+using ZXing.Common;
+using ZXing;
+using ZXing.Windows.Compatibility;
 using static Guna.UI2.Native.WinApi;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
 using OrderService = DAL.Entities.OrderService;
 
@@ -32,6 +40,9 @@ namespace QuanLyPhong
         private List<OrderService> _temporaryServices;
         private IKindOfRoomService _kindOfRoomService;
         private IOrderService _orderService;
+        private FilterInfoCollection _videoDevices;
+        private VideoCaptureDevice _videoCaptureDevice;
+        private BarcodeReader _barcodeReader;
 
         private decimal RoomPrice { get; set; }
         private decimal TotalPriceOrderService { get; set; }
@@ -127,6 +138,7 @@ namespace QuanLyPhong
             LoadPrice();
             MenuStrip();
             LoadDtgOrders();
+            LoadCamera();
         }
 
 
@@ -285,9 +297,72 @@ namespace QuanLyPhong
 
         }
 
-
+        private bool IsValidEmail(string email)
+        {
+            return Regex.IsMatch(email, @"^[_a-z0-9A-Z-]+(\.[_a-z0-9A-Z-]+)*@[a-z0-9A-Z-]+(\.[a-z0-9A-Z-]+)*(\.[a-zA-Z]{2,3})$");
+        }
+        private bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return Regex.IsMatch(phoneNumber, @"^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b$");
+        }
+        private bool IsValidCCCD(string cccd)
+        {
+            string cccdPattern = @"^\d{12}$";
+            return Regex.IsMatch(cccd, cccdPattern);
+        }
         private void btn_Create_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrWhiteSpace(tbCustomerName.Text))
+            {
+                MessageBox.Show("Customer name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_emailCus.Text) || !IsValidEmail(tb_emailCus.Text))
+            {
+                MessageBox.Show("A valid email address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_cccd.Text))
+            {
+                MessageBox.Show("CCCD is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_Address.Text))
+            {
+                MessageBox.Show("Address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (rdFemale.Checked == false && rdMale.Checked == false)
+            {
+                MessageBox.Show("Please select a gender.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_phoneCus.Text) || !IsValidPhoneNumber(tb_phoneCus.Text))
+            {
+                MessageBox.Show("A valid phone number is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidEmail(tb_emailCus.Text))
+            {
+                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidPhoneNumber(tb_phoneCus.Text))
+            {
+                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidCCCD(tb_cccd.Text))
+            {
+                MessageBox.Show("CCCD is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var addCustomer = new Customer()
             {
                 Name = tbCustomerName.Text,
@@ -351,8 +426,12 @@ namespace QuanLyPhong
 
                 if (selectedService.Quantity < quantityToAdd)
                 {
-                    MessageBox.Show("Không còn đủ số lượng sản phẩm.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Not enough product quantity.", "Stock Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
+                }
+                if ((int)cbbnum_quantitySer.Value <= 0)
+                {
+                    MessageBox.Show("The quantity must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
@@ -427,8 +506,18 @@ namespace QuanLyPhong
                 decimal roundedHours = Math.Ceiling(totalHours);
                 TotalPriceRoom = room.PriceByHour * roundedHours;
             }
+            decimal Prepay = 0;
+            string prepayText = txtPrepay.Text.Trim(); 
 
-            TotalAmount = TotalPriceRoom + TotalPriceOrderService;
+            if (!string.IsNullOrEmpty(prepayText) && decimal.TryParse(prepayText, out decimal parsedPrepay))
+            {
+                Prepay = parsedPrepay;
+            }
+            else
+            {
+                Prepay = 0;
+            }
+            TotalAmount = TotalPriceRoom + TotalPriceOrderService - Prepay;
             lbTotalPrice.Text = TotalAmount.ToString("0") + " VNĐ";
         }
 
@@ -505,6 +594,7 @@ namespace QuanLyPhong
                     OrderId = currentOrder.Id;
                     txtPrepay.Text = currentOrder.Prepay.ToString();
                     tb_note.Text = currentOrder.Note;
+                    cbbOrderType.Text = currentOrder.OrderType.ToString();
                     if (currentOrder.DateCreated.HasValue)
                     {
                         DtGioCheckIn.Value = currentOrder.DateCreated.Value;
@@ -561,6 +651,16 @@ namespace QuanLyPhong
             if (!string.IsNullOrEmpty(txtPrepay.Text) && decimal.TryParse(txtPrepay.Text, out decimal parsedPrepay))
             {
                 prepay = parsedPrepay;
+            }
+            if (Session.UserId == Guid.Empty)
+            {
+                MessageBox.Show("Employee does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!rddaily.Checked && !rdHourly.Checked)
+            {
+                MessageBox.Show("Rental type is required.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             var newOrder = new Orders
             {
@@ -667,6 +767,143 @@ namespace QuanLyPhong
             lbGia.Text = "";
             cbb_NameService.SelectedItem = -1;
             txtStatus.Text = "";
+        }
+        void LoadCamera()
+        {
+            _videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            if (_videoDevices.Count == 0)
+            {
+                MessageBox.Show("No video devices found.");
+                return;
+            }
+
+            cbbcam.Items.Clear();
+            foreach (FilterInfo device in _videoDevices)
+            {
+                cbbcam.Items.Add(device.Name);
+            }
+
+            if (cbbcam.Items.Count > 0)
+            {
+                cbbcam.SelectedIndex = 0;
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            if (cbbcam.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a camera.");
+                return;
+            }
+
+            try
+            {
+                _videoCaptureDevice = new VideoCaptureDevice(_videoDevices[cbbcam.SelectedIndex].MonikerString);
+                _videoCaptureDevice.NewFrame += new NewFrameEventHandler(videoCaptureDevice_NewFrame);
+                _videoCaptureDevice.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error starting video capture: " + ex.Message);
+            }
+        }
+
+        private void videoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
+        {
+            Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
+
+            BarcodeReader reader = new BarcodeReader
+            {
+                Options = new DecodingOptions
+                {
+                    TryHarder = true,
+                    PossibleFormats = new[] { BarcodeFormat.QR_CODE }
+                }
+            };
+
+            Result result = reader.Decode(bitmap);
+
+            txtReadCode.Invoke(new MethodInvoker(delegate ()
+            {
+                if (result != null)
+                {
+                    txtReadCode.Text = result.Text;
+                    DisplayDetails(txtReadCode.Text);
+                }
+                else
+                {
+                    txtReadCode.Text = "No QR code found.";
+                }
+            }));
+
+            if (ptCam.Image != null)
+            {
+                ptCam.Image.Dispose();
+            }
+            ptCam.Image = bitmap;
+        }
+
+        private async void btnStop_Click(object sender, EventArgs e)
+        {
+            if (_videoCaptureDevice != null && _videoCaptureDevice.IsRunning)
+            {
+                try
+                {
+                    _videoCaptureDevice.SignalToStop();
+
+                    await Task.Run(() =>
+                    {
+                        while (_videoCaptureDevice.IsRunning)
+                        {
+                            Thread.Sleep(100);
+                        }
+                    });
+
+                    _videoCaptureDevice = null;
+
+                    if (ptCam.Image != null)
+                    {
+                        ptCam.Image.Dispose();
+                        ptCam.Image = null;
+                    }
+
+                    txtReadCode.Text = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error stopping video capture: " + ex.Message);
+                }
+            }
+        }
+        private void DisplayDetails(string input)
+        {
+            string[] parts = input.Split('|');
+
+            if (parts.Length >= 6)
+            {
+                string id = parts[0];
+                string name = parts[2];
+                string address = parts[5];
+                string gender = parts[4];
+
+                tb_cccd.Text = id;
+                tbCustomerName.Text = name;
+                tb_Address.Text = address;
+                if (gender == "Nam")
+                {
+                    rdMale.Checked = true;
+                }
+                rdFemale.Checked = true;
+            }
+            else
+            {
+                MessageBox.Show("The input string does not have the expected format.");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
         }
     }
 }

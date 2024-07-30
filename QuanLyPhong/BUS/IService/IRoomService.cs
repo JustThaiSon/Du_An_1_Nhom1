@@ -13,6 +13,7 @@ namespace BUS.IService
         string AddRoom(RoomViewModels room);
         string RemoveRoom(Guid Id);
         string UpdateRoom(RoomViewModels room);
+        string UpdateRoom(Room room);
         List<Room> GetAllRoomsFromDb();
         List<RoomViewModels> GetAllRooms();
     }

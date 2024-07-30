@@ -64,10 +64,31 @@ namespace QuanLyPhong
                 return;
             }
             frmTransfer frm = new frmTransfer(Room.Id);
-			frm.Show();
+            frm.OnTransferCompleted += HandleTransferCompleted;
+            frm.Show();
 		}
 
-		private void payRoomMenuItem_Click(object? sender, EventArgs e)
+        private void HandleTransferCompleted()
+        {
+            RefreshRoomDetails();
+        }
+        private void RefreshRoomDetails()
+        {
+            var updatedRoom = roomService.GetAllRooms().FirstOrDefault(x => x.Id == Room.Id);
+            if (updatedRoom != null)
+            {
+                SetRoom(new RoomViewModels
+                {
+                    Id = updatedRoom.Id,
+                    RoomName = updatedRoom.RoomName,
+                    Status = updatedRoom.Status,
+                    PricePerDay = updatedRoom.PricePerDay
+                });
+            }
+        }
+
+
+        private void payRoomMenuItem_Click(object? sender, EventArgs e)
 		{
 			CkeckoutRoom();
 		}

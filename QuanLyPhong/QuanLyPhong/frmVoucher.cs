@@ -3,6 +3,7 @@ using BUS.Service;
 using DAL.Entities;
 using DAL.Enums;
 using Guna.UI2.WinForms.Suite;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -67,6 +68,16 @@ namespace QuanLyPhong
             foreach (VoucherStatus status in Enum.GetValues(typeof(VoucherStatus)))
             {
                 cbbStatus.Items.Add(status);
+                cbbStatusfilter.Items.Add(status);
+            }
+            if (cbbStatus.Items.Count > 0)
+            {
+                cbbStatus.SelectedIndex = -1;
+            }
+
+            if (cbbStatusfilter.Items.Count > 0)
+            {
+                cbbStatusfilter.SelectedIndex = -1; 
             }
         }
         void LoadDtg()
@@ -160,6 +171,36 @@ namespace QuanLyPhong
                 MessageBox.Show("Voucher not exists", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (string.IsNullOrEmpty(tb_voucherName.Text))
+            {
+                MessageBox.Show("Voucher name cannot be empty.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tbDiscount.Text))
+            {
+                MessageBox.Show("Discount rate cannot be empty.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tb_minPrice.Text))
+            {
+                MessageBox.Show("Minimum price cannot be empty.");
+                return;
+            }
+
+            // Validate the numeric fields
+            if (!decimal.TryParse(tbDiscount.Text, out decimal discountRate))
+            {
+                MessageBox.Show("Invalid discount rate. Please enter a valid decimal number.");
+                return;
+            }
+
+            if (!decimal.TryParse(tb_minPrice.Text, out decimal minPrice))
+            {
+                MessageBox.Show("Invalid minimum price. Please enter a valid decimal number.");
+                return;
+            }
             DateTime startDate, endDate;
             string startDateStr = dtStartDate.Value.ToString("dd/MM/yyyy");
             string endDateStr = DtEndDate.Value.ToString("dd/MM/yyyy");
@@ -167,7 +208,7 @@ namespace QuanLyPhong
             if (!DateTime.TryParseExact(startDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out startDate) ||
                 !DateTime.TryParseExact(endDateStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out endDate))
             {
-                MessageBox.Show("Ngày không hợp lệ.");
+                MessageBox.Show("Date is not valid .");
                 return;
             }
             if ((VoucherStatus)cbbStatus.SelectedItem != VoucherStatus.Cancelled)
@@ -177,9 +218,12 @@ namespace QuanLyPhong
             }
             if (endDate <= startDate)
             {
-                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("The start date must be less than the end date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
+
+
             var addVoucher = new Voucher()
             {
                 Id = IdCell,
@@ -216,7 +260,92 @@ namespace QuanLyPhong
             LoadDtg();
             ClearForm();
         }
+        void LoadDtgSearch(string KeyWord)
+        {
+            dtgDanhSach.ColumnCount = 9;
+            dtgDanhSach.Columns[0].Name = "Id";
+            dtgDanhSach.Columns[0].Visible = false;
+            dtgDanhSach.Columns[1].Name = "STT";
+            dtgDanhSach.Columns[2].Name = "VoucherName";
+            dtgDanhSach.Columns[3].Name = "VoucherCode";
+            dtgDanhSach.Columns[4].Name = "DisscountRate";
+            dtgDanhSach.Columns[5].Name = "MinPrice";
+            dtgDanhSach.Columns[6].Name = "Status";
+            dtgDanhSach.Columns[7].Name = "StartDate";
+            dtgDanhSach.Columns[8].Name = "EndDate";
+            dtgDanhSach.Rows.Clear();
+            int Count = 0;
+            var Search = _voucherSevice.GetAllVoucherFromDb()
+            .Where(x => x.VoucherCode.StartsWith(KeyWord) || x.VoucherName.StartsWith(KeyWord))
+            .ToList();
 
+            foreach (var item in Search)
+            {
+                Count++;
+                dtgDanhSach.Rows.Add(item.Id, Count, item.VoucherName, item.VoucherCode, item.DiscountRate, item.MinPrice, item.Status, item.StartDate.ToString("dd/MM/yyyy"), item.EndDate.ToString("dd/MM/yyyy"));
+            }
+        }
+        private void tb_search_TextChanged(object sender, EventArgs e)
+        {
+            LoadDtgSearch(tb_search.Text);
+        }
 
+        private void tb_minPrice_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar))
+            {
+                return;
+            }
+
+            if (!char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void tbDiscount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsControl(e.KeyChar))
+            {
+                return;
+            }
+
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true;
+                return;
+            }
+        }
+        void LoadDtgFilterStatus(string KeyWord)
+        {
+            dtgDanhSach.ColumnCount = 9;
+            dtgDanhSach.Columns[0].Name = "Id";
+            dtgDanhSach.Columns[0].Visible = false;
+            dtgDanhSach.Columns[1].Name = "STT";
+            dtgDanhSach.Columns[2].Name = "VoucherName";
+            dtgDanhSach.Columns[3].Name = "VoucherCode";
+            dtgDanhSach.Columns[4].Name = "DisscountRate";
+            dtgDanhSach.Columns[5].Name = "MinPrice";
+            dtgDanhSach.Columns[6].Name = "Status";
+            dtgDanhSach.Columns[7].Name = "StartDate";
+            dtgDanhSach.Columns[8].Name = "EndDate";
+            dtgDanhSach.Rows.Clear();
+            var vouchers = _voucherSevice.GetAllVoucherFromDb();
+
+            if (Enum.TryParse(cbbStatusfilter.SelectedItem.ToString(), out VoucherStatus selectedStatus))
+            {
+                var filteredVouchers = vouchers.Where(x => x.Status == selectedStatus).ToList();
+                int count = 0;
+                foreach (var item in filteredVouchers)
+                {
+                    count++;
+                    dtgDanhSach.Rows.Add(item.Id, count, item.VoucherName, item.VoucherCode, item.DiscountRate, item.MinPrice, item.Status, item.StartDate.ToString("dd/MM/yyyy"), item.EndDate.ToString("dd/MM/yyyy"));
+                }
+            }
+        }
+        private void cbbStatusfilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LoadDtgFilterStatus(cbbStatusfilter.Text);
+        }
     }
 }

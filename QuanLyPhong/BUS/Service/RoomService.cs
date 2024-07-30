@@ -88,5 +88,14 @@ namespace BUS.Service
             }
             return "Update failcure";
         }
+
+        public string UpdateRoom(Room room)
+        {
+            if (_roomRepository.UpdadateRoom(room))
+            {
+                return "Update success";
+            }
+            return "Update failcure";
+        }
     }
 }

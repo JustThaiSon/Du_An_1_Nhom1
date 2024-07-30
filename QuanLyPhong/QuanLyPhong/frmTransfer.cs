@@ -17,9 +17,9 @@ namespace QuanLyPhong
 {
     public partial class frmTransfer : Form
     {
-        private IServiceSevice _serviceSevice;
-
+        public event Action OnTransferCompleted;
         private IRoomService _roomService;
+        private IOrderService _orderService;
         public Guid RoomId { get; set; }
 
         public frmTransfer(Guid RoomId)
@@ -27,9 +27,9 @@ namespace QuanLyPhong
             InitializeComponent();
             _roomService = new RoomService();
             this.RoomId = RoomId;
-            loadNameroom(); loadcbbroomchang();
+            loadNameroom(); LoadAvailableRooms();
             tb_roomnow.Enabled = false;
-
+            _orderService = new OrderServicess();
         }
 
         void loadNameroom()
@@ -37,12 +37,13 @@ namespace QuanLyPhong
             var NameRoom = _roomService.GetAllRooms().Where(x => x.Id == RoomId).Select(x => x.RoomName).FirstOrDefault();
             tb_roomnow.Text = NameRoom;
         }
-        void loadcbbroomchang()
+        private void LoadAvailableRooms()
         {
             cbb_roomchange.Items.Clear();
-            foreach (var item in _roomService.GetAllRoomsFromDb().Where(x=>x.Status.ToString() == ServiceStatus.Available.ToString()))
+            var availableRooms = _roomService.GetAllRoomsFromDb().Where(x => x.Status == RoomStatus.Available);
+            foreach (var room in availableRooms)
             {
-                cbb_roomchange.Items.Add(item.RoomName);
+                cbb_roomchange.Items.Add(room.RoomName);
             }
         }
 
@@ -53,31 +54,82 @@ namespace QuanLyPhong
 
         private void btn_change_Click(object sender, EventArgs e)
         {
-            var sttRoom = _roomService.GetAllRoomsFromDb().Where(x => x.Status.ToString() == ServiceStatus.Available.ToString());
-            if (sttRoom != null)
+            var availableRooms = _roomService.GetAllRoomsFromDb().Where(x => x.Status == RoomStatus.Available);
+            if (availableRooms.Any())
             {
-                var newroomName = cbb_roomchange.SelectedItem.ToString();
-                var newroom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.RoomName == newroomName);
-                if (newroom == null) 
+                var newRoomName = cbb_roomchange.SelectedItem?.ToString();
+                if (string.IsNullOrEmpty(newRoomName))
+                {
+                    MessageBox.Show("Vui lòng chọn phòng mới.");
+                    return;
+                }
+
+                var newRoom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.RoomName == newRoomName);
+                if (newRoom == null)
                 {
                     MessageBox.Show("Phòng được chọn không tồn tại.");
                     return;
                 }
-                if (newroom.Status != RoomStatus.Available)
+
+                if (newRoom.Status != RoomStatus.Available)
                 {
                     MessageBox.Show("Phòng được chọn không khả dụng.");
                     return;
                 }
-                ChuyenPhong(RoomId, newroom.Id);
+
+                ChuyenPhong(RoomId, newRoom.Id);
+                OnTransferCompleted?.Invoke();
+                this.Close();
             }
             else
             {
-				MessageBox.Show("Không Có Phòng Mào Trống");
-			}
-		}
-        public void ChuyenPhong(Guid IdRoomCu , Guid IdRoomMoi)
+                MessageBox.Show("Không có phòng trống.");
+            }
+        }
+        public void ChuyenPhong(Guid oldRoomId, Guid newRoomId)
         {
+            try
+            {
+                var oldRoom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.Id == oldRoomId);
+                var newRoom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.Id == newRoomId);
 
+                if (oldRoom == null)
+                {
+                    MessageBox.Show("Phòng cũ không tồn tại.");
+                    return;
+                }
+
+                if (newRoom == null)
+                {
+                    MessageBox.Show("Phòng mới không tồn tại.");
+                    return;
+                }
+
+                if (newRoom.Status != RoomStatus.Available)
+                {
+                    MessageBox.Show("Phòng mới không khả dụng.");
+                    return;
+                }
+
+                var ordersInOldRoom = _orderService.GetByRoomId(oldRoomId);
+                foreach (var order in ordersInOldRoom)
+                {
+                    order.RoomId = newRoomId;
+                    _orderService.UpdateOrders(order);
+                }
+
+                oldRoom.Status = RoomStatus.Available;
+                newRoom.Status = RoomStatus.UnAvailable;
+
+                _roomService.UpdateRoom(oldRoom);
+                _roomService.UpdateRoom(newRoom);
+
+                MessageBox.Show("Chuyển phòng thành công.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi chuyển phòng: " + ex.Message);
+            }
         }
     }
 }
