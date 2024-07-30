@@ -506,8 +506,18 @@ namespace QuanLyPhong
                 decimal roundedHours = Math.Ceiling(totalHours);
                 TotalPriceRoom = room.PriceByHour * roundedHours;
             }
+            decimal Prepay = 0;
+            string prepayText = txtPrepay.Text.Trim(); 
 
-            TotalAmount = TotalPriceRoom + TotalPriceOrderService;
+            if (!string.IsNullOrEmpty(prepayText) && decimal.TryParse(prepayText, out decimal parsedPrepay))
+            {
+                Prepay = parsedPrepay;
+            }
+            else
+            {
+                Prepay = 0;
+            }
+            TotalAmount = TotalPriceRoom + TotalPriceOrderService - Prepay;
             lbTotalPrice.Text = TotalAmount.ToString("0") + " VNĐ";
         }
 
