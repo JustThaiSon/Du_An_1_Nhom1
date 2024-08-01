@@ -140,6 +140,11 @@ namespace QuanLyPhong
             MenuStrip();
             LoadDtgOrders();
             LoadCamera();
+            var BtnCheckin = _roomService.GetAllRooms().Where(x=>x.Status == RoomStatus.UnAvailable && x.Id == RoomId).ToList();
+            if (BtnCheckin != null)
+            {
+                btn_checkin.Enabled = true;
+            }
         }
 
 
@@ -231,7 +236,11 @@ namespace QuanLyPhong
                 MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            if (rddaily.Checked == false && rdHourly.Checked == false)
+            {
+                MessageBox.Show("You have not chosse Rentaltype ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var selectedCustomer = _customerService.GetAllCustomerFromDb().FirstOrDefault(c => c.Name == selectedCustomerName);
             if (selectedCustomer == null)
             {
@@ -263,8 +272,8 @@ namespace QuanLyPhong
 
             if (MessageBox.Show("Do you want to add this Order?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string result = _orderService.AddOrders(newOrder);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool result = _orderService.AddOrders(newOrder);
+                MessageBox.Show("Booking RoomSuccess", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             foreach (var service in _temporaryServices)
             {
@@ -454,7 +463,7 @@ namespace QuanLyPhong
             }
             else
             {
-                lbTotalPrice.Text = "Error: Please select a pricing method.";
+                lbTotalPrice.Text = "0 VND";
                 return;
             }
 
@@ -597,7 +606,11 @@ namespace QuanLyPhong
                 MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            if (rddaily.Checked == false && rdHourly.Checked == false)
+            {
+                MessageBox.Show("You have not chosse Rentaltype ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var selectedCustomer = _customerService.GetAllCustomerFromDb().FirstOrDefault(c => c.Name == selectedCustomerName);
             if (selectedCustomer == null)
             {
@@ -861,6 +874,7 @@ namespace QuanLyPhong
                 }
             }
         }
+        
         private void DisplayDetails(string input)
         {
             string[] parts = input.Split('|');

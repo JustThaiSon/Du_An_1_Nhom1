@@ -436,6 +436,11 @@ namespace QuanLyPhong
                     };
                     _roomService.UpdadateStatusRoom(updateStatusRoom);
                     SentMailAddPoint(customer.Email, PointAdd, newPoints);
+                    if (pointsUsed > 0)
+                    {
+                    SentMailUsePoint(customer.Email, pointsUsed, newPoints);
+                    }
+
                     if (MessageBox.Show("You want to issue an invoice?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         Issue_An_invoice();
@@ -490,6 +495,47 @@ namespace QuanLyPhong
                 MessageBox.Show(ex.Message);
             }
         }
+        void SentMailUsePoint(string Email, decimal point, decimal ToTalPoint)
+        {
+            if (string.IsNullOrEmpty(Email))
+            {
+                MessageBox.Show("Please enter your email.");
+                return;
+            }
+
+            MailMessage mail = new MailMessage();
+            mail.To.Add(Email.Trim());
+            mail.From = new MailAddress("thaothaobatbai123@gmail.com");
+            mail.Subject = "Notification of adding points";
+            mail.IsBodyHtml = true; ;
+            mail.Body = $"You Used <b>{point}</b> points. Your total score is <b>{ToTalPoint}</b> points.<br><br>Thank you for using our service.";
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential("thaothaobatbai123@gmail.com", "kaefdapftqcriiwj");
+
+            try
+            {
+                smtp.Send(mail);
+                MessageBox.Show("Email đã được gửi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi gửi email: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         void Issue_An_invoice()
         {
             var filterData = _orderService.GetOrdersViewModels(OrderId).FirstOrDefault();
