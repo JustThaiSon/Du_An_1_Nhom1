@@ -185,7 +185,6 @@ namespace QuanLyPhong
             if (MessageBox.Show("Bạn Có Muốn Xuất File Excel Không?", "Xác Nhận", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
             {
                 this.ExportToExcel(dtGV_ThongKe, path_Excel);
-                MessageBox.Show("Xuất File Excel thành công!!!");
             }
         }
         public void ExportToExcel(DataGridView gridView, string filePath)
@@ -197,58 +196,69 @@ namespace QuanLyPhong
             }
 
             IWorkbook workbook;
-
-            // Load existing workbook if file exists, otherwise create a new one
-            if (File.Exists(filePath))
+            try
             {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+
+                // Load existing workbook if file exists, otherwise create a new one
+                if (File.Exists(filePath))
                 {
-                    workbook = new XSSFWorkbook(fileStream);
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        workbook = new XSSFWorkbook(fileStream);
+                    }
+
                 }
-            }
-            else
-            {
-                workbook = new XSSFWorkbook();
-            }
 
-            // Find a unique sheet name
-            string sheetName = "Sheet";
-            int sheetIndex = 1;
-
-            while (workbook.GetSheet(sheetName) != null)
-            {
-                sheetName = "Sheet" + sheetIndex;
-                sheetIndex++;
-            }
-
-            // Create new sheet with a unique name
-            ISheet sheet = workbook.CreateSheet($"{sheetName}({DateTime.Now:dd-MM-yyyy HH-mm-ss})");
-
-            // Add column headers
-            IRow headerRow = sheet.CreateRow(0);
-            for (int i = 0; i < gridView.Columns.Count; i++)
-            {
-                headerRow.CreateCell(i).SetCellValue(gridView.Columns[i].HeaderText);
-            }
-
-            // Add rows
-            for (int i = 0; i < gridView.Rows.Count; i++)
-            {
-                IRow row = sheet.CreateRow(i + 1);
-                for (int j = 0; j < gridView.Columns.Count; j++)
+                else
                 {
-                    row.CreateCell(j).SetCellValue(gridView.Rows[i].Cells[j].Value?.ToString() ?? string.Empty);
+                    workbook = new XSSFWorkbook();
                 }
-            }
 
-            // Save Excel file to the specified file path
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                // Find a unique sheet name
+                string sheetName = "Sheet";
+                int sheetIndex = 1;
+
+                while (workbook.GetSheet(sheetName) != null)
+                {
+                    sheetName = "Sheet" + sheetIndex;
+                    sheetIndex++;
+                }
+
+                // Create new sheet with a unique name
+                ISheet sheet = workbook.CreateSheet($"{sheetName}({DateTime.Now:dd-MM-yyyy HH-mm-ss})");
+
+                // Add column headers
+                IRow headerRow = sheet.CreateRow(0);
+                for (int i = 0; i < gridView.Columns.Count; i++)
+                {
+                    headerRow.CreateCell(i).SetCellValue(gridView.Columns[i].HeaderText);
+                }
+
+                // Add rows
+                for (int i = 0; i < gridView.Rows.Count; i++)
+                {
+                    IRow row = sheet.CreateRow(i + 1);
+                    for (int j = 0; j < gridView.Columns.Count; j++)
+                    {
+                        row.CreateCell(j).SetCellValue(gridView.Rows[i].Cells[j].Value?.ToString() ?? string.Empty);
+                    }
+                }
+
+                // Save Excel file to the specified file path
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                {
+                    workbook.Write(fileStream);
+                }
+
+                // Dispose workbook
+                workbook.Close();
+                MessageBox.Show("Xuất File Excel thành công!!!");
+            }
+            catch (Exception)
             {
-                workbook.Write(fileStream);
+                MessageBox.Show("Vui lòng tắt file Excel!!!");
+                return;
             }
-
-            // Dispose workbook
-            workbook.Close();
         }
         private void Load_cbb_Tang()
         {
@@ -307,12 +317,12 @@ namespace QuanLyPhong
         {
             var mostFrequentRoomId = _orderService.GetAllOrdersFromDb()
                                     .Where(x => (x.DateCreated >= dtP_TuNgay.Value) && (x.DatePayment <= dtP_DenNgay.Value));
-            decimal max = 0;
+            decimal? max = 0;
             List<Orders> order = new List<Orders>();
             foreach(var item in mostFrequentRoomId)
             {
                 var i = _orderServiceService.GetAllOrderService().Where(x => x.OrderId == item.Id);
-                decimal tong = item.ToTal;
+                decimal? tong = item.ToTal;
                 foreach (var item1 in i)
                 {
                     tong += item1.TotalPrice;
@@ -325,7 +335,7 @@ namespace QuanLyPhong
             foreach (var item in mostFrequentRoomId)
             {
                 var i = _orderServiceService.GetAllOrderService().Where(x => x.OrderId == item.Id);
-                decimal tong = item.ToTal;
+                decimal? tong = item.ToTal;
                 foreach (var item1 in i)
                 {
                     tong += item1.TotalPrice;

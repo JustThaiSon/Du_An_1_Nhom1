@@ -19,7 +19,7 @@ namespace DAL.Entities
         public Guid? EmployeeId { get; set; }
         public Guid? CustomerId { get; set; }
         public decimal? TotalDiscount { get; set; }
-        public decimal ToTal { get; set; }
+        public decimal? ToTal { get; set; }
         public OrderType? OrderType { get; set; }
         public Guid? VoucherId { get; set; }
         public Guid? HistoryPointId {  get; set; }
