@@ -50,7 +50,7 @@ namespace DAL.Repositories
 
         public List<OrderService> GetAllOrder()
         {
-            throw new NotImplementedException();
+            return _context.OrderServices.ToList();
         }
 
         public OrderService GetById(Guid Id)

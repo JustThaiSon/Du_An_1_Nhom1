@@ -52,7 +52,7 @@ namespace QuanLyPhong
         {
             var kindsOfRoom = _kindOfRoomService.GetAllKindOfRoomFromDb();
 
-            cbb_typeroom.DataSource = kindsOfRoom;
+            cbb_typeroom.DataSource = _kindOfRoomService.GetAllKindOfRoomFromDb();
             cbb_typeroom.DisplayMember = "KindOfRoomName";
 
             cbb_typeroom.SelectedIndex = -1;
@@ -75,7 +75,7 @@ namespace QuanLyPhong
             foreach (var item in _roomService.GetAllRooms())
             {
                 Count++;
-                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay,item.PriceByHour);
+                dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay, item.PriceByHour);
             }
         }
         void Clear()
@@ -234,12 +234,26 @@ namespace QuanLyPhong
         {
             frmFloor addFloor = new frmFloor();
             addFloor.Show();
+            this.LoadCbbFloor();
         }
 
         private void btn_addTypeRoom_Click(object sender, EventArgs e)
         {
             frmKindOfRoom addTypeRoom = new frmKindOfRoom();
             addTypeRoom.Show();
+        }
+
+        private void frmRoom_Load(object sender, EventArgs e)
+        {
+            this.LoadCbbFloor();
+            _roomService = new RoomService();
+            _floorService = new FloorService();
+            _kindOfRoomService = new KindOfRoomService();
+        }
+
+        private void cbb_floor_Click(object sender, EventArgs e)
+        {
+            this.LoadCbbFloor();
         }
     }
 }

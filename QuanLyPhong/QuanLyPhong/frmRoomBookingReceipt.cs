@@ -43,7 +43,7 @@ namespace QuanLyPhong
 			_orderServiceService = new OrderServiceService();
 			_kindOfRoomService = new KindOfRoomService();
 			_temporaryServices = new List<OrderService>();
-			_orderService = new OrderServicess();
+			_orderService = new OrderServices();
 			this.RoomId = RoomId;
 			Load();
 		}

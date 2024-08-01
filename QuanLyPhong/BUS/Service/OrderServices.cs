@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace BUS.Service
 {
-	public class OrderServicess : IOrderService
+	public class OrderServices : IOrderService
 	{
 		private readonly IOrdersRepository _ordersRepository;
-        public OrderServicess()
+        public OrderServices()
         {
 			_ordersRepository = new OrdersRepository();
 		}

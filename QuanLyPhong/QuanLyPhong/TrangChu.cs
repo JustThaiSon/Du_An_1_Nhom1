@@ -112,6 +112,7 @@ namespace QuanLyPhong
         {
             ResetAllPictures();
             picStatistical.Left = btn_Statistical.Left + 30;
+            OpenChillFrom(new frmThongKe());
         }
 
         private void TrangChu_Load(object sender, EventArgs e)
