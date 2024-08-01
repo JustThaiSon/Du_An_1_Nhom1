@@ -140,6 +140,11 @@ namespace QuanLyPhong
             MenuStrip();
             LoadDtgOrders();
             LoadCamera();
+            var btnCheckin = _roomService.GetAllRooms().Where(x => x.Id == RoomId && x.Status == RoomStatus.UnAvailable);
+            if (btnCheckin != null)
+            {
+                btn_checkin.Enabled = true;
+            }
         }
 
 
