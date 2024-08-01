@@ -37,8 +37,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             btn_Back = new Guna.UI2.WinForms.Guna2Button();
             guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lbRoomName = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -62,7 +60,6 @@
             TbVoucher = new Guna.UI2.WinForms.Guna2TextBox();
             lbTotalPrice = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel25 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            txtPoints = new Guna.UI2.WinForms.Guna2TextBox();
             guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lbDateCheckIn = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lbDateCheckOut = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -371,29 +368,6 @@
             guna2HtmlLabel25.TabIndex = 60;
             guna2HtmlLabel25.Text = "Total Amount:";
             // 
-            // txtPoints
-            // 
-            txtPoints.BorderColor = SystemColors.ActiveBorder;
-            txtPoints.CustomizableEdges = customizableEdges5;
-            txtPoints.DefaultText = "";
-            txtPoints.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtPoints.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtPoints.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtPoints.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtPoints.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtPoints.Font = new Font("Segoe UI", 9F);
-            txtPoints.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtPoints.Location = new Point(286, 638);
-            txtPoints.Margin = new Padding(3, 4, 3, 4);
-            txtPoints.Name = "txtPoints";
-            txtPoints.PasswordChar = '\0';
-            txtPoints.PlaceholderText = "";
-            txtPoints.SelectedText = "";
-            txtPoints.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txtPoints.Size = new Size(190, 27);
-            txtPoints.TabIndex = 63;
-            txtPoints.TextChanged += txtPoints_TextChanged;
-            // 
             // guna2HtmlLabel2
             // 
             guna2HtmlLabel2.BackColor = Color.Transparent;
@@ -654,7 +628,7 @@
             // cbbPayment
             // 
             cbbPayment.BackColor = Color.Transparent;
-            cbbPayment.CustomizableEdges = customizableEdges7;
+            cbbPayment.CustomizableEdges = customizableEdges5;
             cbbPayment.DrawMode = DrawMode.OwnerDrawFixed;
             cbbPayment.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbPayment.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -665,7 +639,7 @@
             cbbPayment.Location = new Point(923, 594);
             cbbPayment.Margin = new Padding(3, 2, 3, 2);
             cbbPayment.Name = "cbbPayment";
-            cbbPayment.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cbbPayment.ShadowDecoration.CustomizableEdges = customizableEdges6;
             cbbPayment.Size = new Size(190, 36);
             cbbPayment.TabIndex = 88;
             cbbPayment.SelectedIndexChanged += cbbOrderType_SelectedIndexChanged;
@@ -695,7 +669,7 @@
             // cbbpoint
             // 
             cbbpoint.BackColor = Color.Transparent;
-            cbbpoint.CustomizableEdges = customizableEdges9;
+            cbbpoint.CustomizableEdges = customizableEdges7;
             cbbpoint.DrawMode = DrawMode.OwnerDrawFixed;
             cbbpoint.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbpoint.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -706,7 +680,7 @@
             cbbpoint.Location = new Point(530, 594);
             cbbpoint.Margin = new Padding(3, 2, 3, 2);
             cbbpoint.Name = "cbbpoint";
-            cbbpoint.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            cbbpoint.ShadowDecoration.CustomizableEdges = customizableEdges8;
             cbbpoint.Size = new Size(190, 36);
             cbbpoint.TabIndex = 91;
             cbbpoint.SelectedIndexChanged += cbbpoint_SelectedIndexChanged;
@@ -745,7 +719,6 @@
             Controls.Add(lbRentaltype);
             Controls.Add(lbDateCheckOut);
             Controls.Add(lbDateCheckIn);
-            Controls.Add(txtPoints);
             Controls.Add(guna2HtmlLabel2);
             Controls.Add(lbTotalPrice);
             Controls.Add(guna2HtmlLabel25);
@@ -807,7 +780,6 @@
         private Guna.UI2.WinForms.Guna2TextBox TbVoucher;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbTotalPrice;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel25;
-        private Guna.UI2.WinForms.Guna2TextBox txtPoints;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbDateCheckIn;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbDateCheckOut;
