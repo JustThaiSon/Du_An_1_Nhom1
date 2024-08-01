@@ -4,16 +4,32 @@ using BUS.ViewModels;
 using DAL.Data;
 using DAL.Entities;
 using DAL.Enums;
+using iText.IO.Font;
+using iText.Kernel.Colors;
+using iText.Kernel.Exceptions;
+using iText.Kernel.Font;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Color = System.Drawing.Color;
+using HorizontalAlignment = iText.Layout.Properties.HorizontalAlignment;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace QuanLyPhong
 {
@@ -31,6 +47,9 @@ namespace QuanLyPhong
         private decimal? ToTal { get; set; }
         private decimal? ToTalDiscount { get; set; }
         private decimal? ToTalPricePoints { get; set; }
+        private decimal?  PriceRoom  { get; set; }
+        private string totalTimeString { get; set; }
+
         private IHistorypointService _historypointService;
         private IRoomService _roomService;
         public frmPay(Guid OrderId)
@@ -92,13 +111,13 @@ namespace QuanLyPhong
             dtgListOrders.Columns[12].Name = "ToTalTime";
             dtgListOrders.Columns[13].Name = "PointsAdd";
             dtgListOrders.Rows.Clear();
-            decimal PriceRoom = 0;
+            
             PointAdd = 0;
             foreach (var item in _orderService.GetOrdersViewModels(OrderId))
             {
                 PointAdd = Convert.ToInt32((double)item.ToTalPrice * 0.01);
                 TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
-                string totalTimeString = "Unavailable";
+                    totalTimeString = "Unavailable";
                 if (ToTalTime.HasValue)
                 {
                     if (item.Rentaltype == RentalTypeEnum.Daily)
@@ -339,6 +358,140 @@ namespace QuanLyPhong
 
         private void btn_confirm_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (cbbPayment.SelectedItem == null)
+                    {
+                        MessageBox.Show("Choose Payment Method", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    MessageBox.Show("Success", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var filterData = _orderService.GetOrdersViewModels(OrderId).FirstOrDefault();
+                    if (filterData == null)
+                    {
+                        MessageBox.Show("Order data not found.");
+                        return;
+                    }
+
+                    var customer = _customerService.GetAllCustomerFromDb().FirstOrDefault(x => x.Id == filterData.CustomerId);
+                    if (customer == null)
+                    {
+                        MessageBox.Show("Customer not found.");
+                        return;
+                    }
+                    var pointsUsageHistory = new HistoryPoints
+                    {
+                        CustomerId = filterData.CustomerId,
+                        Point = (int)ToTalPricePoints.GetValueOrDefault(),
+                        CreatedDate = DateTime.Now,
+                    };
+
+                    _historypointService.AddhtrPoint(pointsUsageHistory);
+                    var voucherCode = TbVoucher.Text.Trim();
+                    var voucherId = _voucherSevice.GetAllVoucherFromDb()
+                                                   .Where(x => x.VoucherCode == voucherCode)
+                                                   .Select(x => x.Id)
+                                                   .FirstOrDefault();
+
+                    var validVoucher = _voucherSevice.GetAllVoucherFromDb().Any(v => v.Id == voucherId);
+                    Guid? validVoucherId = validVoucher ? voucherId : (Guid?)null;
+                    var UpdateOrders = new Orders
+                    {
+                        Id = OrderId,
+                        RoomId = filterData.RoomId,
+                        CustomerId = filterData.CustomerId,
+                        DateCreated = filterData.DateCreated,
+                        DatePayment = DateTime.Now,
+                        Prepay = filterData.Prepay,
+                        Note = filterData.Note,
+                        EmployeeId = Session.UserId,
+                        Rentaltype = filterData.Rentaltype,
+                        OrderType = filterData.OrderType,
+                        ToTalPrice = filterData.ToTalPrice,
+                        ToTal = ToTal,
+                        OrderCode = filterData.OrderCode,
+                        PayMents = cbbPayment.Text,
+                        TotalDiscount = ToTalDiscount,
+                        TotalPricePoint = ToTalPricePoints,
+                        VoucherId = validVoucherId,
+                        HistoryPointId = pointsUsageHistory.Id,
+                    };
+                    _orderService.UpdateOrders(UpdateOrders);
+
+                    decimal pointsUsed = ToTalPricePoints.GetValueOrDefault();
+                    decimal newPoints = customer.Point - pointsUsed + PointAdd;
+
+                    var updateCustomer = new Customer
+                    {
+                        Id = customer.Id,
+                        Point = newPoints
+                    };
+                    _customerService.UpdatePointByCustomer(updateCustomer);
+                    var updateStatusRoom = new Room
+                    {
+                        Id = filterData.RoomId,
+                        Status = RoomStatus.UnderMaintenance
+                    };
+                    _roomService.UpdadateStatusRoom(updateStatusRoom);
+                    SentMailAddPoint(customer.Email, PointAdd, newPoints);
+                    if (MessageBox.Show("You want to issue an invoice?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        Issue_An_invoice();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+
+
+        }
+        void SentMailAddPoint(string Email,decimal point , decimal ToTalPoint)
+        {
+            if (string.IsNullOrEmpty(Email))
+            {
+                MessageBox.Show("Please enter your email.");
+                return;
+            }
+
+            MailMessage mail = new MailMessage();
+            mail.To.Add(Email.Trim());
+            mail.From = new MailAddress("thaothaobatbai123@gmail.com");
+            mail.Subject = "Notification of adding points";
+            mail.IsBodyHtml = true; ;
+            mail.Body = $"You have received <b>{point}</b> points. Your total score is <b>{ToTalPoint}</b> points.<br><br>Thank you for using our service.";
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential("thaothaobatbai123@gmail.com", "kaefdapftqcriiwj");
+
+            try
+            {
+                smtp.Send(mail);
+                MessageBox.Show("Email đã được gửi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi gửi email: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        void Issue_An_invoice()
+        {
             var filterData = _orderService.GetOrdersViewModels(OrderId).FirstOrDefault();
             if (filterData == null)
             {
@@ -352,61 +505,245 @@ namespace QuanLyPhong
                 MessageBox.Show("Customer not found.");
                 return;
             }
-            var pointsUsageHistory = new HistoryPoints
-            {
-                CustomerId = filterData.CustomerId,
-                Point = (int)ToTalPricePoints.GetValueOrDefault(),
-                CreatedDate = DateTime.Now,
-            };
+            string directoryPath = @"C:\Users\admin\Desktop\PDF";
+            string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
+            string filePath = System.IO.Path.Combine(directoryPath, fileName);
 
-            _historypointService.AddhtrPoint(pointsUsageHistory);
-            var voucherCode = TbVoucher.Text.Trim();
-            var voucherId = _voucherSevice.GetAllVoucherFromDb()
-                                           .Where(x => x.VoucherCode == voucherCode)
-                                           .Select(x => x.Id)
-                                           .FirstOrDefault();
-
-            var validVoucher = _voucherSevice.GetAllVoucherFromDb().Any(v => v.Id == voucherId);
-            Guid? validVoucherId = validVoucher ? voucherId : (Guid?)null;
-            var UpdateOrders = new Orders
+            try
             {
-                Id = OrderId,
-                RoomId = filterData.RoomId,
-                CustomerId = filterData.CustomerId,
-                DateCreated = filterData.DateCreated,
-                DatePayment = DateTime.Now,
-                Prepay = filterData.Prepay,
-                Note = filterData.Note,
-                EmployeeId = Session.UserId,
-                Rentaltype = filterData.Rentaltype,
-                OrderType = filterData.OrderType,
-                ToTalPrice = filterData.ToTalPrice,
-                ToTal = ToTal,
-                OrderCode = filterData.OrderCode,
-                PayMents = cbbPayment.Text,
-                TotalDiscount = ToTalDiscount,
-                TotalPricePoint = ToTalPricePoints,
-                VoucherId = validVoucherId,
-                HistoryPointId = pointsUsageHistory.Id,
-            };
-            _orderService.UpdateOrders(UpdateOrders);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
 
-            decimal pointsUsed = ToTalPricePoints.GetValueOrDefault();
-            decimal newPoints = customer.Point - pointsUsed + PointAdd;
+                using (PdfWriter writer = new PdfWriter(filePath))
+                {
+                    using (PdfDocument pdf = new PdfDocument(writer))
+                    {
+                        Document document = new Document(pdf, PageSize.A4);
 
-            var updateCustomer = new Customer
+                        PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+
+                        // Thêm tiêu đề hóa đơn
+                        document.Add(new Paragraph("HÓA ĐƠN")
+                             .SetFont(font)
+                             .SetBold()
+                             .SetFontSize(26)
+                             .SetTextAlignment(TextAlignment.CENTER)
+                             .SetMarginBottom(20));
+
+                        // Thêm thông tin khách hàng
+                        document.Add(new Paragraph($"Khách hàng: {customer.Name}")
+                            .SetFont(font)
+                            .SetFontSize(14)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetMarginBottom(10));
+                        document.Add(new Paragraph($"Địa chỉ: {customer.Address}")
+                            .SetFont(font)
+                            .SetFontSize(14)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetMarginBottom(20));
+                        document.Add(new Paragraph($"Mã Hóa Đơn: {filterData.OrderCode}")
+                           .SetFont(font)
+                           .SetFontSize(14)
+                           .SetTextAlignment(TextAlignment.CENTER)
+                           .SetMarginBottom(20));
+
+                        // Bảng sản phẩm
+                        float[] productColumnWidths = { 1, 3, 2, 2, 2 };
+                        Table productTable = new Table(productColumnWidths);
+                        productTable.SetBorder(new SolidBorder(1));
+                        productTable.SetWidth(UnitValue.CreatePercentValue(100));
+
+                        productTable.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+                        document.Add(new Paragraph($"Hóa Đơn Dịch Vụ")
+                         .SetFont(font)
+                         .SetFontSize(14)
+                         .SetTextAlignment(TextAlignment.LEFT)
+                         .SetMarginBottom(20));
+
+                        productTable.AddHeaderCell(new Cell().Add(new Paragraph("Số thứ tự"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBold()
+                            .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                            .SetFontColor(ColorConstants.WHITE));
+                        productTable.AddHeaderCell(new Cell().Add(new Paragraph("Tên hàng hóa"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBold()
+                            .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                            .SetFontColor(ColorConstants.WHITE));
+                        productTable.AddHeaderCell(new Cell().Add(new Paragraph("Giá"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBold()
+                            .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                            .SetFontColor(ColorConstants.WHITE));
+                        productTable.AddHeaderCell(new Cell().Add(new Paragraph("Số Lượng"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBold()
+                            .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                            .SetFontColor(ColorConstants.WHITE));
+                        productTable.AddHeaderCell(new Cell().Add(new Paragraph("Tổng Giá"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBold()
+                            .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                            .SetFontColor(ColorConstants.WHITE));
+
+                        var getOrderService = _orderServiceService.GetAllOrderService().Where(x=>x.OrderId == OrderId);
+                        // Thêm từng sản phẩm vào bảng
+                        int count = 0;
+                        decimal ToTalPriceService = 0;
+                        foreach (var item in getOrderService)
+                        {
+                            count++;
+                             AddTableRow(productTable, count, item.Name, item.PriceOrderService,item.QuantityOrderService,item.TotalPrice);
+                            ToTalPriceService = getOrderService.Sum(s => s.TotalPrice);
+                        }
+                        Cell totalLabelCell = new Cell(1, 4)
+                           .Add(new Paragraph("Tổng cộng"))
+                           .SetFont(font)
+                           .SetTextAlignment(TextAlignment.CENTER)
+                           .SetBold()
+                           .SetBorder(new SolidBorder(1));
+                        productTable.AddCell(totalLabelCell);
+                        productTable.AddCell(new Cell().Add(new Paragraph($"{ToTalPriceService.ToString("0.##")} VNĐ"))
+                            .SetFont(font)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetBorder(new SolidBorder(1)));
+                        document.Add(productTable);
+                        productTable.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+                        document.Add(new Paragraph($"Hóa Đơn Thuê Phòng")
+                         .SetFont(font)
+                         .SetFontSize(14)
+                         .SetTextAlignment(TextAlignment.LEFT)
+                         .SetMarginBottom(20));
+                        float[] orderColumnWidths = { 1, 2 };
+                        Table orderTable = new Table(orderColumnWidths);
+                        orderTable.SetBorder(new SolidBorder(1));
+                        orderTable.SetWidth(UnitValue.CreatePercentValue(100));
+                        orderTable.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+
+                        void AddOrderHeaderCell(string text)
+                        {
+                            orderTable.AddCell(new Cell().Add(new Paragraph(text))
+                                .SetFont(font)
+                                .SetTextAlignment(TextAlignment.CENTER)
+                                .SetBold()
+                                .SetBackgroundColor(new DeviceRgb(0, 102, 204))
+                                .SetFontColor(ColorConstants.WHITE)
+                                .SetBorder(new SolidBorder(1)));
+                        }
+
+                        void AddOrderDataCell(string text)
+                        {
+                            orderTable.AddCell(new Cell().Add(new Paragraph(text))
+                                .SetFont(font)
+                                .SetTextAlignment(TextAlignment.CENTER)
+                                .SetBorder(new SolidBorder(1)));
+                        }
+
+                        // Add order information headers and data
+                        AddOrderHeaderCell("Thông tin");
+
+                        AddOrderHeaderCell("Giá trị");
+
+                        AddOrderDataCell("STT");
+                        AddOrderDataCell(filterData.ToTal.ToString());
+
+                        AddOrderDataCell("Mã Hóa Đơn");
+                        AddOrderDataCell(filterData.OrderCode);
+
+                        AddOrderDataCell("Ngày Tạo Hóa Đơn");
+                        AddOrderDataCell(filterData.DateCreated.HasValue ? filterData.DateCreated.Value.ToString("dd/MM/yyyy") : "N/A");
+
+                        AddOrderDataCell("Ngày Thanh Toán");
+                        AddOrderDataCell(filterData.DatePayment.HasValue ? filterData.DatePayment.Value.ToString("dd/MM/yyyy") : "Chưa thanh toán");
+
+                        AddOrderDataCell("Hóa Đơn Được Tạo Bởi");
+                        AddOrderDataCell(filterData.EmployeeName);
+
+                        AddOrderDataCell("Tổng Tiền Giảm Giá");
+                        AddOrderDataCell(filterData.TotalDiscount.ToString());
+
+                        AddOrderDataCell("Tổng Tiền Giảm Giá Bằng Điểm");
+                        AddOrderDataCell(filterData.TotalPricePoint.ToString());
+
+                        AddOrderDataCell("Giá Phòng");
+                        AddOrderDataCell(PriceRoom.ToString() + " VNĐ");
+
+                        AddOrderDataCell("Số Giờ/Ngày Thuê");
+                        AddOrderDataCell(totalTimeString);
+
+                        AddOrderDataCell("Số Điểm Cộng");
+                        AddOrderDataCell(PointAdd.ToString() + " Points");
+
+                        AddOrderDataCell("Tiền Trả Trước");
+                        AddOrderDataCell(filterData.Prepay.ToString());
+
+                        AddOrderDataCell("Loại Hình thuê");
+                        AddOrderDataCell(filterData.Rentaltype.ToString());
+
+                        AddOrderDataCell("Tổng Tiền Hóa Đơn");
+                        AddOrderDataCell($"{filterData.ToTal.ToString()} VNĐ");
+                        document.Add(orderTable);
+
+                        // Close document
+                        document.Close();
+                    }
+                }
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+
+                MessageBox.Show("Hóa đơn đã được xuất thành công và mở tự động!");
+            }
+            catch (UnauthorizedAccessException ex)
             {
-                Id = customer.Id,
-                Point = newPoints
-            };
-            _customerService.UpdatePointByCustomer(updateCustomer);
-            var updateStatusRoom = new Room
+                MessageBox.Show("Lỗi quyền truy cập: " + ex.Message);
+            }
+            catch (PdfException ex)
             {
-                Id = filterData.RoomId,
-                Status = RoomStatus.UnderMaintenance
-            };
-            _roomService.UpdadateStatusRoom(updateStatusRoom);
+                MessageBox.Show("Lỗi PDF: " + ex.Message, "Lỗi PDF", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void AddTableRow(Table table, int STT, string itemName, decimal itemPrice, int? quantity, decimal totalPrice)
+        {
+            PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+
+            table.AddCell(new Cell().Add(new Paragraph(STT.ToString()))
+                .SetFont(font)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetPadding(5)
+                .SetBorder(new SolidBorder(1)));
+            table.AddCell(new Cell().Add(new Paragraph(itemName))
+                .SetFont(font)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetPadding(5)
+                .SetBorder(new SolidBorder(1)));
+            table.AddCell(new Cell().Add(new Paragraph(itemPrice.ToString("0.##") + " VNĐ"))
+                .SetFont(font)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetPadding(5)
+                .SetBorder(new SolidBorder(1)));
+            table.AddCell(new Cell().Add(new Paragraph(quantity.HasValue ? quantity.Value.ToString() : ""))
+                .SetFont(font)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetPadding(5)
+                .SetBorder(new SolidBorder(1)));
+            table.AddCell(new Cell().Add(new Paragraph(totalPrice.ToString("0.##") + " VNĐ"))
+                .SetFont(font)
+                .SetTextAlignment(TextAlignment.CENTER)
+                .SetPadding(5)
+                .SetBorder(new SolidBorder(1)));
+        }
+
         void LoadPayMent()
         {
             string[] Payment = { "Payment by cash", "Payment by card" };
@@ -503,5 +840,7 @@ namespace QuanLyPhong
             lbPricePoint.Text = pointsUsed.ToString() + " VND";
             lbTotalPrice.Text = (ToTal).ToString() + " VND";
         }
+
+       
     }
 }
