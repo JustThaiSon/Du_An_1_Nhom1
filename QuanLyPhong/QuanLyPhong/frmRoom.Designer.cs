@@ -75,7 +75,7 @@
             panel1.Controls.Add(tb_search);
             panel1.Location = new Point(41, 39);
             panel1.Name = "panel1";
-            panel1.Size = new Size(846, 129);
+            panel1.Size = new Size(846, 133);
             panel1.TabIndex = 0;
             // 
             // label2
@@ -134,7 +134,7 @@
             panel2.Controls.Add(label3);
             panel2.Location = new Point(937, 39);
             panel2.Name = "panel2";
-            panel2.Size = new Size(517, 841);
+            panel2.Size = new Size(517, 898);
             panel2.TabIndex = 1;
             panel2.Paint += panel2_Paint;
             // 
@@ -160,7 +160,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(64, 659);
+            btnUpdate.Location = new Point(215, 670);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(118, 61);
             btnUpdate.TabIndex = 25;
@@ -170,7 +170,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(210, 659);
+            button1.Location = new Point(361, 670);
             button1.Name = "button1";
             button1.Size = new Size(118, 61);
             button1.TabIndex = 24;
@@ -196,7 +196,7 @@
             // 
             // btn_addRoom
             // 
-            btn_addRoom.Location = new Point(347, 659);
+            btn_addRoom.Location = new Point(64, 670);
             btn_addRoom.Name = "btn_addRoom";
             btn_addRoom.Size = new Size(118, 61);
             btn_addRoom.TabIndex = 22;
@@ -260,7 +260,7 @@
             guna2TextBox5.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             guna2TextBox5.Font = new Font("Segoe UI", 9F);
             guna2TextBox5.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            guna2TextBox5.Location = new Point(37, 691);
+            guna2TextBox5.Location = new Point(188, 702);
             guna2TextBox5.Margin = new Padding(3, 5, 3, 5);
             guna2TextBox5.Name = "guna2TextBox5";
             guna2TextBox5.PasswordChar = '\0';
@@ -343,7 +343,7 @@
             dtgPhong.Name = "dtgPhong";
             dtgPhong.RowHeadersWidth = 51;
             dtgPhong.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dtgPhong.Size = new Size(846, 552);
+            dtgPhong.Size = new Size(846, 692);
             dtgPhong.TabIndex = 22;
             dtgPhong.CellClick += dtgPhong_CellClick;
             dtgPhong.CellContentClick += dtgPhong_CellContentClick;

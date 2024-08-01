@@ -85,7 +85,7 @@ namespace QuanLyPhong
 					PriceByHour = priceByHour
 				};
 
-				if (MessageBox.Show("Do you want to add this KindOfRoom?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				if (MessageBox.Show("Do you want to Update this KindOfRoom?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 				{
 					string result = _service.UpdateKindOfRoom(kindOfRoom);
 					MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -119,7 +119,7 @@ namespace QuanLyPhong
 
 		private void DTgrvkindofroom_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex >= 0)
+			if (e.RowIndex >= 0 && e.RowIndex < _service.GetAllKindOfRoomFromDb().Count())
 			{
 				DataGridViewRow row = DTgrvkindofroom.Rows[e.RowIndex];
 				IdCell = Guid.Parse(row.Cells["Id"].Value.ToString());
