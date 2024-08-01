@@ -58,6 +58,16 @@ namespace BUS.Service
             }
         }
 
-        
+        public string UpdatePointByCustomer(Customer Customer)
+        {
+            if (_CustomerRepo.UpdatePointByCustomer(Customer))
+            {
+                return "update success";
+            }
+            else
+            {
+                return "update fail";
+            }
+        }
     }
 }

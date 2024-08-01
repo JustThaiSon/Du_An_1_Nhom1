@@ -131,5 +131,10 @@ namespace QuanLyPhong
                 MessageBox.Show("Lỗi khi chuyển phòng: " + ex.Message);
             }
         }
+
+        private void frmTransfer_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

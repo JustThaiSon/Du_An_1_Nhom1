@@ -16,10 +16,11 @@ namespace BUS.Service
     public class VoucherSevice : IVoucherSevice
     {
         private IVoucherRepository _voucherRepo;
-
+        private IOrdersRepository _ordersRepository;
         public VoucherSevice()
         {
             _voucherRepo = new VoucherRepository();
+            _ordersRepository = new OrdersRepository();
         }
 
         public List<Voucher> GetAllVoucherFromDb()
@@ -67,5 +68,38 @@ namespace BUS.Service
         {
             await _voucherRepo.UpdateVoucherStatusAuTo();
         }
+
+        public string ValidateVoucher(string voucherCode, Guid orderId)
+        {
+            var order = _ordersRepository.GetAllOrder().FirstOrDefault(o => o.Id == orderId);
+            if (order == null)
+            {
+                return "Order not found";
+            }
+
+            if (order.VoucherId != null)
+            {
+                return "Order has already applied a voucher";
+            }
+
+            var voucher = _voucherRepo.GetAllVouchers().FirstOrDefault(x => x.VoucherCode == voucherCode);
+            if (voucher == null)
+            {
+                return "Invalid voucher code";
+            }
+
+            if (voucher.Status != VoucherStatus.Active)
+            {
+                return "Voucher is not active";
+            }
+
+            if (voucher.MinPrice > order.ToTalPrice)
+            {
+                return "Order total price does not meet voucher minimum price requirement";
+            }
+
+            return "Voucher validation successful";
+        }
+
     }
 }

@@ -39,7 +39,7 @@ namespace DAL.Repositories
 
         public bool DeleteRoom(Guid Id)
         {
-            var delete = _context.Rooms.Find(Id);    
+            var delete = _context.Rooms.Find(Id);
             if (delete != null)
             {
                 _context.Rooms.Remove(delete);
@@ -56,21 +56,33 @@ namespace DAL.Repositories
 
         public Room GetById(Guid Id)
         {
-            return _context.Rooms.FirstOrDefault(x=>x.Id == Id);
+            return _context.Rooms.FirstOrDefault(x => x.Id == Id);
         }
 
         public bool UpdadateRoom(Room romm)
         {
-            var update = _context.Rooms.FirstOrDefault(x => x.Id == romm.Id);   
+            var update = _context.Rooms.FirstOrDefault(x => x.Id == romm.Id);
 
-            if(update == null)return false;
+            if (update == null) return false;
 
             update.Id = romm.Id;
             update.RoomName = romm.RoomName;
             update.Status = romm.Status;
-           
+
             update.FloorId = romm.FloorId;
             update.KindOfRoom = romm.KindOfRoom;
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool UpdadateStatusRoom(Room romm)
+        {
+
+            var update = _context.Rooms.FirstOrDefault(x => x.Id == romm.Id);
+
+            if (update == null) return false;
+            update.Id = romm.Id;
+            update.Status = romm.Status;
             _context.SaveChanges();
             return true;
         }

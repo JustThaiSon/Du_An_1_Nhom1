@@ -85,7 +85,7 @@ namespace QuanLyPhong
                 txt_PhoneNumber.Text = employee.PhoneNumber;
                 txt_UserName.Text = employee.UserName;
                 txt_PassWord.Text = employee.PassWord;
-                dtP_DateOfBirth.Text = DateTime.Parse(employee.DateOfBirth.ToString()).ToString("dd/MM/yyyy");
+                dtP_DateOfBirth.Text = employee.DateOfBirth.ToString();
                 txt_CCCD.Text = employee.CCCD;
                 txt_EmployeeCode.Text = employee.EmployeeCode.ToString();
                 cb_Gender.Text = employee.Gender.ToString();

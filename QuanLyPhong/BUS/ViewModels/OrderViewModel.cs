@@ -22,7 +22,12 @@ namespace BUS.ViewModels
 		public RentalTypeEnum? Rentaltype { get; set; }
 		public Guid CustomerId { get; set; }
 		public string? CustomerName { get; set; }
-		public decimal? TotalDiscount { get; set; }
+        public string? PhoneNumber { get; set; }
+        public MenuGender? Gender { get; set; }
+        public string? Email { get; set; }
+        public string? Address { get; set; }
+        public string? CCCD { get; set; }
+        public decimal? TotalDiscount { get; set; }
 		public decimal? TotalPricePoint { get; set; }
 		public decimal? Prepay { get; set; }
 		public string? ServiceName { get; set; }

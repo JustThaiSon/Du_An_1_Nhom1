@@ -14,6 +14,7 @@ namespace DAL.IRepositories
         List<Room> GetAllRoom();
         bool CreateRoom(Room room);
         bool UpdadateRoom(Room romm);
+        bool UpdadateStatusRoom(Room romm);
         bool DeleteRoom(Guid Id);
     }
 }

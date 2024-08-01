@@ -6,6 +6,7 @@ using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,7 +77,12 @@ namespace BUS.Service
 							EmployeeId = emp != null ? emp.Id : Guid.Empty,
 							EmployeeName = emp != null ? emp.Name : null,
 							CustomerId = ctm.Id,
-							TotalDiscount = o.TotalDiscount,
+							CCCD = ctm.CCCD,
+							Email = ctm.Email,
+                            Gender = ctm.Gender,
+                            Address = ctm.Address,
+                            PhoneNumber = ctm.PhoneNumber,
+                            TotalDiscount = o.TotalDiscount,
 							TotalPricePoint = o.TotalPricePoint,
 							ToTal = o.ToTal,
 							OrderType = o.OrderType,
@@ -114,5 +120,45 @@ namespace BUS.Service
 				return "Update failure";
 			}
 		}
-	}
+
+        public List<OrderViewModel> GetAllOrdersViewModels()
+        {
+            var query = from o in _ordersRepository.GetAllOrder()
+                        join ctm in _customerRepository.GetAllCustomer() on o.CustomerId equals ctm.Id
+                        join r in _roomRepository.GetAllRoom() on o.RoomId equals r.Id
+                        join kof in _kindOfRoomRepository.GetAllKindOfRoom() on r.KindOfRoomId equals kof.Id
+                        join fl in _floorRepository.GetAllFloor() on r.FloorId equals fl.Id
+                        join emp in _employeeRepository.GetAllEmployee() on o.EmployeeId equals emp.Id into empJoin
+                        from emp in empJoin.DefaultIfEmpty()
+                        select new OrderViewModel
+                        {
+                            Id = o.Id,
+                            OrderCode = o.OrderCode,
+                            PayMents = o.PayMents,
+                            DateCreated = o.DateCreated,
+                            DatePayment = o.DatePayment,
+                            ToTalPrice = o.ToTalPrice,
+                            Note = o.Note,
+                            Prepay = o.Prepay,
+                            Rentaltype = o.Rentaltype,
+                            EmployeeId = emp != null ? emp.Id : Guid.Empty,
+                            EmployeeName = emp != null ? emp.Name : null,
+                            CustomerId = ctm.Id,
+                            TotalDiscount = o.TotalDiscount,
+                            TotalPricePoint = o.TotalPricePoint,
+                            ToTal = o.ToTal,
+                            OrderType = o.OrderType,
+                            RoomId = r.Id,
+                            RoomName = r.RoomName,
+                            CustomerName = ctm.Name,
+                            KindOfRoomId = kof.Id,
+                            KindOfRoomName = kof.KindOfRoomName,
+                            FloorName = fl.FloorName,
+                            PriceByHour = kof.PriceByHour,
+                            PricePerDay = kof.PricePerDay,
+                            ToTalTime = o.DatePayment - o.DateCreated,
+                        };
+            return query.ToList();
+        }
+    }
 }

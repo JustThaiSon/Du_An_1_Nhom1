@@ -26,6 +26,7 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static TheArtOfDevHtmlRenderer.Adapters.RGraphicsPath;
 using OrderService = DAL.Entities.OrderService;
+using QuanLyPhong;
 
 namespace QuanLyPhong
 {
@@ -276,11 +277,8 @@ namespace QuanLyPhong
         }
 
         private void cbbnum_quantitySer_ValueChanged(object sender, EventArgs e)
-
         {
-
         }
-
         private void cbb_NameService_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedServiceName = cbb_NameService.SelectedItem.ToString();
@@ -313,71 +311,7 @@ namespace QuanLyPhong
         private void btn_Create_Click(object sender, EventArgs e)
         {
 
-            if (string.IsNullOrWhiteSpace(tbCustomerName.Text))
-            {
-                MessageBox.Show("Customer name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            if (string.IsNullOrWhiteSpace(tb_emailCus.Text) || !IsValidEmail(tb_emailCus.Text))
-            {
-                MessageBox.Show("A valid email address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(tb_cccd.Text))
-            {
-                MessageBox.Show("CCCD is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(tb_Address.Text))
-            {
-                MessageBox.Show("Address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (rdFemale.Checked == false && rdMale.Checked == false)
-            {
-                MessageBox.Show("Please select a gender.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(tb_phoneCus.Text) || !IsValidPhoneNumber(tb_phoneCus.Text))
-            {
-                MessageBox.Show("A valid phone number is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (!IsValidEmail(tb_emailCus.Text))
-            {
-                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (!IsValidPhoneNumber(tb_phoneCus.Text))
-            {
-                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (!IsValidCCCD(tb_cccd.Text))
-            {
-                MessageBox.Show("CCCD is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var addCustomer = new Customer()
-            {
-                Name = tbCustomerName.Text,
-                Email = tb_emailCus.Text,
-                CCCD = tb_cccd.Text,
-                Address = tb_Address.Text,
-                Gender = rdFemale.Checked ? MenuGender.Female : (rdMale.Checked ? MenuGender.Male : MenuGender.Other),
-                PhoneNumber = tb_phoneCus.Text
-            };
-            if (MessageBox.Show("Do you want to add this Customer?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                string result = _customerService.AddCustomer(addCustomer);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            LoadCustomer();
         }
         private void cbb_Customer_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -491,35 +425,59 @@ namespace QuanLyPhong
         }
         void TotalPrice()
         {
-
             TimeSpan timeSpanHours = dtGioCheckout.Value - DtGioCheckIn.Value;
             TimeSpan timeSpanDays = dt_checkout.Value.Date - dt_checkin.Value.Date;
-            var room = _roomService.GetAllRooms().Where(x => x.Id == RoomId).Select(x => new { x.PriceByHour, x.PricePerDay }).FirstOrDefault();
+
+            var room = _roomService.GetAllRooms().FirstOrDefault(x => x.Id == RoomId);
+            if (room == null)
+            {
+                lbTotalPrice.Text = "Error: Room not found.";
+                return;
+            }
+
+            decimal totalDays = 0;
+            decimal totalHours = 0;
 
             if (rddaily.Checked)
             {
-                TotalPriceRoom = room.PricePerDay * (decimal)timeSpanDays.TotalDays;
+                totalDays = (decimal)timeSpanDays.TotalDays;
+                totalDays = totalDays <= 0 ? 1 : totalDays; 
+                decimal roundedDays = Math.Round(totalDays, MidpointRounding.AwayFromZero);
+                TotalPriceRoom = room.PricePerDay * roundedDays;
             }
             else if (rdHourly.Checked)
             {
-                decimal totalHours = (decimal)timeSpanHours.TotalHours;
-                decimal roundedHours = Math.Ceiling(totalHours);
+                totalHours = (decimal)timeSpanHours.TotalHours;
+                totalHours = totalHours <= 0 ? 1 : totalHours; 
+                decimal roundedHours = Math.Round(totalHours, MidpointRounding.AwayFromZero);
                 TotalPriceRoom = room.PriceByHour * roundedHours;
             }
-            decimal Prepay = 0;
-            string prepayText = txtPrepay.Text.Trim(); 
+            else
+            {
+                lbTotalPrice.Text = "Error: Please select a pricing method.";
+                return;
+            }
 
+            decimal Prepay = 0;
+            string prepayText = txtPrepay.Text.Trim();
             if (!string.IsNullOrEmpty(prepayText) && decimal.TryParse(prepayText, out decimal parsedPrepay))
             {
                 Prepay = parsedPrepay;
             }
+
+            TotalAmount = TotalPriceRoom + TotalPriceOrderService;
+            decimal remainingBalance = TotalAmount - Prepay;
+
+            if (remainingBalance > 0)
+            {
+                lbTotalPrice.Text = $"{remainingBalance:0} VNĐ";
+            }
             else
             {
-                Prepay = 0;
+                lbTotalPrice.Text = $"{Math.Abs(remainingBalance):0} VNĐ Excess";
             }
-            TotalAmount = TotalPriceRoom + TotalPriceOrderService - Prepay;
-            lbTotalPrice.Text = TotalAmount.ToString("0") + " VNĐ";
         }
+
 
         private void rdHourly_CheckedChanged(object sender, EventArgs e)
         {
@@ -711,45 +669,58 @@ namespace QuanLyPhong
         }
         void LoadDtgOrders()
         {
-            dtgListOrders.ColumnCount = 14;
+            dtgListOrders.ColumnCount = 13;
             dtgListOrders.Columns[0].Name = "Id";
             dtgListOrders.Columns[0].Visible = false;
-            dtgListOrders.Columns[1].Name = "STT";
-            dtgListOrders.Columns[2].Name = "OrderCode";
-            dtgListOrders.Columns[3].Name = "DateCreated";
-            dtgListOrders.Columns[4].Name = "Note";
-            dtgListOrders.Columns[5].Name = "Rentaltype";
-            dtgListOrders.Columns[6].Name = "Employee";
-            dtgListOrders.Columns[7].Name = "Customer";
-            dtgListOrders.Columns[8].Name = "Prepay";
-            dtgListOrders.Columns[9].Name = "OrderType";
-            dtgListOrders.Columns[10].Name = "Floor";
-            dtgListOrders.Columns[11].Name = "KindOfRoom";
-            dtgListOrders.Columns[12].Name = "Room";
-            dtgListOrders.Columns[13].Name = "ToTalTime";
+            dtgListOrders.Columns[1].Name = "OrderCode";
+            dtgListOrders.Columns[2].Name = "DateCreated";
+            dtgListOrders.Columns[3].Name = "Note";
+            dtgListOrders.Columns[4].Name = "Rentaltype";
+            dtgListOrders.Columns[5].Name = "Employee";
+            dtgListOrders.Columns[6].Name = "Customer";
+            dtgListOrders.Columns[7].Name = "Prepay";
+            dtgListOrders.Columns[8].Name = "OrderType";
+            dtgListOrders.Columns[9].Name = "Floor";
+            dtgListOrders.Columns[10].Name = "KindOfRoom";
+            dtgListOrders.Columns[11].Name = "Room";
+            dtgListOrders.Columns[12].Name = "ToTalTime";
             dtgListOrders.Rows.Clear();
-            int Count = 0;
             decimal PriceRoom = 0;
             foreach (var item in _orderService.GetOrdersViewModels(OrderId))
             {
+                TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
+                string totalTimeString = "Unavailable";
+                decimal priceRoom = 0;
+
+                if (ToTalTime.HasValue)
+                {
+                    if (item.Rentaltype == RentalTypeEnum.Daily)
+                    {
+                        int NgayLamTron = (int)Math.Round(ToTalTime.Value.TotalDays);
+                        NgayLamTron = NgayLamTron < 1 ? 1 : NgayLamTron;
+                        totalTimeString = $"{NgayLamTron} days";
+                    }
+                    else if (item.Rentaltype == RentalTypeEnum.Hourly)
+                    {
+                        int GioLamTron = (int)Math.Round(ToTalTime.Value.TotalHours);
+                        GioLamTron = GioLamTron < 1 ? 1 : GioLamTron;
+                        totalTimeString = $"{GioLamTron} hours";
+                    }
+                }
+
                 if (item.Rentaltype == RentalTypeEnum.Daily)
                 {
                     PriceRoom = item.PricePerDay;
-                    TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
-                    Count++;
-                    dtgListOrders.Rows.Add(item.Id, Count, item.OrderCode, item.DateCreated, item.Note, item.Rentaltype,
-                                           item.EmployeeName, item.CustomerName, item.Prepay, item.OrderType,
-                                           item.FloorName, item.KindOfRoomName, item.RoomName, ToTalTime.HasValue ? $"{ToTalTime.Value.TotalDays:F0} days" : "Unavailable");
                 }
                 else
                 {
                     PriceRoom = item.PriceByHour;
-                    TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
-                    Count++;
-                    dtgListOrders.Rows.Add(item.Id, Count, item.OrderCode, item.DateCreated, item.Note, item.Rentaltype,
-                                           item.EmployeeName, item.CustomerName, item.Prepay, item.OrderType,
-                                           item.FloorName, item.KindOfRoomName, item.RoomName, ToTalTime.HasValue ? $"{ToTalTime.Value.TotalHours:F0} hours" : "Unavailable");
                 }
+
+                dtgListOrders.Rows.Add(item.Id, item.OrderCode, item.DateCreated,
+                                       item.Note, item.Rentaltype, item.EmployeeName, item.CustomerName,
+                                       item.Prepay, item.OrderType, item.FloorName, item.KindOfRoomName,
+                                       item.RoomName, totalTimeString, PriceRoom);
             }
         }
         private void btn_ClearCus_Click(object sender, EventArgs e)
@@ -809,39 +780,52 @@ namespace QuanLyPhong
             }
         }
 
+        private bool qrCodeFound = false;
         private void videoCaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
-            Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
-
-            BarcodeReader reader = new BarcodeReader
+            try
             {
-                Options = new DecodingOptions
+                if (!qrCodeFound)
                 {
-                    TryHarder = true,
-                    PossibleFormats = new[] { BarcodeFormat.QR_CODE }
-                }
-            };
 
-            Result result = reader.Decode(bitmap);
+                    Bitmap bitmap = (Bitmap)eventArgs.Frame.Clone();
 
-            txtReadCode.Invoke(new MethodInvoker(delegate ()
-            {
-                if (result != null)
-                {
-                    txtReadCode.Text = result.Text;
-                    DisplayDetails(txtReadCode.Text);
-                }
-                else
-                {
-                    txtReadCode.Text = "No QR code found.";
-                }
-            }));
+                    BarcodeReader reader = new BarcodeReader
+                    {
+                        Options = new DecodingOptions
+                        {
+                            TryHarder = true,
+                            PossibleFormats = new[] { BarcodeFormat.QR_CODE }
+                        }
+                    };
 
-            if (ptCam.Image != null)
-            {
-                ptCam.Image.Dispose();
+                    Result result = reader.Decode(bitmap);
+
+                    txtReadCode.Invoke(new MethodInvoker(delegate ()
+                    {
+                        if (result != null)
+                        {
+                            txtReadCode.Text = result.Text;
+                            DisplayDetails(txtReadCode.Text);
+                            qrCodeFound = true;
+                        }
+                        else
+                        {
+                            txtReadCode.Text = "No QR code found.";
+                        }
+                    }));
+
+                    if (ptCam.Image != null)
+                    {
+                        ptCam.Image.Dispose();
+                    }
+                    ptCam.Image = bitmap;
+                }
             }
-            ptCam.Image = bitmap;
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private async void btnStop_Click(object sender, EventArgs e)
@@ -864,6 +848,7 @@ namespace QuanLyPhong
 
                     if (ptCam.Image != null)
                     {
+                        qrCodeFound = false;
                         ptCam.Image.Dispose();
                         ptCam.Image = null;
                     }
@@ -904,8 +889,84 @@ namespace QuanLyPhong
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            frmPay frm = new frmPay(OrderId);
+            frm.Show();
         }
 
+        private void frmRoomBookingReceipt_Load(object sender, EventArgs e)
+        {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(tbCustomerName.Text))
+            {
+                MessageBox.Show("Customer name is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_emailCus.Text) || !IsValidEmail(tb_emailCus.Text))
+            {
+                MessageBox.Show("A valid email address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_cccd.Text))
+            {
+                MessageBox.Show("CCCD is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_Address.Text))
+            {
+                MessageBox.Show("Address is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (rdFemale.Checked == false && rdMale.Checked == false)
+            {
+                MessageBox.Show("Please select a gender.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(tb_phoneCus.Text) || !IsValidPhoneNumber(tb_phoneCus.Text))
+            {
+                MessageBox.Show("A valid phone number is required.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidEmail(tb_emailCus.Text))
+            {
+                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidPhoneNumber(tb_phoneCus.Text))
+            {
+                MessageBox.Show("Email is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (!IsValidCCCD(tb_cccd.Text))
+            {
+                MessageBox.Show("CCCD is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var addCustomer = new Customer()
+            {
+                Name = tbCustomerName.Text,
+                Email = tb_emailCus.Text,
+                CCCD = tb_cccd.Text,
+                Address = tb_Address.Text,
+                Gender = rdFemale.Checked ? MenuGender.Female : (rdMale.Checked ? MenuGender.Male : MenuGender.Other),
+                PhoneNumber = tb_phoneCus.Text
+            };
+            if (MessageBox.Show("Do you want to add this Customer?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                string result = _customerService.AddCustomer(addCustomer);
+                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            LoadCustomer();
+            ClearBookingDetails();
+        }
     }
 }

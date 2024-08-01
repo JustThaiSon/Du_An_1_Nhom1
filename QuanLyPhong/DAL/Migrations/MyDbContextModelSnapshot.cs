@@ -57,8 +57,8 @@ namespace DAL.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("Point")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Point")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -182,9 +182,9 @@ namespace DAL.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Point")
+                    b.Property<decimal>("Point")
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

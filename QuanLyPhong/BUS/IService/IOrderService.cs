@@ -16,5 +16,6 @@ namespace BUS.IService
 		List<Orders> GetAllOrdersFromDb();
 		List<Orders> GetByRoomId(Guid Id);
 		List<OrderViewModel> GetOrdersViewModels(Guid OrderId);
+		List<OrderViewModel> GetAllOrdersViewModels();
 	}
 }

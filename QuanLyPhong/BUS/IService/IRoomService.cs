@@ -14,6 +14,7 @@ namespace BUS.IService
         string RemoveRoom(Guid Id);
         string UpdateRoom(RoomViewModels room);
         string UpdateRoom(Room room);
+        string UpdadateStatusRoom(Room romm);
         List<Room> GetAllRoomsFromDb();
         List<RoomViewModels> GetAllRooms();
     }

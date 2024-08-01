@@ -17,7 +17,7 @@ namespace DAL.Entities
         public string? Address { get; set; }
         public MenuGender Gender { get; set; }
         public string? CCCD { get; set; }
-        public int Point { get; set; }
+        public decimal Point { get; set; }
         public List<Orders> Orders { get; set; }
         public List<HistoryPoints> HistoryPoints { get; set; }
 

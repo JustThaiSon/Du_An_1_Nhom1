@@ -13,5 +13,6 @@ namespace BUS.IService
         string RemoveCustomer(Guid Id);
         string UpdateCustomer(Customer Customer);
         List<Customer> GetAllCustomerFromDb();
+        string UpdatePointByCustomer(Customer Customer);
     }
 }

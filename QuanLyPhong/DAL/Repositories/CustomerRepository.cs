@@ -93,5 +93,21 @@ namespace DAL.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public bool UpdatePointByCustomer(Customer customer)
+        {
+            var existingCustomer = _context.Customers.FirstOrDefault(c => c.Id == customer.Id);
+            if (existingCustomer == null)
+            {
+                return false;
+            }
+
+            if (customer.Point != existingCustomer.Point)
+            {
+                existingCustomer.Point = customer.Point;
+            }
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

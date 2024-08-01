@@ -75,6 +75,16 @@ namespace BUS.Service
             }
             return "Delete failure";
         }
+
+        public string UpdadateStatusRoom(Room romm)
+        {
+            if (_roomRepository.UpdadateStatusRoom(romm))
+            {
+                return "Update success";
+            }
+            return "Update failcure";
+        }
+
         public string UpdateRoom(RoomViewModels room)
         {
             var updateRoom = _roomRepository.GetById(room.Id);
