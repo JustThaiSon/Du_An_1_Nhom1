@@ -28,6 +28,7 @@ namespace QuanLyPhong
         private Guid selectedEmployeeId = Guid.Empty;
         private Guid selectedRoleId = Guid.Empty;
         private byte[] img;
+        private string path_img= "C:\\Users\\UBC\\Desktop\\Picture Tạm Thời";
         public frmNhanVien()
         {
             InitializeComponent();
@@ -104,8 +105,9 @@ namespace QuanLyPhong
             bool status = false;
             DateTime dateOfBirth = dtP_add_DateOfBirth.Value;
             Guid role = Guid.Empty;
+            var listCCCD = _employeeService.GetAllEmployeeFromDb().Select(x => x.CCCD);
 
-            if (string.IsNullOrWhiteSpace(txt_add_Name.Text) || txt_add_Name.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
+            if (string.IsNullOrWhiteSpace(txt_add_Name.Text) || txt_Name.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
             {
                 MessageBox.Show("Tên không được Để Trống.");
                 return;
@@ -125,9 +127,9 @@ namespace QuanLyPhong
                 MessageBox.Show("Mật Khẩu Không Được Để Trống!!!.");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(cccd) || !cccd.All(char.IsDigit) || cccd.Length != 12)
+            if (string.IsNullOrWhiteSpace(cccd) || !cccd.All(char.IsDigit) || cccd.Length != 12 || listCCCD.Any(x => x == cccd))
             {
-                MessageBox.Show("CCCD phải là số có 12 chữ số.");
+                MessageBox.Show("CCCD phải là số có 12 chữ số Hoặc CCCD đã tồn tại!!!");
                 return;
             }
             if (!IsValidEmail(txt_add_Email.Text))
@@ -189,6 +191,7 @@ namespace QuanLyPhong
         {
             var employee = _employeeService.GetAllEmployeeFromDb().FirstOrDefault(x => x.Id == Guid.Parse(lb_Id.Text));
             var role_Name = _roleService.GetAllRoleFromDb().FirstOrDefault(x => x.Id == employee.RoleId).RoleName;
+            var listCCCD = _employeeService.GetAllEmployeeFromDb().Select(x => x.CCCD);
 
             if (string.IsNullOrWhiteSpace(txt_Name.Text) || txt_Name.Text.Any(c => !char.IsLetter(c) && !char.IsWhiteSpace(c)))
             {
@@ -215,7 +218,7 @@ namespace QuanLyPhong
             }
 
             string cccd = txt_CCCD.Text;
-            if (string.IsNullOrWhiteSpace(cccd) || !cccd.All(char.IsDigit) || cccd.Length != 12)
+            if (string.IsNullOrWhiteSpace(cccd) || !cccd.All(char.IsDigit) || cccd.Length != 12 || listCCCD.Any(x=>x == cccd))
             {
                 MessageBox.Show("CCCD phải là số có 12 chữ số.");
                 return;
@@ -255,7 +258,7 @@ namespace QuanLyPhong
             {
                 employee.Status = true;
             }
-            var img = File.ReadAllBytes(ptb_Employee.ImageLocation); 
+            var img = File.ReadAllBytes(ptb_Employee.ImageLocation);
             employee.Name = txt_Name.Text;
             employee.Address = txt_Adress.Text;
             employee.UserName = txt_UserName.Text;
@@ -344,7 +347,7 @@ namespace QuanLyPhong
             int Count = 0;
             string role = "";
             var listEployeeSearch = _employeeService.GetAllEmployeeFromDb()
-             .Where(x => x.Name.Contains(txtSearch.Text) || x.CCCD.StartsWith(txtSearch.Text) || x.EmployeeCode.Contains(txtSearch.Text)).ToList();
+             .Where(x => x.Name.ToLower().Contains(txtSearch.Text.ToLower()) || x.CCCD.StartsWith(txtSearch.Text) || x.EmployeeCode.Contains(txtSearch.Text)).ToList();
 
             foreach (var item in listEployeeSearch)
             {
@@ -430,7 +433,7 @@ namespace QuanLyPhong
 
             {
 
-                openFileDialog.InitialDirectory = "C:\\Users\\UBC\\Desktop\\Picture Tạm Thời";
+                openFileDialog.InitialDirectory = path_img;
 
                 openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
 
@@ -464,7 +467,7 @@ namespace QuanLyPhong
 
             {
                 //File chứa Ảnh
-                openFileDialog.InitialDirectory = "C:\\Users\\UBC\\Desktop\\Picture Tạm Thời";
+                openFileDialog.InitialDirectory = path_img;
 
                 openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
 
@@ -499,15 +502,9 @@ namespace QuanLyPhong
         {
             this.Img_edit_click();
         }
-
         private void btn_clear_Click(object sender, EventArgs e)
         {
             add_Clear();
-        }
-
-        private void btn_edit_Click_1(object sender, EventArgs e)
-        {
-            this.btn_edit_Click(sender,e);
         }
     }
 }

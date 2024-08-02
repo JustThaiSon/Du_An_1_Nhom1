@@ -920,7 +920,7 @@
             btn_edit.Size = new Size(184, 47);
             btn_edit.TabIndex = 74;
             btn_edit.Text = " Confirm Edit ";
-            btn_edit.Click += btn_edit_Click_1;
+            btn_edit.Click += btn_edit_Click;
             // 
             // txt_PassWord
             // 

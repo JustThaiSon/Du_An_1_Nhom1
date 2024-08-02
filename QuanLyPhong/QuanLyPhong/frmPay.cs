@@ -558,34 +558,38 @@ namespace QuanLyPhong
                            .SetTextAlignment(TextAlignment.CENTER)
                            .SetMarginBottom(20));
                           var qrData = GetQRCodeImageData();
-                        if (!string.IsNullOrEmpty(qrData))
+                        if (cbbPayment.SelectedIndex == 1)
                         {
-                            Image qrImage = Base64ToImage(qrData);
-                            if (qrImage != null)
+                            if (!string.IsNullOrEmpty(qrData))
                             {
-                                int qrImageSize = 150; 
-                                Image resizedQrImage = ResizeImage(qrImage, qrImageSize);
-                                byte[] qrImageData = ImageToByteArray(resizedQrImage);
+                                Image qrImage = Base64ToImage(qrData);
+                                if (qrImage != null)
+                                {
+                                    int qrImageSize = 150;
+                                    Image resizedQrImage = ResizeImage(qrImage, qrImageSize);
+                                    byte[] qrImageData = ImageToByteArray(resizedQrImage);
 
-                                iText.Layout.Element.Image pdfImage = new iText.Layout.Element.Image(ImageDataFactory.Create(qrImageData));
-                                pdfImage.SetWidth(qrImageSize);
-                                pdfImage.SetHeight(qrImageSize);
+                                    iText.Layout.Element.Image pdfImage = new iText.Layout.Element.Image(ImageDataFactory.Create(qrImageData));
+                                    pdfImage.SetWidth(qrImageSize);
+                                    pdfImage.SetHeight(qrImageSize);
 
-                                Paragraph qrImageParagraph = new Paragraph().Add(pdfImage);
-                                qrImageParagraph.SetTextAlignment(TextAlignment.CENTER);
-                                qrImageParagraph.SetMarginTop(20);
+                                    Paragraph qrImageParagraph = new Paragraph().Add(pdfImage);
+                                    qrImageParagraph.SetTextAlignment(TextAlignment.CENTER);
+                                    qrImageParagraph.SetMarginTop(20);
 
-                                document.Add(qrImageParagraph);
+                                    document.Add(qrImageParagraph);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Không thể chuyển đổi hình ảnh QR từ dữ liệu base64.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
                             else
                             {
-                                MessageBox.Show("Không thể chuyển đổi hình ảnh QR từ dữ liệu base64.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("QR image data is empty or invalid from API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
-                        else
-                        {
-                            MessageBox.Show("QR image data is empty or invalid from API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                      
                         // Bảng sản phẩm
                         float[] productColumnWidths = { 1, 3, 2, 2, 2 };
                         Table productTable = new Table(productColumnWidths);
@@ -685,11 +689,7 @@ namespace QuanLyPhong
 
                         // Add order information headers and data
                         AddOrderHeaderCell("Thông tin");
-
                         AddOrderHeaderCell("Giá trị");
-
-                        AddOrderDataCell("STT");
-                        AddOrderDataCell(filterData.ToTal.ToString());
 
                         AddOrderDataCell("Mã Hóa Đơn");
                         AddOrderDataCell(filterData.OrderCode);
@@ -723,6 +723,9 @@ namespace QuanLyPhong
 
                         AddOrderDataCell("Loại Hình thuê");
                         AddOrderDataCell(filterData.Rentaltype.ToString());
+
+                        AddOrderDataCell("Loại Phòng");
+                        AddOrderDataCell(filterData.KindOfRoomName.ToString());
 
                         AddOrderDataCell("Tổng Tiền Hóa Đơn");
                         AddOrderDataCell($"{filterData.ToTal.ToString()} VNĐ");

@@ -889,9 +889,9 @@ namespace QuanLyPhong
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             frmPay frm = new frmPay(OrderId);
             frm.Show();
+            this.Close();
         }
 
         private void frmRoomBookingReceipt_Load(object sender, EventArgs e)
