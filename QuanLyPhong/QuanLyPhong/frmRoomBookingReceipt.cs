@@ -143,7 +143,7 @@ namespace QuanLyPhong
             var btnCheckin = _roomService.GetAllRooms().Where(x => x.Id == RoomId && x.Status == RoomStatus.UnAvailable);
             if (btnCheckin != null)
             {
-                btn_checkin.Enabled = true;
+                btn_checkin.Visible = true;
             }
         }
 
@@ -268,8 +268,8 @@ namespace QuanLyPhong
 
             if (MessageBox.Show("Do you want to add this Order?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string result = _orderService.AddOrders(newOrder);
-                MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool result = _orderService.AddOrders(newOrder);
+                MessageBox.Show("Booking Room Success", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             foreach (var service in _temporaryServices)
             {
@@ -433,6 +433,7 @@ namespace QuanLyPhong
             TimeSpan timeSpanHours = dtGioCheckout.Value - DtGioCheckIn.Value;
             TimeSpan timeSpanDays = dt_checkout.Value.Date - dt_checkin.Value.Date;
 
+
             var room = _roomService.GetAllRooms().FirstOrDefault(x => x.Id == RoomId);
             if (room == null)
             {
@@ -457,12 +458,6 @@ namespace QuanLyPhong
                 decimal roundedHours = Math.Round(totalHours, MidpointRounding.AwayFromZero);
                 TotalPriceRoom = room.PriceByHour * roundedHours;
             }
-            else
-            {
-                lbTotalPrice.Text = "Error: Please select a pricing method.";
-                return;
-            }
-
             decimal Prepay = 0;
             string prepayText = txtPrepay.Text.Trim();
             if (!string.IsNullOrEmpty(prepayText) && decimal.TryParse(prepayText, out decimal parsedPrepay))
@@ -472,7 +467,7 @@ namespace QuanLyPhong
 
             TotalAmount = TotalPriceRoom + TotalPriceOrderService;
             decimal remainingBalance = TotalAmount - Prepay;
-
+            TotalAmount = remainingBalance;
             if (remainingBalance > 0)
             {
                 lbTotalPrice.Text = $"{remainingBalance:0} VNĐ";
@@ -954,6 +949,16 @@ namespace QuanLyPhong
             if (!IsValidCCCD(tb_cccd.Text))
             {
                 MessageBox.Show("CCCD is invalid.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_customerService.GetAllCustomerFromDb().Any(x=>x.CCCD == tb_cccd.Text))
+            {
+                MessageBox.Show("CCCD is exist", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (_customerService.GetAllCustomerFromDb().Any(x => x.Email == tb_emailCus.Text))
+            {
+                MessageBox.Show("Email is exist", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var addCustomer = new Customer()

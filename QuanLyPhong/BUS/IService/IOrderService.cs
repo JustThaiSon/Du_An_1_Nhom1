@@ -10,7 +10,7 @@ namespace BUS.IService
 {
 	public interface IOrderService
 	{
-		string AddOrders(Orders Orders);
+		bool AddOrders(Orders Orders);
 		string RemoveOrders(Guid Id);
 		string UpdateOrders(Orders Orders);
 		List<Orders> GetAllOrdersFromDb();

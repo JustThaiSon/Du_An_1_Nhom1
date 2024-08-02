@@ -84,14 +84,14 @@ namespace DAL.Repositories
 
             int maxNumber = int.Parse(maxCode.Substring(2));
 
-            return $"CM{maxNumber + 1:D3}";
+            return $"EM{maxNumber + 1:D3}";
         }
 
         public List<Employee> GetAllEmployee()
         {
             if (_context.Employees.ToList() == null)
             {
-                throw new Exception("Employee not found"); // hoặc ném ngoại lệ nếu không tìm thấy
+                throw new Exception("Employee not found"); 
             }
             return _context.Employees.ToList();
         }

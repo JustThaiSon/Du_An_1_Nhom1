@@ -66,10 +66,10 @@
             guna2GradientPanel1.Controls.Add(guna2CirclePictureBox1);
             guna2GradientPanel1.Controls.Add(btn_Exit);
             guna2GradientPanel1.CustomizableEdges = customizableEdges11;
-            guna2GradientPanel1.Location = new Point(0, 12);
+            guna2GradientPanel1.Location = new Point(3, -2);
             guna2GradientPanel1.Name = "guna2GradientPanel1";
             guna2GradientPanel1.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            guna2GradientPanel1.Size = new Size(1117, 542);
+            guna2GradientPanel1.Size = new Size(1131, 576);
             guna2GradientPanel1.TabIndex = 0;
             guna2GradientPanel1.Paint += guna2GradientPanel1_Paint;
             // 
@@ -231,6 +231,7 @@
             Controls.Add(guna2GradientPanel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Login";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += Login_Load;
             guna2GradientPanel1.ResumeLayout(false);

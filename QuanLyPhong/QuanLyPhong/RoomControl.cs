@@ -141,7 +141,7 @@ namespace QuanLyPhong
             {
                 Room.Status = RoomStatus.UnAvailable;
                 roomService.UpdateRoom(Room);
-                MessageBox.Show($"Đặt phòng {Room.RoomName} thành công!");
+                //MessageBox.Show($"Đặt phòng {Room.RoomName} thành công!");
                 ptRoom.Image = Properties.Resources.UnAvailable;
             }
         }

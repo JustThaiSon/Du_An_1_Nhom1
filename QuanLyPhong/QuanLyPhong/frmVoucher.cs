@@ -124,6 +124,11 @@ namespace QuanLyPhong
                 MessageBox.Show("Ngày kết thúc phải lớn hơn ngày bắt đầu.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (startDate <= DateTime.Now)
+            {
+                MessageBox.Show("Ngày Bắt đầu phải lớn hơn trong quá khứ.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var addVoucher = new Voucher()
             {
                 StartDate = startDate,

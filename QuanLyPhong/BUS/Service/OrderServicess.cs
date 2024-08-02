@@ -37,15 +37,15 @@ namespace BUS.Service
 			_customerRepository = new CustomerRepository();
 			_historyPointsRepository = new HistoryPointsRepository();
 		}
-		public string AddOrders(Orders Orders)
+		public bool AddOrders(Orders Orders)
 		{
 			if (_ordersRepository.CreateOrder(Orders))
 			{
-				return "add success";
+				return true;
 			}
 			else
 			{
-				return "add failure";
+				return false;
 			}
 		}
 		public List<Orders> GetAllOrdersFromDb()

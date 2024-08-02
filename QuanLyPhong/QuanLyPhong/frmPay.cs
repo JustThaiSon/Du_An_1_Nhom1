@@ -30,6 +30,16 @@ using System.Windows.Forms.VisualStyles;
 using Color = System.Drawing.Color;
 using HorizontalAlignment = iText.Layout.Properties.HorizontalAlignment;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using BUS.EntitiesApiPay;
+using iText.Kernel.Pdf.Canvas.Wmf;
+using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.Crmf;
+using RestSharp;
+using Image = System.Drawing.Image;
+using System.Xml.Linq;
+using iText.IO.Image;
+using System.Drawing.Drawing2D;
+using Rectangle = System.Drawing.Rectangle;
 
 namespace QuanLyPhong
 {
@@ -47,7 +57,7 @@ namespace QuanLyPhong
         private decimal? ToTal { get; set; }
         private decimal? ToTalDiscount { get; set; }
         private decimal? ToTalPricePoints { get; set; }
-        private decimal?  PriceRoom  { get; set; }
+        private decimal? PriceRoom { get; set; }
         private string totalTimeString { get; set; }
 
         private IHistorypointService _historypointService;
@@ -111,13 +121,13 @@ namespace QuanLyPhong
             dtgListOrders.Columns[12].Name = "ToTalTime";
             dtgListOrders.Columns[13].Name = "PointsAdd";
             dtgListOrders.Rows.Clear();
-            
+
             PointAdd = 0;
             foreach (var item in _orderService.GetOrdersViewModels(OrderId))
             {
                 PointAdd = Convert.ToInt32((double)item.ToTalPrice * 0.01);
                 TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
-                    totalTimeString = "Unavailable";
+                totalTimeString = "Unavailable";
                 if (ToTalTime.HasValue)
                 {
                     if (item.Rentaltype == RentalTypeEnum.Daily)
@@ -440,6 +450,7 @@ namespace QuanLyPhong
                     {
                         Issue_An_invoice();
                     }
+                    this.Close();
                 }
             }
             catch (Exception)
@@ -447,10 +458,8 @@ namespace QuanLyPhong
 
                 return;
             }
-
-
         }
-        void SentMailAddPoint(string Email,decimal point , decimal ToTalPoint)
+        void SentMailAddPoint(string Email, decimal point, decimal ToTalPoint)
         {
             if (string.IsNullOrEmpty(Email))
             {
@@ -548,7 +557,35 @@ namespace QuanLyPhong
                            .SetFontSize(14)
                            .SetTextAlignment(TextAlignment.CENTER)
                            .SetMarginBottom(20));
+                          var qrData = GetQRCodeImageData();
+                        if (!string.IsNullOrEmpty(qrData))
+                        {
+                            Image qrImage = Base64ToImage(qrData);
+                            if (qrImage != null)
+                            {
+                                int qrImageSize = 150; 
+                                Image resizedQrImage = ResizeImage(qrImage, qrImageSize);
+                                byte[] qrImageData = ImageToByteArray(resizedQrImage);
 
+                                iText.Layout.Element.Image pdfImage = new iText.Layout.Element.Image(ImageDataFactory.Create(qrImageData));
+                                pdfImage.SetWidth(qrImageSize);
+                                pdfImage.SetHeight(qrImageSize);
+
+                                Paragraph qrImageParagraph = new Paragraph().Add(pdfImage);
+                                qrImageParagraph.SetTextAlignment(TextAlignment.CENTER);
+                                qrImageParagraph.SetMarginTop(20);
+
+                                document.Add(qrImageParagraph);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không thể chuyển đổi hình ảnh QR từ dữ liệu base64.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("QR image data is empty or invalid from API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         // Bảng sản phẩm
                         float[] productColumnWidths = { 1, 3, 2, 2, 2 };
                         Table productTable = new Table(productColumnWidths);
@@ -593,14 +630,14 @@ namespace QuanLyPhong
                             .SetBackgroundColor(new DeviceRgb(0, 102, 204))
                             .SetFontColor(ColorConstants.WHITE));
 
-                        var getOrderService = _orderServiceService.GetAllOrderService().Where(x=>x.OrderId == OrderId);
+                        var getOrderService = _orderServiceService.GetAllOrderService().Where(x => x.OrderId == OrderId);
                         // Thêm từng sản phẩm vào bảng
                         int count = 0;
                         decimal ToTalPriceService = 0;
                         foreach (var item in getOrderService)
                         {
                             count++;
-                             AddTableRow(productTable, count, item.Name, item.PriceOrderService,item.QuantityOrderService,item.TotalPrice);
+                            AddTableRow(productTable, count, item.Name, item.PriceOrderService, item.QuantityOrderService, item.TotalPrice);
                             ToTalPriceService = getOrderService.Sum(s => s.TotalPrice);
                         }
                         Cell totalLabelCell = new Cell(1, 4)
@@ -670,7 +707,7 @@ namespace QuanLyPhong
                         AddOrderDataCell(filterData.TotalDiscount.ToString());
 
                         AddOrderDataCell("Tổng Tiền Giảm Giá Bằng Điểm");
-                        AddOrderDataCell(filterData.TotalPricePoint.ToString());
+                        AddOrderDataCell(filterData.TotalPricePoint.ToString() + " VND");
 
                         AddOrderDataCell("Giá Phòng");
                         AddOrderDataCell(PriceRoom.ToString() + " VNĐ");
@@ -690,8 +727,6 @@ namespace QuanLyPhong
                         AddOrderDataCell("Tổng Tiền Hóa Đơn");
                         AddOrderDataCell($"{filterData.ToTal.ToString()} VNĐ");
                         document.Add(orderTable);
-
-                        // Close document
                         document.Close();
                     }
                 }
@@ -712,7 +747,50 @@ namespace QuanLyPhong
                 MessageBox.Show("Lỗi PDF: " + ex.Message, "Lỗi PDF", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private Image ResizeImage(Image image, int maxDimension)
+        {
+            int newWidth, newHeight;
+            double ratio = (double)image.Width / image.Height;
 
+            if (image.Width > image.Height)
+            {
+                newWidth = maxDimension;
+                newHeight = (int)(maxDimension / ratio);
+            }
+            else
+            {
+                newHeight = maxDimension;
+                newWidth = (int)(maxDimension * ratio);
+            }
+
+            int highResWidth = newWidth * 2;
+            int highResHeight = newHeight * 2;
+
+            Bitmap highResImage = new Bitmap(highResWidth, highResHeight);
+
+            using (Graphics gr = Graphics.FromImage(highResImage))
+            {
+                gr.SmoothingMode = SmoothingMode.AntiAlias;
+                gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                gr.DrawImage(image, new Rectangle(0, 0, highResWidth, highResHeight));
+            }
+
+            Bitmap resizedImage = new Bitmap(newWidth, newHeight);
+
+            using (Graphics gr = Graphics.FromImage(resizedImage))
+            {
+                gr.SmoothingMode = SmoothingMode.AntiAlias;
+                gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                gr.DrawImage(highResImage, new Rectangle(0, 0, newWidth, newHeight),
+                    new Rectangle(0, 0, highResWidth, highResHeight), GraphicsUnit.Pixel);
+            }
+
+            return resizedImage;
+        }
         private void AddTableRow(Table table, int STT, string itemName, decimal itemPrice, int? quantity, decimal totalPrice)
         {
             PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
@@ -753,9 +831,85 @@ namespace QuanLyPhong
             }
             cbbPayment.SelectedItem = -1;
         }
+        private string GetQRCodeImageData()
+        {
+            try
+            {
+                var apiRequest = new ApiRequest
+                {
+                    acqId = 970436,
+                    accountNo = "0731000935774",
+                    accountName = "HOANG THAI SON",
+                    amount = Convert.ToInt32(ToTal),
+                    format = "text",
+                    template = "compact2"
+                };
+
+                var jsonRequest = JsonConvert.SerializeObject(apiRequest);
+
+                var client = new RestClient("https://api.vietqr.io/v2/generate");
+                var request = new RestRequest
+                {
+                    Method = Method.Post
+                };
+                request.AddHeader("Accept", "application/json");
+                request.AddJsonBody(apiRequest);
+
+                var response = client.Execute(request);
+
+                if (response.IsSuccessful)
+                {
+                    var content = response.Content;
+                    var dataResult = JsonConvert.DeserializeObject<ApiResponse>(content);
+
+                    if (dataResult != null && dataResult.data != null)
+                    {
+                        return dataResult.data.qrDataURL.Replace("data:image/png;base64,", "");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Empty or invalid response received from API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Failed to get a successful response from API. Status Code: {response.StatusCode} - {response.ErrorMessage}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generating QR code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return null;
+        }
+        private byte[] ImageToByteArray(Image image)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
 
         private void cbbOrderType_SelectedIndexChanged(object sender, EventArgs e)
         {
+        } 
+        private Image Base64ToImage(string base64String)
+        {
+            try
+            {
+                byte[] imageBytes = Convert.FromBase64String(base64String);
+                using (var ms = new MemoryStream(imageBytes))
+                {
+                    return Image.FromStream(ms);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error converting base64 to image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
         private void btn_addFloor_Click(object sender, EventArgs e)
@@ -841,6 +995,5 @@ namespace QuanLyPhong
             lbTotalPrice.Text = (ToTal).ToString() + " VND";
         }
 
-       
     }
 }
