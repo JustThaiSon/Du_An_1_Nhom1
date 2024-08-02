@@ -651,7 +651,7 @@ namespace QuanLyPhong
             var servicesToDelete = currentServices.Where(s => !_temporaryServices.Any(ts => ts.ServiceId == s.ServiceId)).ToList();
             foreach (var service in servicesToDelete)
             {
-                string deleteResult = _orderServiceService.RemoveOrderServicee(service.OrderId, service.ServiceId);
+                string deleteResult = _orderServiceService.RemoveOrderServicee(service.OrderId,service.ServiceId);
             }
 
             foreach (var service in _temporaryServices)

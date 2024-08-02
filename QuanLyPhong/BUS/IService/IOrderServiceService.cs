@@ -11,9 +11,11 @@ namespace BUS.IService
 {
 	public interface IOrderServiceService
 	{
-		string AddOrderService(OrderService orderService);
-		string RemoveOrderServicee(Guid orderId, Guid serviceId);
-		string UpdateOrderService(OrderService orderService);
+		string AddOrderService(OrderService orderService); 
+		string RemoveOrderServiceeAll(Guid orderId);
+
+        string RemoveOrderServicee(Guid orderId, Guid serviceId);
+        string UpdateOrderService(OrderService orderService);
 		List<OrderServiceViewModel> GetAllOrderService();
 		List<OrderService> GetOrderServicesByOrderId(Guid Id);
 	}
