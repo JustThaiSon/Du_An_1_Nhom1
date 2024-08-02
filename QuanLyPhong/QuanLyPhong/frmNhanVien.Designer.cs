@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNhanVien));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -233,13 +232,9 @@
             tabPage1.Size = new Size(1414, 745);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Add Employee";
-           
-            // 
-            // guna2DateTimePicker1
             // 
             // ptB_add_Img
             // 
-            ptB_add_Img.Image = (Image)resources.GetObject("ptB_add_Img.Image");
             ptB_add_Img.Location = new Point(1039, 139);
             ptB_add_Img.Name = "ptB_add_Img";
             ptB_add_Img.Size = new Size(289, 270);
@@ -924,7 +919,7 @@
             btn_edit.Size = new Size(184, 47);
             btn_edit.TabIndex = 74;
             btn_edit.Text = " Confirm Edit ";
-            btn_edit.Click += btn_edit_Click_1;
+            btn_edit.Click += btn_edit_Click;
             // 
             // txt_PassWord
             // 
@@ -1244,7 +1239,7 @@
             label26.TabIndex = 48;
             label26.Text = "ID -";
             // 
-            // AddNhanVien
+            // frmNhanVien
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -1252,7 +1247,7 @@
             ClientSize = new Size(1512, 945);
             Controls.Add(tabControl1);
             Controls.Add(guna2HtmlLabel1);
-            Name = "AddNhanVien";
+            Name = "frmNhanVien";
             Text = "AddNhanVien";
             Load += AddNhanVien_Load;
             tabControl1.ResumeLayout(false);

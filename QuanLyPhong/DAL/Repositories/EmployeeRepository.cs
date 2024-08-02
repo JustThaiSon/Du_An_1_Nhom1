@@ -50,7 +50,10 @@ namespace DAL.Repositories
                     _context.SaveChanges();
                     return true;
                 }
-                return false;
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {
@@ -79,10 +82,10 @@ namespace DAL.Repositories
 
             if (string.IsNullOrEmpty(maxCode))
             {
-                return "EM001";
+                return "CM001";
             }
 
-            int maxNumber = int.Parse(maxCode.Substring(2));
+            int maxNumber = int.Parse(maxCode.Substring(2));         
 
             return $"CM{maxNumber + 1:D3}";
         }
