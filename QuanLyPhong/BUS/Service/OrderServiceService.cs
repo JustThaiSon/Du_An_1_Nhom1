@@ -67,14 +67,22 @@ namespace BUS.Service
 
 		public string RemoveOrderServicee(Guid orderId, Guid serviceId)
 		{
-			if (_orderServiceRepository.DeleteOrderSV(orderId, serviceId))
+			if (_orderServiceRepository.DeleteOrderSV(orderId))
 			{
 				return "Delete success";
 			}
 			return "Delete failure";
 		}
+        public string RemoveOrderServiceeAll(Guid orderId)
+        {
+            if (_orderServiceRepository.DeleteOrderSV(orderId))
+            {
+                return "Delete success";
+            }
+            return "Delete failure";
+        }
 
-		public string UpdateOrderService(OrderService orderService)
+        public string UpdateOrderService(OrderService orderService)
 		{
 			//var updateOrderService = _orderServiceRepository.GetById(orderService.OrderId);
 			//updateOrderService.Quantity = orderService.Quantity;

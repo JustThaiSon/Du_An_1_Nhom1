@@ -99,12 +99,12 @@ namespace QuanLyPhong
                 MessageBox.Show("Giá sản phẩm khong hợp lệ.");
                 return;
             }
-            if (Convert.ToInt32(tb_Quantity.Text)<0)
+            if (Convert.ToInt32(tb_Quantity.Text) < 0)
             {
                 MessageBox.Show("Số lượng khong hợp lệ.");
                 return;
             }
-           
+
             var addService = new Services()
             {
                 CreatedDate = createDate,
@@ -236,6 +236,23 @@ namespace QuanLyPhong
         private void frmService_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void tb_search_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = tb_search.Text.Trim().ToLower();
+
+            var allServices = _serSevice.GetAllServiceFromDb();
+
+            var filteredServices = allServices.Where(s => s.Name.ToLower().Contains(searchText) || s.Type.ToLower().Contains(searchText)).ToList();
+
+            dtgDanhSach.Rows.Clear();
+            int count = 0;
+            foreach (var item in filteredServices)
+            {
+                count++;
+                dtgDanhSach.Rows.Add(item.Id, count, item.Name, item.Price, item.Type, item.Status, item.Quantity, item.CreatedDate.ToString("dd/MM/yyyy"), item.Descretion);
+            }
         }
     }
 }

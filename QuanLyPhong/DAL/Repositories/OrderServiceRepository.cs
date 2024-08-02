@@ -35,11 +35,11 @@ namespace DAL.Repositories
             }
         }
 
-        public bool DeleteOrderSV(Guid orderId, Guid serviceId)
+        public bool DeleteOrderSV(Guid orderId)
         {
 
 			var orderService = _context.OrderServices
-			 .FirstOrDefault(os => os.OrderId == orderId && os.ServiceId == serviceId);
+			 .FirstOrDefault(os => os.OrderId == orderId);
 			if (orderService != null)
             {
                 _context.OrderServices.Remove(orderService);

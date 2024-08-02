@@ -105,8 +105,12 @@ namespace BUS.Service
 
 		public string RemoveOrders(Guid Id)
 		{
-			throw new NotImplementedException();
-		}
+            if (_ordersRepository.DeleteOrder(Id))
+            {
+                return "Delete success";
+            }
+            return "Delete failure";
+        }
 
 		public string UpdateOrders(Orders Orders)
 		{

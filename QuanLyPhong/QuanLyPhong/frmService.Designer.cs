@@ -52,6 +52,7 @@
             label2 = new Label();
             tb_search = new Guna.UI2.WinForms.Guna2TextBox();
             panel2 = new Panel();
+            button1 = new Button();
             tbtype = new Guna.UI2.WinForms.Guna2TextBox();
             tb_des = new Guna.UI2.WinForms.Guna2TextBox();
             label9 = new Label();
@@ -71,7 +72,6 @@
             label4 = new Label();
             label3 = new Label();
             dtgDanhSach = new DataGridView();
-            button1 = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgDanhSach).BeginInit();
@@ -149,6 +149,7 @@
             tb_search.Size = new Size(754, 40);
             tb_search.TabIndex = 0;
             tb_search.TextOffset = new Point(15, 0);
+            tb_search.TextChanged += tb_search_TextChanged;
             // 
             // panel2
             // 
@@ -176,6 +177,16 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(517, 841);
             panel2.TabIndex = 25;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(35, 771);
+            button1.Name = "button1";
+            button1.Size = new Size(72, 51);
+            button1.TabIndex = 35;
+            button1.Text = "Clear";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // tbtype
             // 
@@ -411,7 +422,7 @@
             tb_SerName.Size = new Size(438, 36);
             tb_SerName.TabIndex = 8;
             // 
-            // label1
+            // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
@@ -442,16 +453,6 @@
             dtgDanhSach.Size = new Size(846, 624);
             dtgDanhSach.TabIndex = 26;
             dtgDanhSach.CellClick += dtgDanhSach_CellClick;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(35, 771);
-            button1.Name = "button1";
-            button1.Size = new Size(72, 51);
-            button1.TabIndex = 35;
-            button1.Text = "Clear";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // frmService
             // 
