@@ -94,9 +94,9 @@
 			label2.ForeColor = SystemColors.HotTrack;
 			label2.Location = new Point(34, 27);
 			label2.Name = "label2";
-			label2.Size = new Size(150, 21);
+			label2.Size = new Size(162, 21);
 			label2.TabIndex = 27;
-			label2.Text = "Mane KindOfRoom";
+			label2.Text = "Kind Of Room Name";
 			// 
 			// button3
 			// 
@@ -150,6 +150,8 @@
 			txtHour.ShadowDecoration.CustomizableEdges = customizableEdges4;
 			txtHour.Size = new Size(204, 27);
 			txtHour.TabIndex = 12;
+			txtHour.TextChanged += txtHour_TextChanged;
+			txtHour.KeyPress += txtHour_KeyPress;
 			// 
 			// label1
 			// 
@@ -181,6 +183,7 @@
 			txtDay.ShadowDecoration.CustomizableEdges = customizableEdges6;
 			txtDay.Size = new Size(204, 27);
 			txtDay.TabIndex = 10;
+			txtDay.KeyPress += txtDay_KeyPress;
 			// 
 			// label3
 			// 

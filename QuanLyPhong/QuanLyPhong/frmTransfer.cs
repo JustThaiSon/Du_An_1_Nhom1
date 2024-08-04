@@ -92,7 +92,11 @@ namespace QuanLyPhong
             {
                 var oldRoom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.Id == oldRoomId);
                 var newRoom = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.Id == newRoomId);
-
+                if(oldRoom.KindOfRoomId != newRoom.KindOfRoomId)
+                {
+					MessageBox.Show("Chỉ Được Chuyển Phòng Khi Cùng Loại Phòng", "Warning",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+					return;
+				}
                 if (oldRoom == null)
                 {
                     MessageBox.Show("Phòng cũ không tồn tại.");

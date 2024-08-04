@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZXing;
 
 namespace QuanLyPhong
 {
@@ -52,6 +53,21 @@ namespace QuanLyPhong
 			if (decimal.TryParse(txtDay.Text, out decimal pricePerDay) &&
 			decimal.TryParse(txtHour.Text, out decimal priceByHour))
 			{
+                if (string.IsNullOrEmpty(txtName.Text))
+				{
+					MessageBox.Show("Kind Of Name is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
+				if (string.IsNullOrEmpty(txtHour.Text))
+				{
+					MessageBox.Show("Hours is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
+				if (string.IsNullOrEmpty(txtDay.Text))
+				{
+					MessageBox.Show("Days is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
 				var kindOfRoom = new KindOfRoom
 				{
 					KindOfRoomName = txtName.Text,
@@ -77,6 +93,21 @@ namespace QuanLyPhong
 			if (decimal.TryParse(txtDay.Text, out decimal pricePerDay) &&
 		decimal.TryParse(txtHour.Text, out decimal priceByHour))
 			{
+				if (string.IsNullOrEmpty(txtName.Text))
+				{
+					MessageBox.Show("Kind Of Name is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
+				if (string.IsNullOrEmpty(txtHour.Text))
+				{
+					MessageBox.Show("Hours is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
+				if (string.IsNullOrEmpty(txtDay.Text))
+				{
+					MessageBox.Show("Days is not empty", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					return;
+				}
 				var kindOfRoom = new KindOfRoom
 				{
 					Id = IdCell,
@@ -148,6 +179,27 @@ namespace QuanLyPhong
 		private void button3_Click(object sender, EventArgs e)
 		{
 			Delete();
+		}
+
+		private void txtDay_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+			{
+				e.Handled = true; 
+			}
+		}
+
+		private void txtHour_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void txtHour_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+			{
+				e.Handled = true;
+			}
 		}
 	}
 }

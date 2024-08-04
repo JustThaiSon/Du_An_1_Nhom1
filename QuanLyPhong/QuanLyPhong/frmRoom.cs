@@ -1,6 +1,7 @@
 ﻿using BUS.IService;
 using BUS.Service;
 using BUS.ViewModels;
+using DAL.Data;
 using DAL.Entities;
 using DAL.Enums;
 using System;
@@ -27,7 +28,13 @@ namespace QuanLyPhong
             LoadCbbKindOfRoom();
             loadDtg();
             Clear();
-        }
+
+			if (Session.RoleCode == "emp")
+			{
+				btn_addFloor.Enabled = false;
+				btn_addTypeRoom.Enabled = false;
+			}
+		}
 
         void LoadCbbStatus()
         {

@@ -67,8 +67,25 @@ namespace QuanLyPhong
             _orderService = new OrderServicess();
             this.RoomId = RoomId;
             Load();
+            LoadButom();
             contextMenuStrip = new ContextMenuStrip();
         }
+        void LoadButom()
+        {
+			var btnCheckin = _roomService.GetAllRoomsFromDb().Any(x => x.Id == RoomId && x.Status == RoomStatus.UnAvailable);
+			if (btnCheckin)
+			{
+				btn_checkin.Enabled = false;
+			}
+			
+			var btnSavee = _roomService.GetAllRoomsFromDb().Any(x => x.Id == RoomId && x.Status == RoomStatus.Available);
+			if (btnSavee)
+			{
+				btnSave.Enabled = false;
+                button1.Enabled = false;
+				return;
+			}
+		}
         private void MenuStrip()
         {
             contextMenuStrip = new ContextMenuStrip();
@@ -140,11 +157,7 @@ namespace QuanLyPhong
             MenuStrip();
             LoadDtgOrders();
             LoadCamera();
-            var btnCheckin = _roomService.GetAllRooms().Where(x => x.Id == RoomId && x.Status == RoomStatus.UnAvailable);
-            if (btnCheckin != null)
-            {
-                btn_checkin.Visible = true;
-            }
+          
         }
 
 
@@ -371,9 +384,10 @@ namespace QuanLyPhong
                 if ((int)cbbnum_quantitySer.Value <= 0)
                 {
                     MessageBox.Show("The quantity must be greater than 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+					return;
+				}
 
-                var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
+				var existingOrderService = _temporaryServices.FirstOrDefault(s => s.ServiceId == selectedService.Id);
 
                 if (existingOrderService != null)
                 {
@@ -591,7 +605,9 @@ namespace QuanLyPhong
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var selectedCustomerName = cbb_Customer.SelectedItem?.ToString();
+           
+
+			var selectedCustomerName = cbb_Customer.SelectedItem?.ToString();
             if (string.IsNullOrEmpty(selectedCustomerName))
             {
                 MessageBox.Show("Please select a customer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -690,25 +706,24 @@ namespace QuanLyPhong
             {
                 TimeSpan? ToTalTime = DateTime.Now - item.DateCreated;
                 string totalTimeString = "Unavailable";
-                decimal priceRoom = 0;
 
                 if (ToTalTime.HasValue)
                 {
                     if (item.Rentaltype == RentalTypeEnum.Daily)
                     {
-                        int NgayLamTron = (int)Math.Round(ToTalTime.Value.TotalDays);
+                        int NgayLamTron = (int)Math.Ceiling(ToTalTime.Value.TotalDays);
                         NgayLamTron = NgayLamTron < 1 ? 1 : NgayLamTron;
                         totalTimeString = $"{NgayLamTron} days";
                     }
                     else if (item.Rentaltype == RentalTypeEnum.Hourly)
                     {
-                        int GioLamTron = (int)Math.Round(ToTalTime.Value.TotalHours);
+                        int GioLamTron = (int)Math.Ceiling(ToTalTime.Value.TotalHours);
                         GioLamTron = GioLamTron < 1 ? 1 : GioLamTron;
                         totalTimeString = $"{GioLamTron} hours";
                     }
                 }
 
-                if (item.Rentaltype == RentalTypeEnum.Daily)
+				if (item.Rentaltype == RentalTypeEnum.Daily)
                 {
                     PriceRoom = item.PricePerDay;
                 }
@@ -716,7 +731,6 @@ namespace QuanLyPhong
                 {
                     PriceRoom = item.PriceByHour;
                 }
-
                 dtgListOrders.Rows.Add(item.Id, item.OrderCode, item.DateCreated,
                                        item.Note, item.Rentaltype, item.EmployeeName, item.CustomerName,
                                        item.Prepay, item.OrderType, item.FloorName, item.KindOfRoomName,

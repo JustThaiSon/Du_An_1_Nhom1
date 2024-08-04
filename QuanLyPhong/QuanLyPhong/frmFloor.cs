@@ -1,7 +1,9 @@
 ﻿using BUS.IService;
 using BUS.Service;
 using DAL.Entities;
+using GemBox.Spreadsheet;
 using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using IFloorService = BUS.IService.IFloorService;
 
@@ -44,23 +46,40 @@ namespace QuanLyPhong
             }
         }
 
-        public void Add()
+
+		private bool IsValidFloorName(string floorName)
+		{
+			string pattern = @"^Floor\d+$";
+
+			return Regex.IsMatch(floorName, pattern);
+		}
+		public void Add()
         {
             if (string.IsNullOrWhiteSpace(txtFloorName.Text))
             {
-                MessageBox.Show("Tên tầng không được để trống.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
+                MessageBox.Show("Floor name cannot be left blank.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+            if (!IsValidFloorName(txtFloorName.Text))
+            {
+				MessageBox.Show("Floor names must begin with 'Floor' + 'Room Number'", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+            var exist = _floorService.GetAllFloorFromDb().Any(x => x.FloorName == txtFloorName.Text);
+            if (exist)
+            {
+				MessageBox.Show("Floor names already exist", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
             var floor = new Floor()
             {
                 FloorName = txtFloorName.Text
             };
 
-            if (MessageBox.Show("Bạn có muốn thêm tầng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _floorService.AddFloor(floor);
-                MessageBox.Show(result, "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(result, "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             LoadFloors();
@@ -77,22 +96,33 @@ namespace QuanLyPhong
 
         public void Edit()
         {
-            if (string.IsNullOrWhiteSpace(txtFloorName.Text))
-            {
-                MessageBox.Show("Tên tầng không được để trống.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+			if (string.IsNullOrWhiteSpace(txtFloorName.Text))
+			{
+				MessageBox.Show("Floor name cannot be left blank.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			if (!IsValidFloorName(txtFloorName.Text))
+			{
+				MessageBox.Show("Floor names must begin with 'Floor' + 'Room Number'", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			var exist = _floorService.GetAllFloorFromDb().Any(x => x.FloorName == txtFloorName.Text);
+			if (exist)
+			{
+				MessageBox.Show("Floor names already exist", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
-            var floor = new Floor()
+			var floor = new Floor()
             {
                 Id = IdOfedit,
                 FloorName = txtFloorName.Text
             };
 
-            if (MessageBox.Show("Bạn có muốn cập nhật tầng này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show("Are You Sure", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string result = _floorService.UpdateFloor(floor);
-                MessageBox.Show(result, "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(result, "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             LoadFloors();
@@ -103,7 +133,7 @@ namespace QuanLyPhong
         {
             try
             {
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc chắn không?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Are you Sure?", "ConfirmDelete", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     string result = _floorService.RemoveFloor(IdOfedit);
@@ -112,7 +142,7 @@ namespace QuanLyPhong
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}");
+                MessageBox.Show($"ERR: {ex.Message}");
             }
         }
 

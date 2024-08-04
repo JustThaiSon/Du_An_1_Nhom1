@@ -30,16 +30,14 @@ namespace QuanLyPhong
         {
             var contextMenu = new ContextMenuStrip();
             var bookRoomMenuItem = new ToolStripMenuItem("Đặt phòng");
-            var payRoomMenuItem = new ToolStripMenuItem("Thanh toán");
             var moveRoomMenuItem = new ToolStripMenuItem("Chuyển phòng");
             var viewBillMenuItem = new ToolStripMenuItem("Xem hóa đơn");
             // Add event handlers for menu items
             bookRoomMenuItem.Click += bookRoomMenuItem_Click;
-            payRoomMenuItem.Click += payRoomMenuItem_Click;
             moveRoomMenuItem.Click += moveRoomMenuItem_Click;
             viewBillMenuItem.Click += viewBillMenuItem_Click;
 
-            contextMenu.Items.AddRange(new ToolStripItem[] { bookRoomMenuItem, payRoomMenuItem, moveRoomMenuItem, viewBillMenuItem });
+            contextMenu.Items.AddRange(new ToolStripItem[] { bookRoomMenuItem, moveRoomMenuItem, viewBillMenuItem });
 
             ptRoom.ContextMenuStrip = contextMenu;
         }
@@ -49,6 +47,11 @@ namespace QuanLyPhong
             if (Room.Status == RoomStatus.UnAvailable)
             {
                 MessageBox.Show("Phòng Này Đã Được Đặt " + Room.RoomName);
+                return;
+            }
+            if (Room.Status == RoomStatus.UnderMaintenance)
+            {
+                MessageBox.Show("Phòng Đang Được Dọn Dẹp " + Room.RoomName);
                 return;
             }
             frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
@@ -61,6 +64,11 @@ namespace QuanLyPhong
             if (Room.Status == RoomStatus.Available)
             {
                 MessageBox.Show(Room.RoomName + " Chưa Được Đặt");
+                return;
+            }
+            if (Room.Status == RoomStatus.UnderMaintenance)
+            {
+                MessageBox.Show(Room.RoomName + "Đang Dọn Dẹp");
                 return;
             }
             frmTransfer frm = new frmTransfer(Room.Id);
@@ -88,10 +96,7 @@ namespace QuanLyPhong
         }
 
 
-        private void payRoomMenuItem_Click(object? sender, EventArgs e)
-        {
-            CkeckoutRoom();
-        }
+   
 
         private void viewBillMenuItem_Click(object? sender, EventArgs e)
         {
