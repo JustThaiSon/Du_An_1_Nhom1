@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace QuanLyPhong
 {
@@ -19,10 +20,12 @@ namespace QuanLyPhong
 	{
 		private ICustomerService _customerService;
 		private Guid selectedCustomerId = Guid.Empty;
+		private IHistorypointService _historypointService;
 
 		public frmCustomer()
 		{
 			_customerService = new CustomerService();
+			_historypointService = new HistoryPointsService();
 			InitializeComponent();
 		}
 
@@ -53,7 +56,7 @@ namespace QuanLyPhong
 			foreach (var item in _customerService.GetAllCustomerFromDb())
 			{
 				Count++;
-				dtGV_Customer.Rows.Add(Count, item.Id, item.CustomerCode, item.Name, item.PhoneNumber, item.Email, item.Address, item.Gender, item.CCCD, item.Point);
+				dtGV_Customer.Rows.Add(Count, item.Id, item.CustomerCode, item.Name, item.PhoneNumber, item.Email, item.Address, item.Gender, item.CCCD, item.Point.ToString("0"));
 			}
 		}
 
@@ -246,21 +249,21 @@ namespace QuanLyPhong
 		}
 		private void btn_Delete_Click(object sender, EventArgs e)
 		{
-			if (selectedCustomerId == null)
-			{
-				MessageBox.Show("Customer is not exist!!!");
-				return;
-			}
-			DialogResult = MessageBox.Show("Are you Sure?", "Comfirm",
-			 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (DialogResult == DialogResult.Yes)
-			{
-				_customerService.RemoveCustomer(selectedCustomerId);
-				MessageBox.Show("Delete Success!!!");
-			}
-			this.edit_Clear();
-			this.add_Clear();
-			this.Load_dtGV_Customer();
+			//if (selectedCustomerId == null)
+			//{
+			//	MessageBox.Show("Customer is not exist!!!");
+			//	return;
+			//}
+			//DialogResult = MessageBox.Show("Are you Sure?", "Comfirm",
+			// MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			//if (DialogResult == DialogResult.Yes)
+			//{
+			//	_customerService.RemoveCustomer(selectedCustomerId);
+			//	MessageBox.Show("Delete Success!!!");
+			//}
+			//this.edit_Clear();
+			//this.add_Clear();
+			//this.Load_dtGV_Customer();
 		}
 
 		private void btn_edit_Edit_Click(object sender, EventArgs e)
@@ -320,13 +323,83 @@ namespace QuanLyPhong
 			customer.PhoneNumber = Sdt;
 			customer.Email = txt_edit_Email.Text;
 			customer.Gender = selectedGender;
-			customer.Point = int.Parse(NUD_edit_Point.Value.ToString());
+			customer.Point = int.Parse(NUD_edit_Point.Value.ToString("0"));
 			MessageBox.Show(_customerService.UpdateCustomer(customer), "Notificaiton");
 			this.edit_Clear();
 			Load_dtGV_Customer();
 			tab_Customer.SelectedTab = tabPage_ListCustomer;
 		}
 
+		private void btnHistoryPoints_Click(object sender, EventArgs e)
+		{
+			tab_Customer.SelectedTab = tabPage_Historypoints;
+			LoadHistoryPoint(selectedCustomerId);
+		}
+
+		void LoadHistoryPoint(Guid Id)
+		{
+			dtgHistoryPoints.ColumnCount = 5;
+			dtgHistoryPoints.Columns[0].Name = "STT";
+			dtgHistoryPoints.Columns[1].Name = "Id";
+			dtgHistoryPoints.Columns[1].Visible = false;
+			dtgHistoryPoints.Columns[2].Name = "Point Used";
+			dtgHistoryPoints.Columns[3].Name = "CreatedDate";
+			dtgHistoryPoints.Columns[4].Name = "Customer";
+			dtgHistoryPoints.Rows.Clear();
+
+			int count = 1;
+			foreach (var item in _historypointService.GetAllhtrPointFromDb().Where(x => x.Point > 0).OrderBy(x=>x.CreatedDate))
+			{
+				dtgHistoryPoints.Rows.Add(count++, item.Id, item.Point?.ToString("0"), item.CreatedDate, _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.Name).FirstOrDefault());
+			}
+		}
+		private void LoadHistoryPoint(Guid Id, DateTime? startDate = null, DateTime? endDate = null)
+		{
+			dtgHistoryPoints.ColumnCount = 5;
+			dtgHistoryPoints.Columns[0].Name = "STT";
+			dtgHistoryPoints.Columns[1].Name = "Id";
+			dtgHistoryPoints.Columns[1].Visible = false;
+			dtgHistoryPoints.Columns[2].Name = "Point Used";
+			dtgHistoryPoints.Columns[3].Name = "CreatedDate";
+			dtgHistoryPoints.Columns[4].Name = "Customer";
+			dtgHistoryPoints.Rows.Clear();
+
+			var historyPoints = _historypointService.GetAllhtrPointFromDb()
+								.Where(x => x.CustomerId == Id && x.Point > 0
+										&& (startDate.HasValue || x.CreatedDate >= startDate.Value)
+										&& (endDate.HasValue || x.CreatedDate <= endDate.Value))
+								.ToList();
+
+			int count = 1;
+			foreach (var item in historyPoints)
+			{
+
+
+				dtgHistoryPoints.Rows.Add(count++, item.Id, item.Point?.ToString("0"), item.CreatedDate, _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.Name).FirstOrDefault());
+			}
+		}
+		private void dtStartdate_ValueChanged(object sender, EventArgs e)
+		{
+			//if (dtStartdate.Value.Date > dtEndDate.Value.Date)
+			//{
+			//	MessageBox.Show("Start date cannot be later than end date.");
+			//	return;
+			//}
+
+			//LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
+		}
+
+		private void dtEndDate_ValueChanged(object sender, EventArgs e)
+		{
+
+			//if (dtStartdate.Value.Date > dtEndDate.Value.Date)
+			//{
+			//	MessageBox.Show("End date cannot be earlier than start date.");
+			//	return;
+			//}
+
+			//LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
+		}
 	}
 }
 

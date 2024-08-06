@@ -109,7 +109,6 @@ namespace DAL.Repositories
             update.CustomerId = orders.CustomerId;
             update.TotalDiscount = orders.TotalDiscount;
             update.ToTal = orders.ToTal;
-            update.OrderType = orders.OrderType;    
             update.VoucherId = orders.VoucherId;
             update.HistoryPointId = orders.HistoryPointId;
             update.RoomId = orders.RoomId;

@@ -6,6 +6,7 @@ using DAL.Entities;
 using DAL.Enums;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace QuanLyPhong
@@ -191,8 +192,14 @@ namespace QuanLyPhong
                 return;
             }
         }
+		private bool IsValidRoomName(string roomName)
+		{
+			string pattern = @"^Room\d+$";
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+			return Regex.IsMatch(roomName, pattern);
+		}
+
+		private void btnUpdate_Click(object sender, EventArgs e)
         {
             var exists = _roomService.GetAllRoomsFromDb().Any(x => x.Id == IdCell);
             if (!exists)
@@ -200,6 +207,11 @@ namespace QuanLyPhong
                 MessageBox.Show("Phòng không tồn tại");
                 return;
             }
+            if (IsValidRoomName(tb_nameroom.Text))
+            {
+				MessageBox.Show("Room name must start with room + name ");
+				return;
+			}
 
             if (!Validate())
             {
@@ -243,7 +255,6 @@ namespace QuanLyPhong
         private void btn_addFloor_Click(object sender, EventArgs e)
         {
             frmFloor addFloor = new frmFloor();
-            // Đăng ký sự kiện FloorUpdated
             addFloor.FloorUpdated += new frmFloor.FloorUpdatedEventHandler(OnFloorUpdated);
             addFloor.Show();
         }
@@ -259,7 +270,6 @@ namespace QuanLyPhong
 
         }
 
-        // Xử lý sự kiện FloorUpdated
         private void OnFloorUpdated(object sender, EventArgs e)
         {
             LoadCbbFloor();

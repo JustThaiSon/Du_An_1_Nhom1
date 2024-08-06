@@ -267,5 +267,13 @@ namespace QuanLyPhong
 				e.Handled = true;
 			}
 		}
+
+		private void tb_Quantity_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+			{
+				e.Handled = true;
+			}
+		}
 	}
 }

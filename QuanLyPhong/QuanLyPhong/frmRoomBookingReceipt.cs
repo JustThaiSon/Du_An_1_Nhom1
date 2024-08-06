@@ -149,7 +149,6 @@ namespace QuanLyPhong
             loadNameroom();
             LoadCustomer();
             LoadCbbOrderService();
-            LoadStatusOrder();
             LoadDataGridViewService();
             LoadTime();
             LoadBookingDetails();
@@ -207,7 +206,7 @@ namespace QuanLyPhong
             dt_checkin.Value = vietnamTime;
             dt_checkin.Enabled = false;
             dt_checkout.ShowUpDown = true;
-            dt_checkout.Value = vietnamTime;
+            dt_checkout.Value = DateTime.Now;
             dt_checkout.Enabled = false;
 
         }
@@ -231,11 +230,7 @@ namespace QuanLyPhong
                 cbb_Customer.Items.Add(item.Name);
             }
         }
-        void LoadStatusOrder()
-        {
-            cbbOrderType.DataSource = Enum.GetValues(typeof(OrderType));
-            cbbOrderType.SelectedItem = OrderType.RegularCustomer;
-        }
+      
         private void btn_cancel_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -274,7 +269,6 @@ namespace QuanLyPhong
                 Prepay = prepay,
                 EmployeeId = Session.UserId,
                 Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
-                OrderType = (OrderType)cbbOrderType.SelectedItem,
                 ToTalPrice = TotalPriceRoom,
                 ToTal = TotalAmount,
             };
@@ -444,8 +438,8 @@ namespace QuanLyPhong
         }
         void TotalPrice()
         {
-            TimeSpan timeSpanHours = dtGioCheckout.Value - DtGioCheckIn.Value;
-            TimeSpan timeSpanDays = dt_checkout.Value.Date - dt_checkin.Value.Date;
+            TimeSpan timeSpanHours = DateTime.Now - DtGioCheckIn.Value;
+            TimeSpan timeSpanDays = DateTime.Now - dt_checkin.Value.Date;
 
 
             var room = _roomService.GetAllRooms().FirstOrDefault(x => x.Id == RoomId);
@@ -566,7 +560,6 @@ namespace QuanLyPhong
                     OrderId = currentOrder.Id;
                     txtPrepay.Text = currentOrder.Prepay.ToString();
                     tb_note.Text = currentOrder.Note;
-                    cbbOrderType.Text = currentOrder.OrderType.ToString();
                     if (currentOrder.DateCreated.HasValue)
                     {
                         DtGioCheckIn.Value = currentOrder.DateCreated.Value;
@@ -647,7 +640,6 @@ namespace QuanLyPhong
                 Note = tb_note.Text,
                 EmployeeId = Session.UserId,
                 Rentaltype = rdHourly.Checked ? RentalTypeEnum.Hourly : RentalTypeEnum.Daily,
-                OrderType = (OrderType)cbbOrderType.SelectedItem,
                 ToTalPrice = TotalPriceRoom,
                 ToTal = TotalAmount,
             };
@@ -903,7 +895,7 @@ namespace QuanLyPhong
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmPay frm = new frmPay(OrderId);
+			frmPay frm = new frmPay(OrderId);
             frm.Show();
             this.Close();
         }

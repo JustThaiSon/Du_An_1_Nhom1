@@ -10,7 +10,8 @@ namespace DAL.Enums
     {
         Available,
         UnAvailable,
-        UnderMaintenance,
+        CleanUp,
+        //UnderMaintenance,
         Unknown 
     }
 }

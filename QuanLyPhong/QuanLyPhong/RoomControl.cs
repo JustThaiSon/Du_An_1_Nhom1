@@ -38,8 +38,7 @@ namespace QuanLyPhong
             viewBillMenuItem.Click += viewBillMenuItem_Click;
 
             contextMenu.Items.AddRange(new ToolStripItem[] { bookRoomMenuItem, moveRoomMenuItem, viewBillMenuItem });
-
-            ptRoom.ContextMenuStrip = contextMenu;
+			ptRoom.ContextMenuStrip = contextMenu;
         }
 
         private void bookRoomMenuItem_Click(object? sender, EventArgs e)
@@ -49,11 +48,12 @@ namespace QuanLyPhong
                 MessageBox.Show("Phòng Này Đã Được Đặt " + Room.RoomName);
                 return;
             }
-            if (Room.Status == RoomStatus.UnderMaintenance)
+            if (Room.Status == RoomStatus.CleanUp)
             {
                 MessageBox.Show("Phòng Đang Được Dọn Dẹp " + Room.RoomName);
                 return;
             }
+           
             frmRoomBookingReceipt frm = new frmRoomBookingReceipt(Room.Id);
             frm.OnBookRoom += BookRoom;
             frm.Show();
@@ -66,7 +66,7 @@ namespace QuanLyPhong
                 MessageBox.Show(Room.RoomName + " Chưa Được Đặt");
                 return;
             }
-            if (Room.Status == RoomStatus.UnderMaintenance)
+            if (Room.Status == RoomStatus.CleanUp)
             {
                 MessageBox.Show(Room.RoomName + "Đang Dọn Dẹp");
                 return;
@@ -125,10 +125,13 @@ namespace QuanLyPhong
                 case RoomStatus.UnAvailable:
                     ptRoom.Image = Properties.Resources.UnAvailable;
                     break;
-                case RoomStatus.UnderMaintenance:
+                case RoomStatus.CleanUp:
                     ptRoom.Image = Properties.Resources.UnderMaintenance;
                     break;
-            }
+				//case RoomStatus.Unknown:
+				//	ptRoom.Image = Properties.Resources.UnKnow;
+				//	break;
+			}
         }
         private void CkeckoutRoom()
         {
@@ -157,14 +160,14 @@ namespace QuanLyPhong
 
         private void ptRoom_Click(object sender, EventArgs e)
         {
-            if (Room.Status != RoomStatus.UnderMaintenance)
+            if (Room.Status != RoomStatus.CleanUp)
             {
                 return;
             }
             var result = MessageBox.Show($"Bạn có chắc chắn muốn đánh dấu phòng '{Room.RoomName}' là đã hoàn tất dọn dẹp không?", "Xác Nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (Room.Status == RoomStatus.UnderMaintenance)
+                if (Room.Status == RoomStatus.CleanUp)
                 {
                     Room.Status = RoomStatus.Available;
                     roomService.UpdateRoom(Room);

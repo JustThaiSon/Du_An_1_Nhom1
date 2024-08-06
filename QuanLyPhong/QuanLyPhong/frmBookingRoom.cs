@@ -61,7 +61,7 @@ namespace QuanLyPhong
 
 			foreach (var floor in sortedFloors)
 			{
-				var roomsOnFloor = rooms.Where(r => r.FloorId == floor.Id).ToList();
+				var roomsOnFloor = rooms.Where(r => r.FloorId == floor.Id && r.Status != RoomStatus.Unknown).ToList();
 
 				if (roomsOnFloor.Any())
 				{

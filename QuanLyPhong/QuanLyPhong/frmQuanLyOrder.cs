@@ -130,17 +130,16 @@ namespace QuanLyPhong
 			dtgv_order.Columns[6].Name = "Customer";
 			dtgv_order.Columns[7].Name = "CustomerPhone";
 			dtgv_order.Columns[8].Name = "Prepay";
-			dtgv_order.Columns[9].Name = "OrderType";
-			dtgv_order.Columns[10].Name = "ToTalPriceRoom";
-			dtgv_order.Columns[11].Name = "NameRoom";
-			dtgv_order.Columns[12].Name = "Note";
-			dtgv_order.Columns[13].Name = "PriceRoom";
-			dtgv_order.Columns[14].Name = "PointAdded";
-			dtgv_order.Columns[15].Name = "TotalPricePoint";
-			dtgv_order.Columns[16].Name = "TotalDiscount";
-			dtgv_order.Columns[17].Name = "RenType";
-			dtgv_order.Columns[18].Name = "TotalTime";
-			dtgv_order.Columns[19].Name = "Total";
+			dtgv_order.Columns[9].Name = "ToTalPriceRoom";
+			dtgv_order.Columns[10].Name = "NameRoom";
+			dtgv_order.Columns[11].Name = "Note";
+			dtgv_order.Columns[12].Name = "PriceRoom";
+			dtgv_order.Columns[13].Name = "PointAdded";
+			dtgv_order.Columns[14].Name = "TotalPricePoint";
+			dtgv_order.Columns[15].Name = "TotalDiscount";
+			dtgv_order.Columns[16].Name = "RenType";
+			dtgv_order.Columns[17].Name = "TotalTime";
+			dtgv_order.Columns[18].Name = "Total";
 
 			dtgv_order.Rows.Clear();
 			int Count = 0;
@@ -195,7 +194,7 @@ namespace QuanLyPhong
 				decimal PointAdd = item.ToTalPrice * 0.01m;
 				dtgv_order.Rows.Add(item.Id, Count, item.OrderCode, employ, item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm"), datePayment, Customer,
 					CustomerPhone, item.Prepay,
-					item.OrderType, item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
+				 item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
 			}
 		}
 		void ServiceTongTien()

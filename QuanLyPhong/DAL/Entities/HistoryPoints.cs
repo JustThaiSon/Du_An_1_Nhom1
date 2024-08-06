@@ -9,7 +9,7 @@ namespace DAL.Entities
     public class HistoryPoints
     {
         public  Guid Id { get; set; }
-        public  decimal Point { get; set; }
+        public  decimal? Point { get; set; }
         public  DateTime CreatedDate { get; set; }
         public  Guid CustomerId { get; set; }
 

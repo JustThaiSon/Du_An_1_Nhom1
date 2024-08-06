@@ -104,7 +104,7 @@ namespace QuanLyPhong
 		void LoadDtgOrders()
 		{
 
-			dtgListOrders.ColumnCount = 14;
+			dtgListOrders.ColumnCount = 13;
 			dtgListOrders.Columns[0].Name = "Id";
 			dtgListOrders.Columns[0].Visible = false;
 			dtgListOrders.Columns[1].Name = "OrderCode";
@@ -114,12 +114,11 @@ namespace QuanLyPhong
 			dtgListOrders.Columns[5].Name = "Employee";
 			dtgListOrders.Columns[6].Name = "Customer";
 			dtgListOrders.Columns[7].Name = "Prepay";
-			dtgListOrders.Columns[8].Name = "OrderType";
-			dtgListOrders.Columns[9].Name = "KindOfRoom";
-			dtgListOrders.Columns[10].Name = "Room";
-			dtgListOrders.Columns[11].Name = "Price";
-			dtgListOrders.Columns[12].Name = "ToTalTime";
-			dtgListOrders.Columns[13].Name = "PointsAdd";
+			dtgListOrders.Columns[8].Name = "KindOfRoom";
+			dtgListOrders.Columns[9].Name = "Room";
+			dtgListOrders.Columns[10].Name = "Price";
+			dtgListOrders.Columns[11].Name = "ToTalTime";
+			dtgListOrders.Columns[12].Name = "PointsAdd";
 			dtgListOrders.Rows.Clear();
 
 			PointAdd = 0;
@@ -152,81 +151,81 @@ namespace QuanLyPhong
 					PriceRoom = item.PriceByHour;
 				}
 				dtgListOrders.Rows.Add(item.Id, item.OrderCode, item.DateCreated, item.Note, item.Rentaltype,
-									   item.EmployeeName, item.CustomerName, item.Prepay, item.OrderType,
+									   item.EmployeeName, item.CustomerName, item.Prepay,
 									   item.KindOfRoomName, item.RoomName, PriceRoom, totalTimeString, PointAdd);
 			}
 		}
-		void Loaddb()
-		{
-			var GetOrderById = _orderService.GetOrdersViewModels(OrderId);
-			_lstOrderViewModes = GetOrderById;
-			foreach (var order in _lstOrderViewModes)
-			{
-				lbAddress.Text = order.Address;
-				lbCCCD.Text = order.CCCD;
-				lbCustomer.Text = order?.CustomerName;
-				lbDateCheckIn.Text = order.DateCreated.ToString();
-				lbDateCheckOut.Text = DateTime.Now.ToString();
-				lbEmail.Text = order.Email;
-				lbGender.Text = order.Gender.ToString();
-				lbNote.Text = order.Note.ToString();
-				lbNumberPhone.Text = order.PhoneNumber.ToString();
-				lbPrePay.Text = order.Prepay.ToString();
-				lbRentaltype.Text = order.Rentaltype.ToString();
-				lbRoomName.Text = order.RoomName.ToString();
-				lbToTalPriceRoom.Text = order.ToTalPrice.ToString("0") + " VNĐ";
-				lbKindOfRoom.Text = order.KindOfRoomName.ToString();
-				lbPointsAreAdded.Text = PointAdd.ToString() + " Points";
-				ToTalPriceRoom = order.ToTalPrice;
-				if (order.TotalDiscount != null)
-				{
-					lbTotalDiscount.Text = order.TotalDiscount.ToString() + " VNĐ";
-				}
-				else
-				{
-					lbTotalDiscount.Text = "0 VNĐ";
-				}
+		//void Loaddb()
+		//{
+		//	var GetOrderById = _orderService.GetOrdersViewModels(OrderId);
+		//	_lstOrderViewModes = GetOrderById;
+		//	foreach (var order in _lstOrderViewModes)
+		//	{
+		//		lbAddress.Text = order.Address;
+		//		lbCCCD.Text = order.CCCD;
+		//		lbCustomer.Text = order?.CustomerName;
+		//		lbDateCheckIn.Text = order.DateCreated.ToString();
+		//		lbDateCheckOut.Text = DateTime.Now.ToString();
+		//		lbEmail.Text = order.Email;
+		//		lbGender.Text = order.Gender.ToString();
+		//		lbNote.Text = order.Note.ToString();
+		//		lbNumberPhone.Text = order.PhoneNumber.ToString();
+		//		lbPrePay.Text = order.Prepay.ToString();
+		//		lbRentaltype.Text = order.Rentaltype.ToString();
+		//		lbRoomName.Text = order.RoomName.ToString();
+		//		lbToTalPriceRoom.Text = order.ToTalPrice.ToString("0") + " VNĐ";
+		//		lbKindOfRoom.Text = order.KindOfRoomName.ToString();
+		//		lbPointsAreAdded.Text = PointAdd.ToString() + " Points";
+		//		ToTalPriceRoom = order.ToTalPrice;
+		//		if (order.TotalDiscount != null)
+		//		{
+		//			lbTotalDiscount.Text = order.TotalDiscount.ToString() + " VNĐ";
+		//		}
+		//		else
+		//		{
+		//			lbTotalDiscount.Text = "0 VNĐ";
+		//		}
 
-				if (order.TotalPricePoint != null)
-				{
-					lbPricePoint.Text = order.TotalPricePoint.ToString() + " VNĐ";
-				}
-				else
-				{
-					lbPricePoint.Text = "0 VNĐ";
-				}
-				lbTotalPrice.Text = order.ToTal.ToString() + " VNĐ";
+		//		if (order.TotalPricePoint != null)
+		//		{
+		//			lbPricePoint.Text = order.TotalPricePoint.ToString() + " VNĐ";
+		//		}
+		//		else
+		//		{
+		//			lbPricePoint.Text = "0 VNĐ";
+		//		}
+		//		lbTotalPrice.Text = order.ToTal.ToString() + " VNĐ";
 
-				TimeSpan? totalTime = DateTime.Now - order.DateCreated;
+		//		TimeSpan? totalTime = DateTime.Now - order.DateCreated;
 
-				if (totalTime.HasValue)
-				{
-					if (order.Rentaltype == RentalTypeEnum.Daily)
-					{
-						int totalDays = (int)Math.Round(totalTime.Value.TotalDays);
-						lbTotalTime.Text = $"{totalDays} days";
-					}
-					else
-					{
-						int totalHours = (int)Math.Round(totalTime.Value.TotalHours);
-						lbTotalTime.Text = $"{totalHours} hours";
-					}
-				}
-				else
-				{
-					lbTotalTime.Text = "Unavailable";
-				}
+		//		if (totalTime.HasValue)
+		//		{
+		//			if (order.Rentaltype == RentalTypeEnum.Daily)
+		//			{
+		//				int totalDays = (int)Math.Round(totalTime.Value.TotalDays);
+		//				lbTotalTime.Text = $"{totalDays} days";
+		//			}
+		//			else
+		//			{
+		//				int totalHours = (int)Math.Round(totalTime.Value.TotalHours);
+		//				lbTotalTime.Text = $"{totalHours} hours";
+		//			}
+		//		}
+		//		else
+		//		{
+		//			lbTotalTime.Text = "Unavailable";
+		//		}
 
-				if (order.Rentaltype == RentalTypeEnum.Daily)
-				{
-					lbRoomPrice.Text = order.PricePerDay.ToString("0") + " VNĐ";
-				}
-				else
-				{
-					lbRoomPrice.Text = order.PriceByHour.ToString("0") + " VNĐ";
-				}
-			}
-		}
+		//		if (order.Rentaltype == RentalTypeEnum.Daily)
+		//		{
+		//			lbRoomPrice.Text = order.PricePerDay.ToString("0") + " VNĐ";
+		//		}
+		//		else
+		//		{
+		//			lbRoomPrice.Text = order.PriceByHour.ToString("0") + " VNĐ";
+		//		}
+		//	}
+		//}
 		void LoadDataOnLabel()
 		{
 
@@ -271,7 +270,7 @@ namespace QuanLyPhong
 				{
 					lbPricePoint.Text = "0 VNĐ";
 				}
-				ToTal = firstOrderViewModel.ToTal;
+				ToTal = firstOrderViewModel.ToTal - firstOrderViewModel.Prepay;
 				lbTotalPrice.Text = ToTal + " VNĐ";
 
 				TimeSpan? totalTime = DateTime.Now - firstOrderViewModel.DateCreated;
@@ -291,6 +290,7 @@ namespace QuanLyPhong
 						lbTotalTime.Text = $"{GioLamTron} hours";
 					}
 				}
+
 				if (firstOrderViewModel.Rentaltype == RentalTypeEnum.Daily)
 				{
 					lbRoomPrice.Text = firstOrderViewModel.PricePerDay.ToString("0") + " VNĐ";
@@ -401,7 +401,6 @@ namespace QuanLyPhong
 						Note = filterData.Note,
 						EmployeeId = Session.UserId,
 						Rentaltype = filterData.Rentaltype,
-						OrderType = filterData.OrderType,
 						ToTalPrice = filterData.ToTalPrice,
 						ToTal = ToTal,
 						OrderCode = filterData.OrderCode,
@@ -425,7 +424,7 @@ namespace QuanLyPhong
 					var updateStatusRoom = new Room
 					{
 						Id = filterData.RoomId,
-						Status = RoomStatus.UnderMaintenance
+						Status = RoomStatus.CleanUp
 					};
 					_roomService.UpdadateStatusRoom(updateStatusRoom);
 					SentMailAddPoint(customer.Email, PointAdd, newPoints);

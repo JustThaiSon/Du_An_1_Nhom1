@@ -63,7 +63,6 @@
 			tabControl1 = new TabControl();
 			Information = new TabPage();
 			cbbPayment = new Guna.UI2.WinForms.Guna2ComboBox();
-			btn_delete = new Button();
 			label8 = new Label();
 			textBox1 = new TextBox();
 			button1 = new Button();
@@ -126,7 +125,6 @@
 			// Information
 			// 
 			Information.Controls.Add(cbbPayment);
-			Information.Controls.Add(btn_delete);
 			Information.Controls.Add(label8);
 			Information.Controls.Add(textBox1);
 			Information.Controls.Add(button1);
@@ -162,17 +160,6 @@
 			cbbPayment.TabIndex = 52;
 			cbbPayment.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
 			// 
-			// btn_delete
-			// 
-			btn_delete.Location = new Point(835, 598);
-			btn_delete.Margin = new Padding(3, 2, 3, 2);
-			btn_delete.Name = "btn_delete";
-			btn_delete.Size = new Size(141, 48);
-			btn_delete.TabIndex = 49;
-			btn_delete.Text = "Delete";
-			btn_delete.UseVisualStyleBackColor = true;
-			btn_delete.Click += btn_delete_Click;
-			// 
 			// label8
 			// 
 			label8.AutoSize = true;
@@ -193,7 +180,7 @@
 			// 
 			// button1
 			// 
-			button1.Location = new Point(1064, 598);
+			button1.Location = new Point(1125, 600);
 			button1.Margin = new Padding(3, 2, 3, 2);
 			button1.Name = "button1";
 			button1.Size = new Size(141, 48);
@@ -816,7 +803,6 @@
         private Label label8;
         private TextBox textBox1;
         private Guna.UI2.WinForms.Guna2Button btn_editorderser;
-        private Button btn_delete;
 		private Guna.UI2.WinForms.Guna2ComboBox cbbPayment;
 	}
 }

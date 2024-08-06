@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
 namespace QuanLyPhong
 {
 	public partial class frmNhanVien : Form
@@ -184,7 +183,7 @@ namespace QuanLyPhong
 				MessageBox.Show("Email have exist");
 				return;
 			}
-			if (!DateTime.TryParse(dtP_add_DateOfBirth.Value.ToString(), out dateOfBirth) ||
+			if (!DateTime.TryParse(dtP_add_DateOfBirth.Value.ToString("dd/MM/yyyy"), out dateOfBirth) ||
 			dateOfBirth > DateTime.Today)
 			{
 				MessageBox.Show("Invalid Date of birth ");
@@ -381,7 +380,7 @@ namespace QuanLyPhong
 				}
 
 				Count++;
-				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, Status, item.UserName, item.PassWord, item.DateOfBirth, item.Img, item.CCCD, item.Gender);
+				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, Status, item.UserName, item.PassWord, item.DateOfBirth.ToString(), item.Img, item.CCCD, item.Gender);
 			}
 		}
 
@@ -418,7 +417,7 @@ namespace QuanLyPhong
 			int Count = 0;
 			string role = "";
 			var listEployeeSearch = _employeeService.GetAllEmployeeFromDb()
-			 .Where(x => x.Name.ToLower().Contains(txtSearch.Text.ToLower()) || x.CCCD.StartsWith(txtSearch.Text) || x.EmployeeCode.Contains(txtSearch.Text)).ToList();
+			 .Where(x => x.Name.ToLower().Contains(txtSearch.Text.ToLower()) || x.CCCD.ToLower().StartsWith(txtSearch.Text) || x.EmployeeCode.ToLower().Contains(txtSearch.Text)).ToList();
 
 			foreach (var item in listEployeeSearch)
 			{

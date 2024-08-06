@@ -377,6 +377,7 @@
 			tb_Quantity.ShadowDecoration.CustomizableEdges = customizableEdges14;
 			tb_Quantity.Size = new Size(383, 27);
 			tb_Quantity.TabIndex = 21;
+			tb_Quantity.KeyPress += tb_Quantity_KeyPress;
 			// 
 			// label7
 			// 

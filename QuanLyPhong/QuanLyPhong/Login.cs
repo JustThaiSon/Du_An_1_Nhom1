@@ -23,10 +23,15 @@ namespace QuanLyPhong
                 var employee = context.Employees
                     .Include(e => e.Role) 
                     .FirstOrDefault(e => e.UserName == tb_username.Text && e.PassWord == tb_password.Text);
-
+               
                 if (employee != null)
                 {
-                    lb_error.Visible = false;
+					if (employee.Status == false)
+					{
+						MessageBox.Show("Employee has retired", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
+					lb_error.Visible = false;
 
                     Session.UserName = employee.UserName;
                     Session.UserId = employee.Id;
