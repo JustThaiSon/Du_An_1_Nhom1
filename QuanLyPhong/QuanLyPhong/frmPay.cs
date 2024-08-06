@@ -440,6 +440,7 @@ namespace QuanLyPhong
                     {
                         Issue_An_invoice();
                     }
+                    this.Close();
                 }
             }
             catch (Exception)
@@ -505,7 +506,7 @@ namespace QuanLyPhong
                 MessageBox.Show("Customer not found.");
                 return;
             }
-            string directoryPath = @"C:\Users\admin\Desktop\PDF";
+            string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\pdf";
             string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
             string filePath = System.IO.Path.Combine(directoryPath, fileName);
 
