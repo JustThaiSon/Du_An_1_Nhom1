@@ -124,7 +124,7 @@ namespace QuanLyPhong
 			Guid role = Guid.Empty;
 			var listCCCD = _employeeService.GetAllEmployeeFromDb().Select(x => x.CCCD);
 
-			if (string.IsNullOrWhiteSpace(txt_Name.Text))
+			if (string.IsNullOrWhiteSpace(txt_add_Name.Text))
 			{
 				MessageBox.Show("Name is not empty.");
 				return;
@@ -207,7 +207,8 @@ namespace QuanLyPhong
 				MessageBox.Show("Img is not empty!!!");
 				return;
 			}
-			var employee = new Employee()
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txt_add_PassWord.Text); //hash
+            var employee = new Employee()
 			{
 				Name = txt_add_Name.Text,
 				RoleId = role,
@@ -216,7 +217,7 @@ namespace QuanLyPhong
 				PhoneNumber = txt_add_PhoneNumber.Text,
 				Status = status,
 				UserName = txt_add_UserName.Text,
-				PassWord = txt_add_PassWord.Text,
+				PassWord = hashedPassword,
 				Img = img,
 				DateOfBirth = dateOfBirth,
 				CCCD = txt_add_CCCD.Text,

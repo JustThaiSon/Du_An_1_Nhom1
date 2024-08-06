@@ -497,7 +497,7 @@ namespace QuanLyPhong
 				MessageBox.Show("Customer not found.");
 				return;
 			}
-			string directoryPath = @"C:\Users\admin\Desktop\PDF";
+			string directoryPath = @"C:\Users\Thao\source\repos\Pdf";
 			string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
 			string filePath = System.IO.Path.Combine(directoryPath, fileName);
 
@@ -514,10 +514,10 @@ namespace QuanLyPhong
 					{
 						Document document = new Document(pdf, PageSize.A4);
 
-						PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+                        PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\Arial.ttf", PdfEncodings.IDENTITY_H);
 
-						// Thêm tiêu đề hóa đơn
-						document.Add(new Paragraph("HÓA ĐƠN")
+                        // Thêm tiêu đề hóa đơn
+                        document.Add(new Paragraph("HÓA ĐƠN")
 							 .SetFont(font)
 							 .SetBold()
 							 .SetFontSize(26)
@@ -779,7 +779,7 @@ namespace QuanLyPhong
 		}
 		private void AddTableRow(Table table, int STT, string itemName, decimal itemPrice, int? quantity, decimal totalPrice)
 		{
-			PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+			PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\Arial.ttf", PdfEncodings.IDENTITY_H);
 
 			table.AddCell(new Cell().Add(new Paragraph(STT.ToString()))
 				.SetFont(font)

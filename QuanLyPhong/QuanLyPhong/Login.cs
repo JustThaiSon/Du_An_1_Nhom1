@@ -21,10 +21,10 @@ namespace QuanLyPhong
             using (var context = new MyDbContext())
             {
                 var employee = context.Employees
-                    .Include(e => e.Role) 
-                    .FirstOrDefault(e => e.UserName == tb_username.Text && e.PassWord == tb_password.Text);
+                    .Include(e => e.Role)
+                    .FirstOrDefault(e => e.UserName == tb_username.Text);
 
-                if (employee != null)
+                if (employee != null && BCrypt.Net.BCrypt.Verify(tb_password.Text, employee.PassWord))
                 {
                     lb_error.Visible = false;
 
@@ -32,7 +32,7 @@ namespace QuanLyPhong
                     Session.UserId = employee.Id;
                     Session.EmployeeCode = employee.EmployeeCode;
                     Session.Name = employee.Name;
-                    Session.RoleCode = employee.Role?.RoleCode; 
+                    Session.RoleCode = employee.Role?.RoleCode;
                     Session.PassWord = employee.PassWord;
                     TrangChu tc = new TrangChu();
                     this.Hide();

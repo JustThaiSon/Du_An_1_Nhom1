@@ -109,7 +109,7 @@ namespace QuanLyPhong
             {
                 var user = _context.Employees.FirstOrDefault(u => u.Email == txt_EmailTofogotpass.Text);
 
-                //string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txt_NewPass.Text);
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txt_NewPass.Text);
                 user.PassWord = txt_NewPass.Text;
                 _context.SaveChanges();
 
