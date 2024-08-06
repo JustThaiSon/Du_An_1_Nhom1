@@ -123,7 +123,7 @@ namespace QuanLyPhong
 			Guid role = Guid.Empty;
 			var listCCCD = _employeeService.GetAllEmployeeFromDb().Select(x => x.CCCD);
 
-			if (string.IsNullOrWhiteSpace(txt_Name.Text))
+			if (string.IsNullOrWhiteSpace(txt_add_Name.Text))
 			{
 				MessageBox.Show("Name is not empty.");
 				return;
@@ -183,7 +183,7 @@ namespace QuanLyPhong
 				MessageBox.Show("Email have exist");
 				return;
 			}
-			if (!DateTime.TryParse(dtP_add_DateOfBirth.Value.ToString("dd/MM/yyyy"), out dateOfBirth) ||
+			if (
 			dateOfBirth > DateTime.Today)
 			{
 				MessageBox.Show("Invalid Date of birth ");

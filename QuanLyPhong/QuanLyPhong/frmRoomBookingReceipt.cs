@@ -455,22 +455,23 @@ namespace QuanLyPhong
             if (rddaily.Checked)
             {
                 totalDays = (decimal)timeSpanDays.TotalDays;
-                totalDays = totalDays <= 0 ? 1 : totalDays; 
+                totalDays = totalDays <= 1 ? 1 : totalDays; 
                 decimal roundedDays = Math.Round(totalDays, MidpointRounding.AwayFromZero);
                 TotalPriceRoom = room.PricePerDay * roundedDays;
             }
             else if (rdHourly.Checked)
             {
                 totalHours = (decimal)timeSpanHours.TotalHours;
-                totalHours = totalHours <= 0 ? 1 : totalHours; 
+                totalHours = totalHours <= 1 ? 1 : totalHours; 
                 decimal roundedHours = Math.Round(totalHours, MidpointRounding.AwayFromZero);
                 TotalPriceRoom = room.PriceByHour * roundedHours;
             }
+
             decimal Prepay = 0;
             string prepayText = txtPrepay.Text.Trim();
             if (!string.IsNullOrEmpty(prepayText) && decimal.TryParse(prepayText, out decimal parsedPrepay))
             {
-                Prepay = parsedPrepay;
+                Prepay = parsedPrepay; 
             }
 
             TotalAmount = TotalPriceRoom + TotalPriceOrderService;
@@ -677,7 +678,7 @@ namespace QuanLyPhong
         }
         void LoadDtgOrders()
         {
-            dtgListOrders.ColumnCount = 13;
+            dtgListOrders.ColumnCount = 12;
             dtgListOrders.Columns[0].Name = "Id";
             dtgListOrders.Columns[0].Visible = false;
             dtgListOrders.Columns[1].Name = "OrderCode";
@@ -687,11 +688,10 @@ namespace QuanLyPhong
             dtgListOrders.Columns[5].Name = "Employee";
             dtgListOrders.Columns[6].Name = "Customer";
             dtgListOrders.Columns[7].Name = "Prepay";
-            dtgListOrders.Columns[8].Name = "OrderType";
-            dtgListOrders.Columns[9].Name = "Floor";
-            dtgListOrders.Columns[10].Name = "KindOfRoom";
-            dtgListOrders.Columns[11].Name = "Room";
-            dtgListOrders.Columns[12].Name = "ToTalTime";
+            dtgListOrders.Columns[8].Name = "Floor";
+            dtgListOrders.Columns[9].Name = "KindOfRoom";
+            dtgListOrders.Columns[10].Name = "Room";
+            dtgListOrders.Columns[11].Name = "ToTalTime";
             dtgListOrders.Rows.Clear();
             decimal PriceRoom = 0;
             foreach (var item in _orderService.GetOrdersViewModels(OrderId))
@@ -709,10 +709,10 @@ namespace QuanLyPhong
                     }
                     else if (item.Rentaltype == RentalTypeEnum.Hourly)
                     {
-                        int GioLamTron = (int)Math.Ceiling(ToTalTime.Value.TotalHours);
-                        GioLamTron = GioLamTron < 1 ? 1 : GioLamTron;
-                        totalTimeString = $"{GioLamTron} hours";
-                    }
+						int GioLamTron = (int)Math.Ceiling(ToTalTime.Value.TotalHours);
+						GioLamTron = GioLamTron < 1 ? 1 : GioLamTron;
+						totalTimeString = $"{GioLamTron} hours";
+					}
                 }
 
 				if (item.Rentaltype == RentalTypeEnum.Daily)
@@ -725,7 +725,7 @@ namespace QuanLyPhong
                 }
                 dtgListOrders.Rows.Add(item.Id, item.OrderCode, item.DateCreated,
                                        item.Note, item.Rentaltype, item.EmployeeName, item.CustomerName,
-                                       item.Prepay, item.OrderType, item.FloorName, item.KindOfRoomName,
+                                       item.Prepay, item.FloorName, item.KindOfRoomName,
                                        item.RoomName, totalTimeString, PriceRoom);
             }
         }
@@ -895,6 +895,7 @@ namespace QuanLyPhong
 
         private void button1_Click(object sender, EventArgs e)
         {
+
 			frmPay frm = new frmPay(OrderId);
             frm.Show();
             this.Close();

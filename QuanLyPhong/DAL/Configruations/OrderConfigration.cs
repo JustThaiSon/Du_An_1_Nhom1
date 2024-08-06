@@ -41,9 +41,6 @@ namespace DAL.Configruations
 			builder.Property(o => o.ToTal)
 				.HasColumnType("decimal(18,2)");
 
-			builder.Property(o => o.OrderType)
-				.HasMaxLength(50).IsRequired().HasConversion<string>(); ;
-
 			builder.HasOne(o => o.Employee)
 				.WithMany(e => e.Orders)
 				.HasForeignKey(o => o.EmployeeId)

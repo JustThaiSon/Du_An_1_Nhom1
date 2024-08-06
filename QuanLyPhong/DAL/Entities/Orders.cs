@@ -23,7 +23,6 @@ namespace DAL.Entities
         public decimal? TotalPricePoint { get; set; }
         public decimal? Prepay { get; set; }
         public decimal? ToTal { get; set; }
-        public OrderType? OrderType { get; set; }
         public Guid? VoucherId { get; set; }
         public Guid? HistoryPointId {  get; set; }
         public Guid? RoomId {  get; set; }
