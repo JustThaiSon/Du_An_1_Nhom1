@@ -658,5 +658,10 @@ namespace QuanLyPhong
         {
 
         }
+
+        private void txt_add_Email_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
