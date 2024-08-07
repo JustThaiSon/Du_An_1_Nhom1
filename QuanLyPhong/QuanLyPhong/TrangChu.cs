@@ -16,7 +16,7 @@ namespace QuanLyPhong
         private int picBookingOriginalLeft;
 
 
-
+        //ádfasdffsdfasdfa
         public TrangChu()
         {
             InitializeComponent();
