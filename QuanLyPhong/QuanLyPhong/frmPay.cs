@@ -463,6 +463,7 @@ namespace QuanLyPhong
 			smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 			smtp.Credentials = new NetworkCredential("thaothaobatbai123@gmail.com", "kaefdapftqcriiwj");
 
+<<<<<<< HEAD
 			try
 			{
 				smtp.Send(mail);
@@ -472,6 +473,30 @@ namespace QuanLyPhong
 			{
 				MessageBox.Show("Lỗi khi gửi email: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+=======
+                    var updateCustomer = new Customer
+                    {
+                        Id = customer.Id,
+                        Point = newPoints
+                    };
+                    _customerService.UpdatePointByCustomer(updateCustomer);
+                    var updateStatusRoom = new Room
+                    {
+                        Id = filterData.RoomId,
+                        Status = RoomStatus.UnderMaintenance
+                    };
+                    _roomService.UpdadateStatusRoom(updateStatusRoom);
+                    SentMailAddPoint(customer.Email, PointAdd, newPoints);
+                    if (MessageBox.Show("You want to issue an invoice?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        Issue_An_invoice();
+                    }
+                    this.Close();
+                }
+            }
+            catch (Exception)
+            {
+>>>>>>> cdbebcd824d5e451989336a6506f475ff0a5f27c
 
 			try
 			{
@@ -514,7 +539,62 @@ namespace QuanLyPhong
 					{
 						Document document = new Document(pdf, PageSize.A4);
 
+<<<<<<< HEAD
                         PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\Arial.ttf", PdfEncodings.IDENTITY_H);
+=======
+            try
+            {
+                smtp.Send(mail);
+                MessageBox.Show("Email đã được gửi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi gửi email: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        void Issue_An_invoice()
+        {
+            var filterData = _orderService.GetOrdersViewModels(OrderId).FirstOrDefault();
+            if (filterData == null)
+            {
+                MessageBox.Show("Order data not found.");
+                return;
+            }
+
+            var customer = _customerService.GetAllCustomerFromDb().FirstOrDefault(x => x.Id == filterData.CustomerId);
+            if (customer == null)
+            {
+                MessageBox.Show("Customer not found.");
+                return;
+            }
+            string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\pdf";
+            string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
+            string filePath = System.IO.Path.Combine(directoryPath, fileName);
+
+            try
+            {
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                using (PdfWriter writer = new PdfWriter(filePath))
+                {
+                    using (PdfDocument pdf = new PdfDocument(writer))
+                    {
+                        Document document = new Document(pdf, PageSize.A4);
+
+                        PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+>>>>>>> cdbebcd824d5e451989336a6506f475ff0a5f27c
 
                         // Thêm tiêu đề hóa đơn
                         document.Add(new Paragraph("HÓA ĐƠN")
