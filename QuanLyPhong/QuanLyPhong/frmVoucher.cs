@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,13 +138,14 @@ namespace QuanLyPhong
 				return;
 			}
 
-			if (decimal.Parse(tbDiscount.Text) > 1)
-			{
-				MessageBox.Show("The discount ratio must be less than or equal to 1");
-				return;
-			}
+            decimal discount;
+            if (!decimal.TryParse(tbDiscount.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out discount) || discount > 1)
+            {
+                MessageBox.Show("The discount ratio must be less than or equal to 1");
+                return;
+            }
 
-			if (!decimal.TryParse(tb_minPrice.Text, out decimal minPrice))
+            if (!decimal.TryParse(tb_minPrice.Text, out decimal minPrice))
 			{
 				MessageBox.Show("Invalid minimum price. Please enter a valid decimal number.");
 				return;
@@ -178,7 +180,7 @@ namespace QuanLyPhong
 				StartDate = startDate,
 				EndDate = endDate,
 				VoucherName = tb_voucherName.Text,
-				DiscountRate = Convert.ToDecimal(tbDiscount.Text),
+				DiscountRate = discount,
 				MinPrice = Convert.ToDecimal(tb_minPrice.Text),
 			};
 
