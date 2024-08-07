@@ -17,8 +17,13 @@ namespace QuanLyPhong
 {
     public partial class frmTransfer : Form
     {
-        public event Action OnTransferCompleted;
-        private IRoomService _roomService;
+		//public event Action OnTransferCompleted;
+
+		public delegate void OnTransferCompletedHandler();
+		public event OnTransferCompletedHandler OnTransferCompleted;
+
+
+		private IRoomService _roomService;
         private IOrderService _orderService;
         public Guid RoomId { get; set; }
 
@@ -78,8 +83,8 @@ namespace QuanLyPhong
                 }
 
                 ChuyenPhong(RoomId, newRoom.Id);
-                OnTransferCompleted?.Invoke();
-                this.Close();
+				OnTransferCompleted?.Invoke();
+				this.Close();
             }
             else
             {

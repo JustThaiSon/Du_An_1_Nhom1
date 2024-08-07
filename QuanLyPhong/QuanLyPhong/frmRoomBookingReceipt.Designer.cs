@@ -252,6 +252,7 @@
 			txtPrepay.ShadowDecoration.CustomizableEdges = customizableEdges2;
 			txtPrepay.Size = new Size(276, 26);
 			txtPrepay.TabIndex = 42;
+			txtPrepay.TextChanged += txtPrepay_TextChanged;
 			// 
 			// rdHourly
 			// 

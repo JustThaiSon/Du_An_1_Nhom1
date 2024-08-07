@@ -49,7 +49,7 @@ namespace QuanLyPhong
 
 		private bool IsValidFloorName(string floorName)
 		{
-			string pattern = @"^Floor\d+$";
+			string pattern = @"^Floor\s+\d+$";
 
 			return Regex.IsMatch(floorName, pattern);
 		}

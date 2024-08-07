@@ -40,11 +40,16 @@ using System.Xml.Linq;
 using iText.IO.Image;
 using System.Drawing.Drawing2D;
 using Rectangle = System.Drawing.Rectangle;
+using QuanLyPhong;
+using static QuanLyPhong.frmRoomBookingReceipt;
 
 namespace QuanLyPhong
 {
 	public partial class frmPay : Form
 	{
+		public delegate void CheckOutHandler();
+		public event CheckOutHandler OnCheckOut;
+
 		public Guid OrderId { get; set; }
 		private IOrderServiceService _orderServiceService;
 		private IServiceSevice _serviceSevice;
@@ -74,13 +79,16 @@ namespace QuanLyPhong
 			_customerService = new CustomerService();
 			_historypointService = new HistoryPointsService();
 			_roomService = new RoomService();
+
 			LoadDtgService();
 			LoadDtgOrders();
 			LoadDataOnLabel();
 			LoadPayMent();
 			//Loaddb();
 			LoadCbbPoint();
+			LoadCbbVoucher();
 		}
+
 
 		void LoadDtgService()
 		{
@@ -270,8 +278,16 @@ namespace QuanLyPhong
 				{
 					lbPricePoint.Text = "0 VNĐ";
 				}
-				ToTal = firstOrderViewModel.ToTal - firstOrderViewModel.Prepay;
-				lbTotalPrice.Text = ToTal + " VNĐ";
+				decimal total = (firstOrderViewModel.ToTal ?? 0) - (firstOrderViewModel.Prepay ?? 0);
+
+				if (total > 0)
+				{
+					lbTotalPrice.Text = $"{total:0} VNĐ";
+				}
+				else
+				{
+					lbTotalPrice.Text = $"{Math.Abs(total):0} VNĐ Excess";
+				}
 
 				TimeSpan? totalTime = DateTime.Now - firstOrderViewModel.DateCreated;
 				lbTotalTime.Text = "Unavailable";
@@ -314,7 +330,7 @@ namespace QuanLyPhong
 
 		private void TbVoucher_TextChanged(object sender, EventArgs e)
 		{
-		
+
 		}
 
 		private decimal ToTalPriceDiscount = 0;
@@ -338,12 +354,28 @@ namespace QuanLyPhong
 			ToTalPriceDiscount = ToTalPriceRoom * discountRate;
 			ToTalDiscount = ToTalPriceDiscount;
 			ToTalPriceRoom -= ToTalPriceDiscount;
+
 			AppliedVouchers.Add(voucher.Id);
+
 			ToTal = _orderService.GetOrdersViewModels(OrderId)[0].ToTal - ToTalPriceDiscount;
 			lbTotalDiscount.Text = ToTalPriceDiscount.ToString("0") + " VND";
-			lbTotalPrice.Text = (ToTal).ToString() + " VND";
+			//lbTotalPrice.Text = (ToTal).ToString() + " VND";
+			ToTal = ToTal;
+
+			decimal? totalPricePrepay = _orderService.GetOrdersViewModels(OrderId)[0].Prepay;
+
+			decimal calculate = (ToTal ?? 0) - (totalPricePrepay ?? 0);
+			if (calculate > 0)
+			{
+				lbTotalPrice.Text = $"{calculate:0} VNĐ";
+			}
+			else
+			{
+				lbTotalPrice.Text = $"{Math.Abs(calculate):0} VNĐ Excess";
+			}
 			return $"Voucher applied successfully. Discount: {ToTalPriceDiscount.ToString("0")} VNĐ";
 		}
+
 		private void btnApplyVoucher_Click(object sender, EventArgs e)
 		{
 
@@ -432,7 +464,7 @@ namespace QuanLyPhong
 					{
 						Issue_An_invoice();
 					}
-					this.Close();
+					TriggerCheckOutEvent();
 				}
 			}
 			catch (Exception)
@@ -441,6 +473,13 @@ namespace QuanLyPhong
 				return;
 			}
 		}
+
+		private void TriggerCheckOutEvent()
+		{
+			OnCheckOut?.Invoke();
+			this.Close(); 
+		}
+
 		void SentMailAddPoint(string Email, decimal point, decimal ToTalPoint)
 		{
 			if (string.IsNullOrEmpty(Email))
@@ -633,7 +672,7 @@ namespace QuanLyPhong
 						   .SetBold()
 						   .SetBorder(new SolidBorder(1));
 						productTable.AddCell(totalLabelCell);
-						productTable.AddCell(new Cell().Add(new Paragraph($"{ToTalPriceService.ToString("0.##")} VNĐ"))
+						productTable.AddCell(new Cell().Add(new Paragraph($"{ToTalPriceService.ToString("0")} VNĐ"))
 							.SetFont(font)
 							.SetTextAlignment(TextAlignment.CENTER)
 							.SetBorder(new SolidBorder(1)));
@@ -685,14 +724,24 @@ namespace QuanLyPhong
 						AddOrderDataCell("Hóa Đơn Được Tạo Bởi");
 						AddOrderDataCell(filterData.EmployeeName);
 
+						decimal TotalPriceDiscount = 0;
+						if (filterData.TotalDiscount > 0)
+						{
+							TotalPriceDiscount = filterData.TotalDiscount.Value;
+						}
+
 						AddOrderDataCell("Tổng Tiền Giảm Giá");
-						AddOrderDataCell(filterData.TotalDiscount.ToString());
+						AddOrderDataCell(TotalPriceDiscount.ToString("0") + " VND");
+
+						decimal TotalPricePoint = 0;
+						if (filterData.TotalPricePoint.HasValue && filterData.TotalPricePoint.Value > 0)
+						{
+							TotalPricePoint = filterData.TotalPricePoint.Value;
+						}
 
 						AddOrderDataCell("Tổng Tiền Giảm Giá Bằng Điểm");
-						AddOrderDataCell(filterData.TotalPricePoint.ToString() + " VND");
+						AddOrderDataCell(TotalPricePoint.ToString("0") + " VND");
 
-						AddOrderDataCell("Giá Phòng");
-						AddOrderDataCell(PriceRoom.ToString() + " VNĐ");
 
 						AddOrderDataCell("Số Giờ/Ngày Thuê");
 						AddOrderDataCell(totalTimeString);
@@ -701,7 +750,13 @@ namespace QuanLyPhong
 						AddOrderDataCell(PointAdd.ToString() + " Points");
 
 						AddOrderDataCell("Tiền Trả Trước");
-						AddOrderDataCell(filterData.Prepay.ToString());
+						AddOrderDataCell(filterData.Prepay?.ToString("0") + " VND");
+
+						AddOrderDataCell("Giá Phòng");
+						AddOrderDataCell(PriceRoom?.ToString("0") + " VND");
+
+						AddOrderDataCell("Tổng Tiền Phòng");
+						AddOrderDataCell(filterData.ToTalPrice.ToString("0") + " VND");
 
 						AddOrderDataCell("Loại Hình thuê");
 						AddOrderDataCell(filterData.Rentaltype.ToString());
@@ -709,8 +764,17 @@ namespace QuanLyPhong
 						AddOrderDataCell("Loại Phòng");
 						AddOrderDataCell(filterData.KindOfRoomName.ToString());
 
+						decimal total = (filterData.ToTal ?? 0) - (filterData.Prepay ?? 0);
+						decimal TotalLeftOverPrice = 0;
+						if (total < 0)
+						{
+							TotalLeftOverPrice = Math.Abs(total);
+						}
+						AddOrderDataCell("Tiền Thừa");
+						AddOrderDataCell(TotalLeftOverPrice.ToString("0") + " VND");
+
 						AddOrderDataCell("Tổng Tiền Hóa Đơn");
-						AddOrderDataCell($"{filterData.ToTal.ToString()} VNĐ");
+						AddOrderDataCell($"{filterData.ToTal?.ToString("0")} VND");
 						document.Add(orderTable);
 						document.Close();
 					}
@@ -721,7 +785,7 @@ namespace QuanLyPhong
 					UseShellExecute = true
 				});
 
-				MessageBox.Show("Hóa đơn đã được xuất thành công và mở tự động!");
+				MessageBox.Show("The Invoice has been successfully issued and automatically opened!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			catch (UnauthorizedAccessException ex)
 			{
@@ -790,7 +854,7 @@ namespace QuanLyPhong
 				.SetTextAlignment(TextAlignment.CENTER)
 				.SetPadding(5)
 				.SetBorder(new SolidBorder(1)));
-			table.AddCell(new Cell().Add(new Paragraph(itemPrice.ToString("0.##") + " VNĐ"))
+			table.AddCell(new Cell().Add(new Paragraph(itemPrice.ToString("0") + " VNĐ"))
 				.SetFont(font)
 				.SetTextAlignment(TextAlignment.CENTER)
 				.SetPadding(5)
@@ -800,7 +864,7 @@ namespace QuanLyPhong
 				.SetTextAlignment(TextAlignment.CENTER)
 				.SetPadding(5)
 				.SetBorder(new SolidBorder(1)));
-			table.AddCell(new Cell().Add(new Paragraph(totalPrice.ToString("0.##") + " VNĐ"))
+			table.AddCell(new Cell().Add(new Paragraph(totalPrice.ToString("0") + " VNĐ"))
 				.SetFont(font)
 				.SetTextAlignment(TextAlignment.CENTER)
 				.SetPadding(5)
@@ -976,8 +1040,18 @@ namespace QuanLyPhong
 			int pointsUsed = (int)Math.Min(maxPointsThatCanBeUsed, customer.Point);
 			ToTalPricePoints = pointsUsed;
 			ToTal = ToTal - pointsToUse;
+			decimal calculate = (ToTal ?? 0) - (filterData.Prepay ?? 0);
+			if (calculate > 0)
+			{
+				lbTotalPrice.Text = $"{calculate:0} VNĐ";
+			}
+			else
+			{
+				lbTotalPrice.Text = $"{Math.Abs(calculate):0} VNĐ Excess";
+			}
+
 			lbPricePoint.Text = pointsUsed.ToString() + " VND";
-			lbTotalPrice.Text = (ToTal).ToString() + " VND";
+			//lbTotalPrice.Text = (ToTal).ToString() + " VND";
 		}
 
 		private void btnApply_Click(object sender, EventArgs e)
@@ -1001,5 +1075,41 @@ namespace QuanLyPhong
 				MessageBox.Show(validationResult);
 			}
 		}
+		void LoadCbbVoucher()
+		{
+			cbbVoucher.Items.Clear();
+			foreach (var item in _voucherSevice.GetAllVoucherFromDb().Where(x => x.Status == VoucherStatus.Active))
+			{
+				cbbVoucher.Items.Add(item.VoucherCode);
+			}
+			cbbVoucher.DropDownStyle = ComboBoxStyle.DropDown;
+			cbbVoucher.Enabled = true;
+		}
+
+		private void cbbVoucher_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbbVoucher.SelectedItem != null)
+			{
+				string selectedVoucherCode = cbbVoucher.SelectedItem.ToString();
+
+				string validationResult = _voucherSevice.ValidateVoucher(selectedVoucherCode, OrderId);
+
+				if (validationResult == "Voucher validation successful")
+				{
+					TbVoucher.BackColor = Color.LightGreen;
+
+					string applyResult = ApplyVoucher(selectedVoucherCode);
+
+					MessageBox.Show(applyResult);
+				}
+				else
+				{
+					TbVoucher.BackColor = Color.LightPink;
+
+					MessageBox.Show(validationResult);
+				}
+			}
+		}
+
 	}
 }

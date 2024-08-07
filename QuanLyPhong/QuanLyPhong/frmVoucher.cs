@@ -162,11 +162,11 @@ namespace QuanLyPhong
 				return;
 			}
 
-			if (startDate < DateTime.Now)
-			{
-				MessageBox.Show("The start date must be greater than or equal to the current date.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
+			//if (startDate < DateTime.Now)
+			//{
+			//	MessageBox.Show("The start date must be greater than or equal to the current date.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			//	return;
+			//}
 
 			if (endDate == startDate)
 			{
