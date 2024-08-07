@@ -89,7 +89,7 @@ namespace QuanLyPhong
 				txt_PhoneNumber.Text = employee.PhoneNumber;
 				cbb_Status.Text = Status;
 				txt_UserName.Text = employee.UserName;
-				txt_PassWord.Text = employee.PassWord;
+				txt_PassWord.Text = "";
 				dtP_DateOfBirth.Text = employee.DateOfBirth.ToString();
 				txt_CCCD.Text = employee.CCCD;
 				txt_EmployeeCode.Text = employee.EmployeeCode.ToString();
@@ -206,23 +206,24 @@ namespace QuanLyPhong
 				MessageBox.Show("Img is not empty!!!");
 				return;
 			}
-			var employee = new Employee()
-			{
-				Name = txt_add_Name.Text,
-				RoleId = role,
-				Email = txt_add_Email.Text,
-				Address = txt_add_Adress.Text,
-				PhoneNumber = txt_add_PhoneNumber.Text,
-				Status = status,
-				UserName = txt_add_UserName.Text,
-				PassWord = txt_add_PassWord.Text,
-				Img = img,
-				DateOfBirth = dateOfBirth,
-				CCCD = txt_add_CCCD.Text,
-				Gender = selectedGender,
-			};
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(txt_add_PassWord.Text); //hash
+            var employee = new Employee()
+            {
+                Name = txt_add_Name.Text,
+                RoleId = role,
+                Email = txt_add_Email.Text,
+                Address = txt_add_Adress.Text,
+                PhoneNumber = txt_add_PhoneNumber.Text,
+                Status = status,
+                UserName = txt_add_UserName.Text,
+                PassWord = hashedPassword,
+                Img = img,
+                DateOfBirth = dateOfBirth,
+                CCCD = txt_add_CCCD.Text,
+                Gender = selectedGender,
+            };
 
-			MessageBox.Show(_employeeService.AddEmployee(employee), "Notification");
+            MessageBox.Show(_employeeService.AddEmployee(employee), "Notification");
 			this.add_Clear();
 			Load_dtGV_Employee();
 			tabControl1.SelectedTab = tabPage2;
@@ -319,8 +320,12 @@ namespace QuanLyPhong
 			employee.Name = txt_Name.Text;
 			employee.Address = txt_Adress.Text;
 			employee.UserName = txt_UserName.Text;
-			employee.PassWord = txt_PassWord.Text;
-			employee.CCCD = txt_CCCD.Text;
+            if (!string.IsNullOrEmpty(txt_PassWord.Text))
+            {
+                employee.PassWord = BCrypt.Net.BCrypt.HashPassword(txt_PassWord.Text);
+            }
+
+            employee.CCCD = txt_CCCD.Text;
 			employee.Status = employee.Status;
 			employee.PhoneNumber = txt_PhoneNumber.Text;
 			employee.Email = txt_Email.Text;
@@ -380,7 +385,7 @@ namespace QuanLyPhong
 				}
 
 				Count++;
-				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, Status, item.UserName, item.PassWord, item.DateOfBirth.ToString(), item.Img, item.CCCD, item.Gender);
+				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, Status, item.UserName,"******", item.DateOfBirth.ToString(), item.Img, item.CCCD, item.Gender);
 			}
 		}
 
@@ -429,7 +434,7 @@ namespace QuanLyPhong
 					}
 				}
 				Count++;
-				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, item.Status, item.UserName, item.PassWord, item.DateOfBirth, item.Img, item.CCCD, item.Gender);
+				dtGV_Employee.Rows.Add(Count, item.Id, item.EmployeeCode, item.Name, role, item.Email, item.Address, item.PhoneNumber, item.Status, item.UserName, "******", item.DateOfBirth, item.Img, item.CCCD, item.Gender);
 			}
 		}
 

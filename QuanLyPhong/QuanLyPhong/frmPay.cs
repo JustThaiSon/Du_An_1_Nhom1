@@ -552,7 +552,7 @@ namespace QuanLyPhong
 					{
 						Document document = new Document(pdf, PageSize.A4);
 
-						PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+						PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIAL.TTF", PdfEncodings.IDENTITY_H);
 
 						// Thêm tiêu đề hóa đơn
 						document.Add(new Paragraph("HÓA ĐƠN")
@@ -842,7 +842,7 @@ namespace QuanLyPhong
 		}
 		private void AddTableRow(Table table, int STT, string itemName, decimal itemPrice, int? quantity, decimal totalPrice)
 		{
-			PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+			PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIAL.TTF", PdfEncodings.IDENTITY_H);
 
 			table.AddCell(new Cell().Add(new Paragraph(STT.ToString()))
 				.SetFont(font)
