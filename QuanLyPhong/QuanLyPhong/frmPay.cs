@@ -535,7 +535,7 @@ namespace QuanLyPhong
 				MessageBox.Show("Customer not found.");
 				return;
 			}
-			string directoryPath = @"C:\Users\admin\Desktop\PDF";
+			string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\Du_An_1_Nhom1\pdf";
 			string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
 			string filePath = System.IO.Path.Combine(directoryPath, fileName);
 
