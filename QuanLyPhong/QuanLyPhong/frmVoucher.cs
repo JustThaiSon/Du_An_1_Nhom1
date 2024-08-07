@@ -95,6 +95,7 @@ namespace QuanLyPhong
 			dtgDanhSach.Columns[8].Name = "EndDate";
 			dtgDanhSach.Rows.Clear();
 			int Count = 0;
+			//kjkk
 			foreach (var item in _voucherSevice.GetAllVoucherFromDb())
 			{
 				Count++;
