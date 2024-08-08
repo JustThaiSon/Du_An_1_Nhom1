@@ -17,7 +17,7 @@ namespace QuanLyPhong
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
           
-            Application.Run(new frmRoom());
+            Application.Run(new frmQuanLyOrder());
 
 		}
 	}
