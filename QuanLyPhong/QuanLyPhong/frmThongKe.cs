@@ -25,7 +25,7 @@ namespace QuanLyPhong
     {
         //Thời gian mặc định của dtP_TuNgay,dtP_DenNgay là 17/07/2024 12:00:00 AM
         //Lưu ý đổi đường dẫn path_Excel này:
-        private string path_Excel = "C:\\Users\\admin\\Desktop\\Học FPL\\ExcelThongKe.xlsx";
+        private string path_Excel = "D:\\Tai_Lieu_Sinh_Vien\\duan1\\Du_An_1_Nhom1\\ex\\ExcelThongKe.xlsx";
         private IOrderService _orderService;
         private IOrderServiceService _orderServiceService;
         private IRoomService _roomService;

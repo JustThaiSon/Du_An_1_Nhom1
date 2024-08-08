@@ -70,7 +70,7 @@ namespace QuanLyPhong
 		}
 		public void add_Clear()
 		{
-			lb_add_Id.Text = "---";
+			
 			txt_add_CustomerCode.Clear();
 			txt_add_Name.Clear();
 			txt_add_Email.Clear();
@@ -78,11 +78,11 @@ namespace QuanLyPhong
 			txt_add_PhoneNumber.Clear();
 			txt_add_CCCD.Clear();
 			cbb_add_Gender.SelectedIndex = 0;
-			NUD_add_Point.Value = 0;
+			
 		}
 		public void edit_Clear()
 		{
-			lb_edit_Id.Text = "---";
+			
 			txt_edit_CustomerCode.Clear();
 			txt_edit_Name.Clear();
 			txt_edit_Email.Clear();
@@ -130,7 +130,7 @@ namespace QuanLyPhong
 
 			int Count = 0;
 			var listCustomer = _customerService.GetAllCustomerFromDb()
-			.Where(x => x.Name.Contains(txtSearch.Text) || x.CCCD.StartsWith(txtSearch.Text) || x.CustomerCode.Contains(txtSearch.Text)).ToList();
+			.Where(x => x.Name!.Contains(txtSearch.Text) || x.CCCD!.StartsWith(txtSearch.Text) || x.CustomerCode!.Contains(txtSearch.Text)).ToList();
 
 			foreach (var item in listCustomer)
 			{
@@ -193,11 +193,7 @@ namespace QuanLyPhong
 				return;
 			}
 
-			if (NUD_add_Point.Value < 0)
-			{
-				MessageBox.Show("Point must be greater than or equal to 0.");
-				return;
-			}
+			
 			MenuGender selectedGender = (MenuGender)Enum.Parse(typeof(MenuGender), cbb_add_Gender.SelectedItem.ToString());
 			var customer = new Customer()
 			{
@@ -207,7 +203,7 @@ namespace QuanLyPhong
 				Address = txt_add_Adress.Text,
 				CCCD = txt_add_CCCD.Text,
 				Gender = selectedGender,
-				Point = int.Parse(NUD_add_Point.Value.ToString())
+				Point = 0
 			};
 
 			MessageBox.Show(_customerService.AddCustomer(customer), "Notificaiton");
