@@ -105,45 +105,95 @@ namespace QuanLyPhong
 
 		private void ToolStripDelete_Click(object? sender, EventArgs e)
 		{
-			if (dtgService.SelectedRows.Count > 0)
+			try
 			{
-				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
-				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
-				var serviceToRemove = _temporaryServices.FirstOrDefault(s => s.ServiceId == serviceId);
-
-				if (serviceToRemove != null)
+				if (dtgService.SelectedRows.Count > 0)
 				{
-					TotalPriceOrderService = TotalPriceOrderService - serviceToRemove.TotalPrice;
-					_temporaryServices.Remove(serviceToRemove);
-					LoadDataGridViewService();
-					TotalPrice();
+					DataGridViewRow selectedRow = dtgService.SelectedRows[0];
+					if (selectedRow.Cells["Id"].Value == null)
+					{
+						MessageBox.Show("Selected row is missing required information.");
+						return;
+					}
+					var serviceId = (Guid)selectedRow.Cells["Id"].Value;
+					var serviceToRemove = _temporaryServices.FirstOrDefault(s => s.ServiceId == serviceId);
+					if (serviceToRemove != null)
+					{
+						TotalPriceOrderService -= serviceToRemove.TotalPrice;
+						_temporaryServices.Remove(serviceToRemove);
+						LoadDataGridViewService();
+						TotalPrice();
+
+						MessageBox.Show("Service removed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					else
+					{
+						MessageBox.Show("Service not found in the temporary list.");
+					}
+				}
+				else
+				{
+					MessageBox.Show("No row selected.");
 				}
 			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"An error occurred: {ex.Message}");
+			}
 		}
+
 
 		private void ToolStripEdit_Click(object? sender, EventArgs e)
 		{
 			if (dtgService.SelectedRows.Count > 0)
 			{
 				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
-				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
-				var serviceToUpdate = _temporaryServices.FirstOrDefault(x => x.ServiceId == serviceId);
-				if (serviceToUpdate != null)
+				if (selectedRow.Cells["Id"].Value == null || selectedRow.Cells["Quantity"].Value == null)
 				{
-					int newQuantity = Convert.ToInt32(selectedRow.Cells["Quantity"].Value);
-					decimal price = Convert.ToDecimal(selectedRow.Cells["Price"].Value);
-
-					decimal newTotalPrice = newQuantity * price;
-
-					serviceToUpdate.Quantity = newQuantity;
-					serviceToUpdate.TotalPrice = newTotalPrice;
-
-					selectedRow.Cells["Quantity"].Value = newQuantity;
-					selectedRow.Cells["TotalPrice"].Value = newTotalPrice.ToString("0");
-
-					MessageBox.Show("Update Thành Công");
-					LoadDataGridViewService();
+					MessageBox.Show("Selected row is missing required information.");
+					return;
 				}
+				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
+				var serviceToUpdate = _orderServiceService.GetAllOrderServiceFromDb()
+					.FirstOrDefault(s => s.ServiceId == serviceId && s.OrderId == OrderId);
+				if (serviceToUpdate == null)
+				{
+					MessageBox.Show("Service not found in the order.");
+					return;
+				}
+				var orderViewModel = _orderService.GetOrdersViewModels(OrderId);
+				if (orderViewModel == null)
+				{
+					MessageBox.Show("Order details not found or the order has been paid.");
+					return;
+				}
+				int newQuantity;
+				if (!int.TryParse(selectedRow.Cells["Quantity"].Value.ToString(), out newQuantity) || newQuantity < 0)
+				{
+					MessageBox.Show("The quantity must be greater than 0.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == serviceToUpdate.ServiceId);
+				if (service != null)
+				{
+					int quantityDifference = newQuantity - serviceToUpdate.Quantity;
+					if (service.Quantity - quantityDifference < 0)
+					{
+						MessageBox.Show("Not enough product quantity.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						return;
+					}
+					service.Quantity -= quantityDifference;
+					_serviceSevice.UpdateService(service);
+				}
+				serviceToUpdate.Quantity = newQuantity;
+				serviceToUpdate.TotalPrice = newQuantity * service.Price;
+				_orderServiceService.UpdateOrderService(serviceToUpdate);
+				MessageBox.Show("Order Service updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				LoadDataGridViewService();
+			}
+			else
+			{
+				MessageBox.Show("No row selected.");
 			}
 		}
 
@@ -293,6 +343,7 @@ namespace QuanLyPhong
 				Guid OrderId = service.OrderId;
 				string serviceResult = _orderServiceService.AddOrderService(service);
 			}
+			
 			this.Close();
 		}
 
