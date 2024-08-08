@@ -2,6 +2,7 @@
 using BUS.Service;
 using DAL.Entities;
 using DAL.Enums;
+using ICSharpCode.SharpZipLib.Zip;
 using iText.Layout.Borders;
 using System;
 using System.Collections.Generic;
@@ -70,52 +71,113 @@ namespace QuanLyPhong
 			if (dtgService.SelectedRows.Count > 0)
 			{
 				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
+				if (selectedRow.Cells["Id"].Value == null || selectedRow.Cells["Quantity"].Value == null)
+				{
+					MessageBox.Show("Selected row is missing required information.");
+					return;
+				}
 				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
-				var serviceToUpdate = _orderServiceService.GetAllOrderServiceFromDb().FirstOrDefault(s => s.ServiceId == serviceId && s.OrderId == OrderId);
-
+				var serviceToUpdate = _orderServiceService.GetAllOrderServiceFromDb()
+					.FirstOrDefault(s => s.ServiceId == serviceId && s.OrderId == OrderId);
+				if (serviceToUpdate == null)
+				{
+					MessageBox.Show("Service not found in the order.");
+					return;
+				}
 				var orderViewModel = _orderService.GetOrdersViewModels(OrderId);
 				if (orderViewModel == null)
 				{
-					MessageBox.Show("Orders have been paid success");
+					MessageBox.Show("Order details not found or the order has been paid.");
 					return;
 				}
-				int newQuantity = Convert.ToInt32(selectedRow.Cells["Quantity"].Value);
-				if (serviceToUpdate != null)
+				int newQuantity;
+				if (!int.TryParse(selectedRow.Cells["Quantity"].Value.ToString(), out newQuantity) || newQuantity < 0)
 				{
-					serviceToUpdate.Quantity = newQuantity;
-					_orderServiceService.UpdateOrderService(serviceToUpdate);
-					MessageBox.Show("Order Service updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					LoadDataGridViewService(OrderId);
+					MessageBox.Show("The quantity must be greater than 0.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
 				}
+				var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == serviceToUpdate.ServiceId);
+				if (service != null)
+				{
+					int quantityDifference = newQuantity - serviceToUpdate.Quantity;
+					if (service.Quantity - quantityDifference < 0)
+					{
+						MessageBox.Show($"Not enough product quantity.Quantity now: {service.Quantity}.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						return;
+					}
+					service.Quantity -= quantityDifference;
+					_serviceSevice.UpdateService(service);
+				}
+				serviceToUpdate.Quantity = newQuantity;
+				serviceToUpdate.TotalPrice = newQuantity * service.Price;
+				_orderServiceService.UpdateOrderService(serviceToUpdate);
+				MessageBox.Show("Order Service updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				LoadDataGridViewService(OrderId);
+			}
+			else
+			{
+				MessageBox.Show("No row selected.");
 			}
 		}
+
+
 
 		private void ToolStripDelete_Click(object? sender, EventArgs e)
 		{
-			if (dtgService.SelectedRows.Count > 0)
+			try
 			{
-				DataGridViewRow selectedRow = dtgService.SelectedRows[0];
-				var serviceId = (Guid)selectedRow.Cells["Id"].Value;
-				var serviceToRemove = _orderServiceService.GetAllOrderService().FirstOrDefault(s => s.ServiceId == serviceId && s.OrderId == OrderId);
-
-				var orderViewModel = _orderService.GetOrdersViewModels(OrderId)
-								   .FirstOrDefault(x => x.DatePayment == null);
-				if (orderViewModel == null)
+				if (dtgService.SelectedRows.Count > 0)
 				{
-					MessageBox.Show("Orders have been paid success");
-					return;
+					DataGridViewRow selectedRow = dtgService.SelectedRows[0];
+					if (selectedRow.Cells["Id"].Value == null)
+					{
+						MessageBox.Show("Selected row is missing required information.");
+						return;
+					}
+					var serviceId = (Guid)selectedRow.Cells["Id"].Value;
+					var serviceToRemove = _orderServiceService.GetAllOrderServiceFromDb()
+						.FirstOrDefault(s => s.ServiceId == serviceId && s.OrderId == OrderId);
+					var orderViewModel = _orderService.GetOrdersViewModels(OrderId)
+						.FirstOrDefault(x => x.DatePayment == null);
+
+					if (orderViewModel == null)
+					{
+						MessageBox.Show("Order has already been paid or does not exist.");
+						return;
+					}
+					if (serviceToRemove != null)
+					{
+						var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == serviceToRemove.ServiceId);
+						if (service != null)
+						{
+							service.Quantity += serviceToRemove.Quantity;
+							_serviceSevice.UpdateService(service);
+						}
+						else
+						{
+							MessageBox.Show("Service not found in the inventory.");
+							return;
+						}
+						_orderServiceService.RemoveOrderServicee(serviceToRemove.OrderId, serviceToRemove.ServiceId);
+						MessageBox.Show("Service removed successfully.");
+						LoadDataGridViewService(OrderId);
+					}
+					else
+					{
+						MessageBox.Show("Service not found in the order.");
+					}
 				}
-				if (serviceToRemove != null)
+				else
 				{
-
-					_orderServiceService.RemoveOrderServicee(serviceToRemove.OrderId, serviceToRemove.ServiceId);
-					MessageBox.Show("Delete success");
-
-					LoadDataGridViewService(OrderId);
+					MessageBox.Show("No row selected.");
 				}
 			}
-
+			catch (Exception ex)
+			{
+				MessageBox.Show($"An error occurred: {ex.Message}");
+			}
 		}
+
 
 		void LoadDataGridViewOrder()
 		{
@@ -211,7 +273,7 @@ namespace QuanLyPhong
 			 decimal.TryParse(txt_price.Text, out decimal price))
 			{
 				decimal total = quantity * price;
-				txt_priretotalser.Text = total.ToString("N2");
+				txt_priretotalser.Text = total.ToString("N0");
 			}
 			else
 			{
@@ -245,8 +307,19 @@ namespace QuanLyPhong
 			{
 				if (e.RowIndex >= 0 && e.RowIndex < dtgv_order.Rows.Count)
 				{
-					var cellValue = dtgv_order.Rows[e.RowIndex].Cells["Id"].Value;
 					var selectedRow = dtgv_order.Rows[e.RowIndex];
+
+					if (selectedRow.IsNewRow)
+					{
+						MessageBox.Show("Không có thông tin.");
+						return;
+					}
+
+					if (selectedRow.Cells["Id"].Value == null || selectedRow.Cells["Id"].Value == DBNull.Value)
+					{
+						MessageBox.Show("Không có thông tin.");
+						return;
+					}
 
 					txt_Code.Text = selectedRow.Cells["OrderCode"].Value?.ToString();
 					txt_employe.Text = selectedRow.Cells["Employee"].Value?.ToString();
@@ -256,7 +329,8 @@ namespace QuanLyPhong
 					txt_TotalPrice.Text = selectedRow.Cells["Total"].Value?.ToString();
 					txt_Roomprice.Text = selectedRow.Cells["ToTalPriceRoom"].Value?.ToString();
 					txt_nameroom.Text = selectedRow.Cells["NameRoom"].Value?.ToString();
-					OrderId = Guid.Parse(selectedRow.Cells[0].Value.ToString());
+
+					OrderId = Guid.Parse(selectedRow.Cells["Id"].Value.ToString());
 					LoadDataGridViewService(OrderId);
 				}
 				else
@@ -264,12 +338,12 @@ namespace QuanLyPhong
 					MessageBox.Show("Không có thông tin.");
 				}
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-
-				return;
+				MessageBox.Show("Đã xảy ra lỗi: " + ex.Message);
 			}
 		}
+
 
 		private void button1_Click(object sender, EventArgs e)
 		{
@@ -394,45 +468,42 @@ namespace QuanLyPhong
 					MessageBox.Show("Vui lòng chọn dịch vụ cần chỉnh sửa.");
 					return;
 				}
-
 				var selectedRow = dtgService.SelectedRows[0];
 				Guid serviceId = (Guid)selectedRow.Cells["Id"].Value;
 				int newQuantity;
-
 				if (!int.TryParse(txt_quantity.Text, out newQuantity) || newQuantity <= 0)
 				{
 					MessageBox.Show("Vui lòng nhập số lượng hợp lệ (số nguyên dương).");
 					return;
 				}
-
 				var selectedOrderRow = dtgv_order.SelectedRows[0];
 				Guid orderId = (Guid)selectedOrderRow.Cells["Id"].Value;
-
 				var orderService = _orderServiceService.GetOrderServicesByOrderId(orderId)
 					.FirstOrDefault(os => os.ServiceId == serviceId);
-
 				if (orderService == null)
 				{
-					MessageBox.Show("Không tìm thấy dịch vụ trong đơn hàng.");
+					MessageBox.Show("Service not found in the order.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
-
-				int quantityDifference = newQuantity - orderService.Quantity;
-				orderService.Quantity = newQuantity;
-				orderService.TotalPrice = orderService.TotalPrice * newQuantity;
-
-				_orderServiceService.UpdateOrderService(orderService);
-
 				var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == serviceId);
 				if (service != null)
 				{
+					int quantityDifference = newQuantity - orderService.Quantity;
+					if (service.Quantity - quantityDifference < 0)
+					{
+						MessageBox.Show($"Not enough product quantity.Quantity now: {service.Quantity}.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+						return;
+					}
 					service.Quantity -= quantityDifference;
 					_serviceSevice.UpdateService(service);
 				}
-
+				orderService.Quantity = newQuantity;
+				orderService.TotalPrice = decimal.Parse(txt_priretotalser.Text);
+				_orderServiceService.UpdateOrderService(orderService);
 				MessageBox.Show("Cập nhật số lượng dịch vụ thành công.");
 				LoadDataGridViewService(orderId);
 				LoadDataGridViewOrder();
+				tabControl1.SelectedTab = Information;
 			}
 			catch (Exception ex)
 			{
@@ -617,7 +688,6 @@ namespace QuanLyPhong
 					item.OrderType, item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
 			}
 		}
-
 		void LoadCbbPayment()
 		{
 			string[] Payment = { "All", "Have been paid", "Not yet paid" };
@@ -641,73 +711,80 @@ namespace QuanLyPhong
 				LoadDataGridViewOrder();
 			}
 		}
-
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			try
 			{
+				if (dtgService.SelectedRows.Count == 0)
+				{
+					MessageBox.Show("Vui lòng chọn dịch vụ cần xóa.");
+					return;
+				}
+				var selectedServiceRow = dtgService.SelectedRows[0];
+				if (selectedServiceRow.Cells["Id"].Value == null || selectedServiceRow.Cells["Id"].Value == DBNull.Value)
+				{
+					MessageBox.Show("Dịch vụ đã chọn không hợp lệ.");
+					return;
+				}
+				Guid serviceId = (Guid)selectedServiceRow.Cells["Id"].Value;
 				if (dtgv_order.SelectedRows.Count == 0)
 				{
 					MessageBox.Show("Vui lòng chọn đơn hàng cần xóa.");
 					return;
 				}
-
-				var selectedRow = dtgv_order.SelectedRows[0];
-				Guid orderId = (Guid)selectedRow.Cells["Id"].Value;
-				var nameroom = selectedRow.Cells["NameRoom"].Value.ToString();
-				var Value = selectedRow.Cells["DatePayment"].Value;
-
-				if (Value.ToString() != "Chưa thanh toán")
+				var selectedOrderRow = dtgv_order.SelectedRows[0];
+				if (selectedOrderRow.Cells["Id"].Value == null || selectedOrderRow.Cells["Id"].Value == DBNull.Value)
 				{
-					MessageBox.Show("Không thể xóa hóa đơn đã thanh toán");
+					MessageBox.Show("Đơn hàng đã chọn không hợp lệ.");
 					return;
 				}
-
-				var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa đơn hàng này?",
-													"Xác nhận xóa",
-													MessageBoxButtons.YesNo);
-				if (confirmResult != DialogResult.Yes) return;
-
-				var orderServices = _orderServiceService.GetOrderServicesByOrderId(orderId);
-
-
-				foreach (var orderService in orderServices)
+				Guid orderId = (Guid)selectedOrderRow.Cells["Id"].Value;
+				var nameroom = selectedOrderRow.Cells["NameRoom"].Value?.ToString();
+				var paymentStatus = selectedOrderRow.Cells["DatePayment"].Value?.ToString();
+				if (paymentStatus != null && paymentStatus != "Chưa thanh toán")
 				{
-					var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == orderService.ServiceId);
+					MessageBox.Show("Không thể xóa hóa đơn đã thanh toán.");
+					return;
+				}
+				var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa dịch vụ này khỏi đơn hàng?", "Xác nhận xóa", MessageBoxButtons.YesNo);
+				if (confirmResult != DialogResult.Yes) return;
+				var orderServiceToDelete = _orderServiceService.GetOrderServicesByOrderId(orderId)
+					.FirstOrDefault(os => os.ServiceId == serviceId);
+				if (orderServiceToDelete != null)
+				{
+					var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == orderServiceToDelete.ServiceId);
 					if (service != null)
 					{
-						service.Quantity += orderService.Quantity;
+						service.Quantity += orderServiceToDelete.Quantity;
 						_serviceSevice.UpdateService(service);
 					}
 					else
 					{
-						MessageBox.Show($"Không tìm thấy dịch vụ : {service.Name}");
+						MessageBox.Show($"Không tìm thấy dịch vụ: {orderServiceToDelete.ServiceId}");
 					}
-				}
-
-				_orderServiceService.RemoveOrderServiceeAll(orderId);
-				_orderService.RemoveOrders(orderId);
-
-				var room = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.RoomName == nameroom);
-				if (room != null)
-				{
-					room.Status = RoomStatus.Available;
-					_roomService.UpdadateStatusRoom(room);
+					_orderServiceService.RemoveOrderServicee(orderId, serviceId);
+					MessageBox.Show("Xóa dịch vụ thành công");
 				}
 				else
 				{
-					MessageBox.Show($"Không tìm thấy phòng có tên: {nameroom}");
+					MessageBox.Show("Không tìm thấy dịch vụ trong đơn hàng.");
 				}
 
-				MessageBox.Show("Xóa thành công");
 				LoadDataGridViewOrder();
 				LoadDataGridViewService(orderId);
 			}
-			catch
+			catch (Exception ex)
 			{
-				MessageBox.Show("Loi");
+				MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}");
 			}
 		}
+
+		private void btn_addNewSer_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		
 	}
 }
 
