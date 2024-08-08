@@ -21,23 +21,18 @@ namespace QuanLyPhong
             using (var context = new MyDbContext())
             {
                 var employee = context.Employees
-                    .Include(e => e.Role) 
-                    .FirstOrDefault(e => e.UserName == tb_username.Text && e.PassWord == tb_password.Text);
-               
-                if (employee != null)
+                    .Include(e => e.Role)
+                    .FirstOrDefault(e => e.UserName == tb_username.Text);
+
+                if (employee != null && BCrypt.Net.BCrypt.Verify(tb_password.Text, employee.PassWord))
                 {
-					if (employee.Status == false)
-					{
-						MessageBox.Show("Employee has retired", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
-					lb_error.Visible = false;
+                    lb_error.Visible = false;
 
                     Session.UserName = employee.UserName;
                     Session.UserId = employee.Id;
                     Session.EmployeeCode = employee.EmployeeCode;
                     Session.Name = employee.Name;
-                    Session.RoleCode = employee.Role?.RoleCode; 
+                    Session.RoleCode = employee.Role?.RoleCode;
                     Session.PassWord = employee.PassWord;
                     TrangChu tc = new TrangChu();
                     this.Hide();
