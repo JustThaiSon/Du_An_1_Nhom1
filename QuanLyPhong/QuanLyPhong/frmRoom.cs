@@ -105,7 +105,9 @@ namespace QuanLyPhong
 			dtgPhong.Columns[7].Name = "PriceByHour";
 			dtgPhong.Rows.Clear();
 			int Count = 0;
-			foreach (var item in _roomService.GetAllRooms().Where(x => x.RoomName.ToLower().StartsWith(KeyWord.ToLower())))
+			foreach (var item in _roomService.GetAllRooms().Where(x => x.RoomName.ToLower().StartsWith(KeyWord.ToLower())|| 
+			x.Status.ToString().ToLower().StartsWith(KeyWord.ToLower()) || x.FloorName.ToLower().StartsWith(KeyWord.ToLower()) 
+			|| x.KindOfRoomName.ToLower().StartsWith(KeyWord.ToLower())))
 			{
 				Count++;
 				dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay, item.PriceByHour);

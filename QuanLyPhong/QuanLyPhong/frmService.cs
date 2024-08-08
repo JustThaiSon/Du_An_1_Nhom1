@@ -85,23 +85,23 @@ namespace QuanLyPhong
 
 			if (!DateTime.TryParseExact(createDatest, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out createDate))
 			{
-				MessageBox.Show("Ngày không hợp lệ.");
+				MessageBox.Show("Invalid date.");
 				return;
 			}
 			if (Convert.ToInt32(tb_Quantity.Text) < 0 && Convert.ToDecimal(tb_price.Text) < 0)
 			{
-				MessageBox.Show("Giá sản phẩm và số lượng không hợp lệ.");
+				MessageBox.Show("\r\nProduct price and quantity are invalid.");
 				return;
 			}
 			if (Convert.ToDecimal(tb_price.Text) < 0)
 			{
 
-				MessageBox.Show("Giá sản phẩm khong hợp lệ.");
+				MessageBox.Show("Invalid Price.");
 				return;
 			}
 			if (Convert.ToInt32(tb_Quantity.Text) < 0)
 			{
-				MessageBox.Show("Số lượng khong hợp lệ.");
+				MessageBox.Show("Invalid quantity.");
 				return;
 			}
 
@@ -161,23 +161,23 @@ namespace QuanLyPhong
 
 			if (!DateTime.TryParseExact(createDatest, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out createDate))
 			{
-				MessageBox.Show("Ngày không hợp lệ.");
+				MessageBox.Show("Invalid date.");
 				return;
 			}
 			if (Convert.ToInt32(tb_Quantity.Text) < 0 && Convert.ToDecimal(tb_price.Text) < 0)
 			{
-				MessageBox.Show("Giá sản phẩm và số lượng không hợp lệ.");
+				MessageBox.Show("Product price and quantity are invalid.");
 				return;
 			}
 			if (Convert.ToDecimal(tb_price.Text) < 0)
 			{
 
-				MessageBox.Show("Giá sản phẩm khong hợp lệ.");
+				MessageBox.Show("Invalid price.");
 				return;
 			}
 			if (Convert.ToInt32(tb_Quantity.Text) < 0)
 			{
-				MessageBox.Show("Số lượng khong hợp lệ.");
+				MessageBox.Show("Invalid quantity.");
 				return;
 			}
 
