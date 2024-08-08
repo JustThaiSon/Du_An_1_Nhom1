@@ -348,6 +348,7 @@ namespace QuanLyPhong
 		private void btn_addTypeRoom_Click(object sender, EventArgs e)
 		{
 			frmKindOfRoom addTypeRoom = new frmKindOfRoom();
+			LoadCbbKindOfRoom();
 			addTypeRoom.Show();
 		}
 
@@ -457,6 +458,11 @@ namespace QuanLyPhong
 			}
 			Guid Id = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == selectedStatus).Select(x => x.Id).FirstOrDefault();
 			loadDtgFloor(Id);
+		}
+
+		private void cbb_typeroom_Click(object sender, EventArgs e)
+		{
+			LoadCbbKindOfRoom();
 		}
 	}
 }

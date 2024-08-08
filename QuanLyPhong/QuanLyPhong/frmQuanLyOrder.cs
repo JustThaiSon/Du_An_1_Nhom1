@@ -241,25 +241,33 @@ namespace QuanLyPhong
 		}
 		private void dtgv_order_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex >= 0 && e.RowIndex < dtgv_order.Rows.Count)
+			try
 			{
-				var cellValue = dtgv_order.Rows[e.RowIndex].Cells["Id"].Value;
-				var selectedRow = dtgv_order.Rows[e.RowIndex];
+				if (e.RowIndex >= 0 && e.RowIndex < dtgv_order.Rows.Count)
+				{
+					var cellValue = dtgv_order.Rows[e.RowIndex].Cells["Id"].Value;
+					var selectedRow = dtgv_order.Rows[e.RowIndex];
 
-				txt_Code.Text = selectedRow.Cells["OrderCode"].Value?.ToString();
-				txt_employe.Text = selectedRow.Cells["Employee"].Value?.ToString();
-				txt_Cus.Text = selectedRow.Cells["Customer"].Value?.ToString();
-				txt_phone.Text = selectedRow.Cells["CustomerPhone"].Value?.ToString();
-				txt_prepay.Text = selectedRow.Cells["Prepay"].Value?.ToString();
-				txt_TotalPrice.Text = selectedRow.Cells["Total"].Value?.ToString();
-				txt_Roomprice.Text = selectedRow.Cells["ToTalPriceRoom"].Value?.ToString();
-				txt_nameroom.Text = selectedRow.Cells["NameRoom"].Value?.ToString();
-				OrderId = Guid.Parse(selectedRow.Cells[0].Value.ToString());
-				LoadDataGridViewService(OrderId);
+					txt_Code.Text = selectedRow.Cells["OrderCode"].Value?.ToString();
+					txt_employe.Text = selectedRow.Cells["Employee"].Value?.ToString();
+					txt_Cus.Text = selectedRow.Cells["Customer"].Value?.ToString();
+					txt_phone.Text = selectedRow.Cells["CustomerPhone"].Value?.ToString();
+					txt_prepay.Text = selectedRow.Cells["Prepay"].Value?.ToString();
+					txt_TotalPrice.Text = selectedRow.Cells["Total"].Value?.ToString();
+					txt_Roomprice.Text = selectedRow.Cells["ToTalPriceRoom"].Value?.ToString();
+					txt_nameroom.Text = selectedRow.Cells["NameRoom"].Value?.ToString();
+					OrderId = Guid.Parse(selectedRow.Cells[0].Value.ToString());
+					LoadDataGridViewService(OrderId);
+				}
+				else
+				{
+					MessageBox.Show("Không có thông tin.");
+				}
 			}
-			else
+			catch (Exception)
 			{
-				MessageBox.Show("Không có thông tin.");
+
+				return;
 			}
 		}
 
@@ -434,69 +442,7 @@ namespace QuanLyPhong
 
 		private void btn_delete_Click(object sender, EventArgs e)
 		{
-			try
-			{
-				if (dtgv_order.SelectedRows.Count == 0)
-				{
-					MessageBox.Show("Vui lòng chọn đơn hàng cần xóa.");
-					return;
-				}
 
-				var selectedRow = dtgv_order.SelectedRows[0];
-				Guid orderId = (Guid)selectedRow.Cells["Id"].Value;
-				var nameroom = selectedRow.Cells["NameRoom"].Value.ToString();
-				var Value = selectedRow.Cells["DatePayment"].Value;
-
-				if (Value.ToString() != "Chưa thanh toán")
-				{
-					MessageBox.Show("Không thể xóa hóa đơn đã thanh toán");
-					return;
-				}
-
-				var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa đơn hàng này?",
-													"Xác nhận xóa",
-													MessageBoxButtons.YesNo);
-				if (confirmResult != DialogResult.Yes) return;
-
-				var orderServices = _orderServiceService.GetOrderServicesByOrderId(orderId);
-
-
-				foreach (var orderService in orderServices)
-				{
-					var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == orderService.ServiceId);
-					if (service != null)
-					{
-						service.Quantity += orderService.Quantity;
-						_serviceSevice.UpdateService(service);
-					}
-					else
-					{
-						MessageBox.Show($"Không tìm thấy dịch vụ : {service.Name}");
-					}
-				}
-
-				_orderServiceService.RemoveOrderServiceeAll(orderId);
-				_orderService.RemoveOrders(orderId);
-
-				var room = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.RoomName == nameroom);
-				if (room != null)
-				{
-					room.Status = RoomStatus.Available;
-					_roomService.UpdadateStatusRoom(room);
-				}
-				else
-				{
-					MessageBox.Show($"Không tìm thấy phòng có tên: {nameroom}");
-				}
-
-				MessageBox.Show("Xóa thành công");
-				LoadDataGridViewOrder();
-				LoadDataGridViewService(orderId);
-			}
-			catch
-			{
-				MessageBox.Show("Loi");
-			}
 		}
 
 		private void rdHavePaymented_CheckedChanged(object sender, EventArgs e)
@@ -536,7 +482,7 @@ namespace QuanLyPhong
 			dtgv_order.Rows.Clear();
 			int Count = 0;
 			decimal PriceRoom = 0;
-			foreach (var item in _orderService.GetAllOrdersViewModels().Where(x=>x.PayMents == null))
+			foreach (var item in _orderService.GetAllOrdersViewModels().Where(x => x.PayMents == null))
 			{
 				TimeSpan? ToTalTime;
 
@@ -674,18 +620,19 @@ namespace QuanLyPhong
 
 		void LoadCbbPayment()
 		{
-			string[] Payment = { "All","Have been paid", "Not yet paid" };
-            foreach (var item in Payment)
-            {
+			string[] Payment = { "All", "Have been paid", "Not yet paid" };
+			foreach (var item in Payment)
+			{
 				cbbPayment.Items.Add(item);
-            }
-        }
+			}
+		}
 		private void guna2ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            if (cbbPayment.SelectedIndex == 2)
-            {
+			if (cbbPayment.SelectedIndex == 2)
+			{
 				LoadDataGridViewOrderFilter();
-			}else if (cbbPayment.SelectedIndex == 1)
+			}
+			else if (cbbPayment.SelectedIndex == 1)
 			{
 				LoadDataGridViewOrderFilter2();
 			}
@@ -693,7 +640,74 @@ namespace QuanLyPhong
 			{
 				LoadDataGridViewOrder();
 			}
-        }
+		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				if (dtgv_order.SelectedRows.Count == 0)
+				{
+					MessageBox.Show("Vui lòng chọn đơn hàng cần xóa.");
+					return;
+				}
+
+				var selectedRow = dtgv_order.SelectedRows[0];
+				Guid orderId = (Guid)selectedRow.Cells["Id"].Value;
+				var nameroom = selectedRow.Cells["NameRoom"].Value.ToString();
+				var Value = selectedRow.Cells["DatePayment"].Value;
+
+				if (Value.ToString() != "Chưa thanh toán")
+				{
+					MessageBox.Show("Không thể xóa hóa đơn đã thanh toán");
+					return;
+				}
+
+				var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa đơn hàng này?",
+													"Xác nhận xóa",
+													MessageBoxButtons.YesNo);
+				if (confirmResult != DialogResult.Yes) return;
+
+				var orderServices = _orderServiceService.GetOrderServicesByOrderId(orderId);
+
+
+				foreach (var orderService in orderServices)
+				{
+					var service = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(s => s.Id == orderService.ServiceId);
+					if (service != null)
+					{
+						service.Quantity += orderService.Quantity;
+						_serviceSevice.UpdateService(service);
+					}
+					else
+					{
+						MessageBox.Show($"Không tìm thấy dịch vụ : {service.Name}");
+					}
+				}
+
+				_orderServiceService.RemoveOrderServiceeAll(orderId);
+				_orderService.RemoveOrders(orderId);
+
+				var room = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.RoomName == nameroom);
+				if (room != null)
+				{
+					room.Status = RoomStatus.Available;
+					_roomService.UpdadateStatusRoom(room);
+				}
+				else
+				{
+					MessageBox.Show($"Không tìm thấy phòng có tên: {nameroom}");
+				}
+
+				MessageBox.Show("Xóa thành công");
+				LoadDataGridViewOrder();
+				LoadDataGridViewService(orderId);
+			}
+			catch
+			{
+				MessageBox.Show("Loi");
+			}
+		}
 	}
 }
 

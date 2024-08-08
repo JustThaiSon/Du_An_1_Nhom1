@@ -60,6 +60,11 @@ namespace BUS.Service
 			return _orderServiceRepository.GetAllOrder();
 		}
 
+		public List<OrderService> GetByOrderIdServiceId(Guid orderId, Guid serviceId)
+		{
+			return _orderServiceRepository.GetByOrderIdServiceId(orderId, serviceId);
+		}
+
 		public List<OrderService> GetOrderServicesByOrderId(Guid Id)
 		{
 			return _orderServiceRepository.GetByOrderId(Id);

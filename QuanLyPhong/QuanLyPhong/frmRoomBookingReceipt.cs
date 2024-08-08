@@ -58,7 +58,6 @@ namespace QuanLyPhong
 		private ContextMenuStrip contextMenuStrip;
 		private ToolStripMenuItem toolStripEdit;
 		private ToolStripMenuItem toolStripDelete;
-
 		public frmRoomBookingReceipt(Guid RoomId)
 		{
 			InitializeComponent();
@@ -670,22 +669,35 @@ namespace QuanLyPhong
 			{
 				string result = _orderService.UpdateOrders(newOrder);
 				MessageBox.Show(result, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			var currentServices = _orderServiceService.GetOrderServicesByOrderId(newOrder.Id);
 
-			var servicesToDelete = currentServices.Where(s => !_temporaryServices.Any(ts => ts.ServiceId == s.ServiceId)).ToList();
-			foreach (var service in servicesToDelete)
-			{
-				string deleteResult = _orderServiceService.RemoveOrderServicee(service.OrderId, service.ServiceId);
-			}
+				var currentServices = _orderServiceService.GetOrderServicesByOrderId(newOrder.Id);
 
-			foreach (var service in _temporaryServices)
-			{
-				service.OrderId = newOrder.Id;
-				string updateServiceResult = _orderServiceService.UpdateOrderService(service);
-				if (updateServiceResult == "Update failcure")
+				var servicesToDelete = currentServices.Where(s => !_temporaryServices.Any(ts => ts.ServiceId == s.ServiceId)).ToList();
+				foreach (var service in servicesToDelete)
 				{
-					string addServiceResult = _orderServiceService.AddOrderService(service);
+					var originalService = _orderServiceService.GetAllOrderServiceFromDb().Where(x => x.ServiceId == service.ServiceId && x.OrderId == service.OrderId).FirstOrDefault();
+
+					var serviceFromDb = _serviceSevice.GetAllServiceFromDb().FirstOrDefault(x => x.Id == service.ServiceId);
+					string deleteResult = _orderServiceService.RemoveOrderServicee(service.OrderId, service.ServiceId);
+
+
+					if (deleteResult == "Delete success")
+					{
+						serviceFromDb.Quantity += originalService.Quantity;
+						_serviceSevice.UpdateService(serviceFromDb);
+						_serviceSevice.UpdateServiceStatusAuto();
+
+					}
+				}
+
+				foreach (var service in _temporaryServices)
+				{
+					service.OrderId = newOrder.Id;
+					string updateServiceResult = _orderServiceService.UpdateOrderService(service);
+					if (updateServiceResult == "Update failcure")
+					{
+						string addServiceResult = _orderServiceService.AddOrderService(service);
+					}
 				}
 			}
 			this.Close();
@@ -967,9 +979,9 @@ namespace QuanLyPhong
 				ToTal = TotalAmount,
 			};
 
-		
-			 _orderService.UpdateOrders(newOrder);
-			
+
+			_orderService.UpdateOrders(newOrder);
+
 			var currentServices = _orderServiceService.GetOrderServicesByOrderId(newOrder.Id);
 
 			var servicesToDelete = currentServices.Where(s => !_temporaryServices.Any(ts => ts.ServiceId == s.ServiceId)).ToList();

@@ -18,6 +18,7 @@ namespace BUS.IService
         string UpdateOrderService(OrderService orderService);
 		List<OrderService> GetAllOrderServiceFromDb();
 		List<OrderServiceViewModel> GetAllOrderService();
+		List<OrderService> GetByOrderIdServiceId(Guid orderId, Guid serviceId);
 		List<OrderService> GetOrderServicesByOrderId(Guid Id);
 	}
 }

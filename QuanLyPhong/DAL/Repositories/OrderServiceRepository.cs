@@ -64,6 +64,12 @@ namespace DAL.Repositories
 			return _context.OrderServices.Where(x => x.OrderId == Id).ToList();
 		}
 
+		public List<OrderService> GetByOrderIdServiceId(Guid orderId, Guid serviceId)
+		{
+			return _context.OrderServices
+				  .Where(x => x.OrderId == orderId && x.ServiceId == serviceId)
+				  .ToList();
+		}
 
 		public bool UpdadateOrderSV(OrderService orderService)
         {
