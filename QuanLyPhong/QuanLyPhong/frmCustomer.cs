@@ -90,7 +90,7 @@ namespace QuanLyPhong
 			txt_edit_PhoneNumber.Clear();
 			txt_edit_CCCD.Clear();
 			cbb_edit_Gender.SelectedIndex = 0;
-			NUD_edit_Point.Value = 0;
+			//NUD_edit_Point.Value = 0;
 		}
 		private bool IsValidEmail(string email)
 		{
@@ -230,7 +230,7 @@ namespace QuanLyPhong
 				txt_edit_PhoneNumber.Text = customer.PhoneNumber;
 				txt_edit_CCCD.Text = customer.CCCD;
 				cbb_edit_Gender.Text = customer.Gender.ToString();
-				NUD_edit_Point.Value = customer.Point;
+				//NUD_edit_Point.Value = customer.Point;
 			}
 		}
 
@@ -306,11 +306,11 @@ namespace QuanLyPhong
 				MessageBox.Show("Invalid PhoneNumber.");
 				return;
 			}
-			if (NUD_edit_Point.Value < 0)
-			{
-				MessageBox.Show("Point must be greater than or equal to 0.");
-				return;
-			}
+			//if (NUD_edit_Point.Value < 0)
+			//{
+			//	MessageBox.Show("Point must be greater than or equal to 0.");
+			//	return;
+			//}
 			MenuGender selectedGender = (MenuGender)Enum.Parse(typeof(MenuGender), cbb_edit_Gender.SelectedItem.ToString());
 
 			customer.Name = txt_edit_Name.Text;
@@ -319,7 +319,7 @@ namespace QuanLyPhong
 			customer.PhoneNumber = Sdt;
 			customer.Email = txt_edit_Email.Text;
 			customer.Gender = selectedGender;
-			customer.Point = int.Parse(NUD_edit_Point.Value.ToString("0"));
+			//customer.Point = int.Parse(NUD_edit_Point.Value.ToString("0"));
 			MessageBox.Show(_customerService.UpdateCustomer(customer), "Notificaiton");
 			this.edit_Clear();
 			Load_dtGV_Customer();
