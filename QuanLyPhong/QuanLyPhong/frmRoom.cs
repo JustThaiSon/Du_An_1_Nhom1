@@ -354,10 +354,7 @@ namespace QuanLyPhong
 			addTypeRoom.Show();
 		}
 
-		private void frmRoom_Load(object sender, EventArgs e)
-		{
-
-		}
+		
 
 		private void OnFloorUpdated(object sender, EventArgs e)
 		{
@@ -411,11 +408,7 @@ namespace QuanLyPhong
 				}
 			}
 		}
-		private void cbbStatusfilter_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			string selectedStatus = cbbStatusfilter.SelectedItem.ToString();
-			loadDtg(selectedStatus);
-		}
+		
 
 		void LoadCbbFloorFilter()
 		{
@@ -449,22 +442,64 @@ namespace QuanLyPhong
 				dtgPhong.Rows.Add(item.Id, Count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay, item.PriceByHour);
 			}
 		}
-
-		private void cbbFloorFilter_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			string selectedStatus = cbbFloorFilter.SelectedItem.ToString();
-			if (selectedStatus == "All")
-			{
-				loadDtg();
-				return;
-			}
-			Guid Id = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == selectedStatus).Select(x => x.Id).FirstOrDefault();
-			loadDtgFloor(Id);
-		}
+       
 
 		private void cbb_typeroom_Click(object sender, EventArgs e)
 		{
 			LoadCbbKindOfRoom();
 		}
-	}
+        private void frmRoom_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void cbbStatusfilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //string selectedStatus = cbbStatusfilter.SelectedItem.ToString();
+            //loadDtg(selectedStatus);
+            FilterData();
+        }
+        private void cbbFloorFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //string selectedStatus = cbbFloorFilter.SelectedItem.ToString();
+            //if (selectedStatus == "All")
+            //{
+            //	loadDtg();
+            //	return;
+            //}
+            //Guid Id = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == selectedStatus).Select(x => x.Id).FirstOrDefault();
+            //loadDtgFloor(Id);
+            FilterData();
+        }
+        void FilterData()
+        {
+            string selectedStatus = cbbStatusfilter.SelectedItem?.ToString() ?? "All";
+            string selectedFloor = cbbFloorFilter.SelectedItem?.ToString() ?? "All";
+
+            dtgPhong.Rows.Clear();
+
+            int count = 0;
+            var rooms = _roomService.GetAllRooms();
+
+            
+            if (selectedStatus != "All" && Enum.TryParse(selectedStatus, out RoomStatus statusEnum))
+            {
+                rooms = rooms.Where(x => x.Status == statusEnum).ToList();
+            }
+
+          
+            if (selectedFloor != "All")
+            {
+                Guid floorId = _floorService.GetAllFloorFromDb().Where(x => x.FloorName == selectedFloor).Select(x => x.Id).FirstOrDefault();
+                rooms = rooms.Where(x => x.FloorId == floorId).ToList();
+            }
+
+           
+            foreach (var item in rooms)
+            {
+                count++;
+                dtgPhong.Rows.Add(item.Id, count, item.RoomName, item.Status, item.FloorName, item.KindOfRoomName, item.PricePerDay, item.PriceByHour);
+            }
+        }
+
+    }
 }

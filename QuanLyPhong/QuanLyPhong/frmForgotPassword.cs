@@ -45,7 +45,7 @@ namespace QuanLyPhong
             MailMessage mail = new MailMessage();
             mail.To.Add(txt_EmailTofogotpass.Text.Trim());
             mail.From = new MailAddress("thaothaobatbai123@gmail.com");
-            mail.Subject = "Mã xác nhận của bạn";
+            mail.Subject = "Your confirmation code";
             mail.Body = $"Your verification code is {generatedCode}";
 
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
@@ -57,11 +57,11 @@ namespace QuanLyPhong
             try
             {
                 smtp.Send(mail);
-                MessageBox.Show("Email đã được gửi thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Email sent successfully!", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi gửi email: " + ex.Message, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error sending email: " + ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
@@ -83,25 +83,25 @@ namespace QuanLyPhong
         {
             if (string.IsNullOrEmpty(txt_otp.Text) || string.IsNullOrEmpty(txt_NewPass.Text) || string.IsNullOrEmpty(Re_newpass.Text))
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin.");
+                MessageBox.Show("Please fill in all information.");
                 return;
             }
 
             if (txt_otp.Text != generatedCode)
             {
-                MessageBox.Show("Mã OTP không hợp lệ. Vui lòng kiểm tra lại.");
+                MessageBox.Show("Invalid OTP code. Please check again.");
                 return;
             }
 
             if (txt_NewPass.Text != Re_newpass.Text)
             {
-                MessageBox.Show("Mật khẩu mới và mật khẩu xác nhận không trùng khớp.");
+                MessageBox.Show("New password and confirm password do not match.");
                 return;
             }
 
             if (!ValidatePassword(txt_NewPass.Text))
             {
-                MessageBox.Show("Mật khẩu quá yếu. Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm cả chữ cái in hoa, chữ thường và số.");
+                MessageBox.Show("Password is too weak. Password must contain at least 8 characters, including uppercase letters, lowercase letters, and numbers..");
                 return;
             }
 
@@ -113,13 +113,13 @@ namespace QuanLyPhong
                 user.PassWord = hashedPassword;
                 _context.SaveChanges();
 
-                MessageBox.Show("Mật khẩu đã được thay đổi thành công.");
+                MessageBox.Show("Password has been changed successfully.");
 
                
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Đã xảy ra lỗi khi cập nhật mật khẩu: " + ex.Message);
+                MessageBox.Show("An error occurred while updating password: " + ex.Message);
             }
         }
         private bool ValidatePassword(string password)

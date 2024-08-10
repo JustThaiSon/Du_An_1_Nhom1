@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tb_roomnow = new Guna.UI2.WinForms.Guna2TextBox();
             lb_roomnow = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -42,7 +42,8 @@
             // 
             // tb_roomnow
             // 
-            tb_roomnow.CustomizableEdges = customizableEdges5;
+            tb_roomnow.BorderRadius = 5;
+            tb_roomnow.CustomizableEdges = customizableEdges1;
             tb_roomnow.DefaultText = "";
             tb_roomnow.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             tb_roomnow.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -57,7 +58,7 @@
             tb_roomnow.PasswordChar = '\0';
             tb_roomnow.PlaceholderText = "";
             tb_roomnow.SelectedText = "";
-            tb_roomnow.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            tb_roomnow.ShadowDecoration.CustomizableEdges = customizableEdges2;
             tb_roomnow.Size = new Size(380, 42);
             tb_roomnow.TabIndex = 12;
             // 
@@ -104,7 +105,8 @@
             // cbb_roomchange
             // 
             cbb_roomchange.BackColor = Color.Transparent;
-            cbb_roomchange.CustomizableEdges = customizableEdges7;
+            cbb_roomchange.BorderRadius = 5;
+            cbb_roomchange.CustomizableEdges = customizableEdges3;
             cbb_roomchange.DrawMode = DrawMode.OwnerDrawFixed;
             cbb_roomchange.DropDownStyle = ComboBoxStyle.DropDownList;
             cbb_roomchange.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -114,7 +116,7 @@
             cbb_roomchange.ItemHeight = 30;
             cbb_roomchange.Location = new Point(162, 115);
             cbb_roomchange.Name = "cbb_roomchange";
-            cbb_roomchange.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cbb_roomchange.ShadowDecoration.CustomizableEdges = customizableEdges4;
             cbb_roomchange.Size = new Size(380, 36);
             cbb_roomchange.TabIndex = 36;
             // 

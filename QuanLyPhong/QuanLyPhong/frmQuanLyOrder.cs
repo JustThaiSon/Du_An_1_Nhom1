@@ -196,7 +196,7 @@ namespace QuanLyPhong
         }
         void LoadDataGridViewOrder()
         {
-            dtgv_order.ColumnCount = 20;
+            dtgv_order.ColumnCount = 19;
             dtgv_order.Columns[0].Name = "Id";
             dtgv_order.Columns[0].Visible = false;
             dtgv_order.Columns[1].Name = "STT";
@@ -812,7 +812,7 @@ namespace QuanLyPhong
                 MessageBox.Show("Customer not found.");
                 return;
             }
-            string directoryPath = @"C:\Users\admin\Desktop\PDF";
+            string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\pdf";
             string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
             string filePath = System.IO.Path.Combine(directoryPath, fileName);
 
@@ -829,7 +829,7 @@ namespace QuanLyPhong
                     {
                         Document document = new Document(pdf, PageSize.A4);
 
-                        PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+                        PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIAL.TTF", PdfEncodings.IDENTITY_H);
 
                         // Thêm tiêu đề hóa đơn
                         document.Add(new Paragraph("HÓA ĐƠN")
@@ -1233,7 +1233,7 @@ namespace QuanLyPhong
 
         private void AddTableRow(Table table, int STT, string itemName, decimal itemPrice, int? quantity, decimal totalPrice)
         {
-            PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIALUNI.TTF", PdfEncodings.IDENTITY_H);
+            PdfFont font = PdfFontFactory.CreateFont(@"C:\Windows\Fonts\ARIAL.TTF", PdfEncodings.IDENTITY_H);
 
             table.AddCell(new Cell().Add(new Paragraph(STT.ToString()))
                 .SetFont(font)

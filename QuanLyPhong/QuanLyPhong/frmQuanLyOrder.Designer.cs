@@ -62,6 +62,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tabControl1 = new TabControl();
             Information = new TabPage();
+            btnExportPDF = new Button();
             btnDelete = new Button();
             cbbPayment = new Guna.UI2.WinForms.Guna2ComboBox();
             label8 = new Label();
@@ -103,7 +104,6 @@
             label22 = new Label();
             guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             btn_edit = new Guna.UI2.WinForms.Guna2Button();
-            btnExportPDF = new Button();
             tabControl1.SuspendLayout();
             Information.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgService).BeginInit();
@@ -117,11 +117,10 @@
             // 
             tabControl1.Controls.Add(Information);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(10, 9);
-            tabControl1.Margin = new Padding(3, 2, 3, 2);
+            tabControl1.Location = new Point(11, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1302, 691);
+            tabControl1.Size = new Size(1488, 921);
             tabControl1.TabIndex = 0;
             // 
             // Information
@@ -137,21 +136,29 @@
             Information.Controls.Add(label2);
             Information.Controls.Add(label1);
             Information.ForeColor = SystemColors.ControlText;
-            Information.Location = new Point(4, 24);
-            Information.Margin = new Padding(3, 2, 3, 2);
+            Information.Location = new Point(4, 29);
             Information.Name = "Information";
-            Information.Padding = new Padding(3, 2, 3, 2);
-            Information.Size = new Size(1294, 663);
+            Information.Padding = new Padding(3, 3, 3, 3);
+            Information.Size = new Size(1480, 888);
             Information.TabIndex = 0;
             Information.Text = "Information";
             Information.UseVisualStyleBackColor = true;
             // 
+            // btnExportPDF
+            // 
+            btnExportPDF.Location = new Point(927, 20);
+            btnExportPDF.Name = "btnExportPDF";
+            btnExportPDF.Size = new Size(126, 56);
+            btnExportPDF.TabIndex = 54;
+            btnExportPDF.Text = "Invoice";
+            btnExportPDF.UseVisualStyleBackColor = true;
+            btnExportPDF.Click += btnExportPDF_Click;
+            // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(898, 600);
-            btnDelete.Margin = new Padding(3, 2, 3, 2);
+            btnDelete.Location = new Point(1026, 800);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(141, 48);
+            btnDelete.Size = new Size(161, 64);
             btnDelete.TabIndex = 53;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -160,6 +167,7 @@
             // cbbPayment
             // 
             cbbPayment.BackColor = Color.Transparent;
+            cbbPayment.BorderRadius = 5;
             cbbPayment.CustomizableEdges = customizableEdges1;
             cbbPayment.DrawMode = DrawMode.OwnerDrawFixed;
             cbbPayment.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -168,37 +176,36 @@
             cbbPayment.Font = new Font("Segoe UI", 10F);
             cbbPayment.ForeColor = Color.FromArgb(68, 88, 112);
             cbbPayment.ItemHeight = 30;
-            cbbPayment.Location = new Point(990, 21);
+            cbbPayment.Location = new Point(1119, 28);
+            cbbPayment.Margin = new Padding(3, 4, 3, 4);
             cbbPayment.Name = "cbbPayment";
             cbbPayment.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            cbbPayment.Size = new Size(166, 36);
+            cbbPayment.Size = new Size(189, 36);
             cbbPayment.TabIndex = 52;
             cbbPayment.SelectedIndexChanged += guna2ComboBox1_SelectedIndexChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(72, 29);
+            label8.Location = new Point(82, 39);
             label8.Name = "label8";
-            label8.Size = new Size(42, 15);
+            label8.Size = new Size(53, 20);
             label8.TabIndex = 48;
             label8.Text = "Search";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(135, 21);
-            textBox1.Margin = new Padding(3, 2, 3, 2);
+            textBox1.Location = new Point(141, 28);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(321, 23);
+            textBox1.Size = new Size(366, 27);
             textBox1.TabIndex = 47;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
             // button1
             // 
-            button1.Location = new Point(1125, 600);
-            button1.Margin = new Padding(3, 2, 3, 2);
+            button1.Location = new Point(1286, 800);
             button1.Name = "button1";
-            button1.Size = new Size(141, 48);
+            button1.Size = new Size(161, 64);
             button1.TabIndex = 46;
             button1.Text = "Update";
             button1.UseVisualStyleBackColor = true;
@@ -208,23 +215,21 @@
             // 
             dtgService.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dtgService.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgService.Location = new Point(26, 449);
-            dtgService.Margin = new Padding(3, 2, 3, 2);
+            dtgService.Location = new Point(30, 599);
             dtgService.Name = "dtgService";
             dtgService.RowHeadersWidth = 51;
             dtgService.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dtgService.Size = new Size(1240, 132);
+            dtgService.Size = new Size(1417, 176);
             dtgService.TabIndex = 45;
             dtgService.CellClick += dtgService_CellClick;
             // 
             // dtgv_order
             // 
             dtgv_order.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgv_order.Location = new Point(26, 73);
-            dtgv_order.Margin = new Padding(3, 2, 3, 2);
+            dtgv_order.Location = new Point(30, 97);
             dtgv_order.Name = "dtgv_order";
             dtgv_order.RowHeadersWidth = 51;
-            dtgv_order.Size = new Size(1240, 324);
+            dtgv_order.Size = new Size(1417, 432);
             dtgv_order.TabIndex = 44;
             dtgv_order.CellClick += dtgv_order_CellClick;
             dtgv_order.CellContentClick += dtgv_order_CellContentClick;
@@ -233,9 +238,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(26, 426);
+            label2.Location = new Point(30, 568);
             label2.Name = "label2";
-            label2.Size = new Size(191, 21);
+            label2.Size = new Size(238, 28);
             label2.TabIndex = 43;
             label2.Text = "Information Order Service";
             // 
@@ -243,9 +248,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(26, 50);
+            label1.Location = new Point(30, 67);
             label1.Name = "label1";
-            label1.Size = new Size(137, 21);
+            label1.Size = new Size(171, 28);
             label1.TabIndex = 42;
             label1.Text = "Information Order";
             // 
@@ -256,18 +261,18 @@
             tabPage2.Controls.Add(Order);
             tabPage2.Controls.Add(guna2Button3);
             tabPage2.Controls.Add(btn_edit);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Margin = new Padding(3, 2, 3, 2);
+            tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 2, 3, 2);
+            tabPage2.Padding = new Padding(3, 3, 3, 3);
             tabPage2.RightToLeft = RightToLeft.Yes;
-            tabPage2.Size = new Size(1294, 663);
+            tabPage2.Size = new Size(1480, 888);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Update";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // btn_editorderser
             // 
+            btn_editorderser.BorderRadius = 5;
             btn_editorderser.CustomizableEdges = customizableEdges3;
             btn_editorderser.DisabledState.BorderColor = Color.DarkGray;
             btn_editorderser.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -275,11 +280,10 @@
             btn_editorderser.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btn_editorderser.Font = new Font("Segoe UI", 9F);
             btn_editorderser.ForeColor = Color.White;
-            btn_editorderser.Location = new Point(994, 579);
-            btn_editorderser.Margin = new Padding(3, 2, 3, 2);
+            btn_editorderser.Location = new Point(1136, 772);
             btn_editorderser.Name = "btn_editorderser";
             btn_editorderser.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btn_editorderser.Size = new Size(161, 35);
+            btn_editorderser.Size = new Size(184, 47);
             btn_editorderser.TabIndex = 118;
             btn_editorderser.Text = " Confirm Edit Order Service";
             btn_editorderser.Click += btn_editorderser_Click;
@@ -295,11 +299,9 @@
             groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(txt_quantity);
             groupBox2.Controls.Add(guna2HtmlLabel1);
-            groupBox2.Location = new Point(871, 70);
-            groupBox2.Margin = new Padding(3, 2, 3, 2);
+            groupBox2.Location = new Point(995, 93);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(3, 2, 3, 2);
-            groupBox2.Size = new Size(382, 467);
+            groupBox2.Size = new Size(437, 623);
             groupBox2.TabIndex = 117;
             groupBox2.TabStop = false;
             groupBox2.Text = "Service";
@@ -308,14 +310,15 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(33, 119);
+            label4.Location = new Point(38, 159);
             label4.Name = "label4";
-            label4.Size = new Size(116, 21);
+            label4.Size = new Size(143, 28);
             label4.TabIndex = 117;
             label4.Text = "Name Service";
             // 
             // txt_priretotalser
             // 
+            txt_priretotalser.BorderRadius = 5;
             txt_priretotalser.CustomizableEdges = customizableEdges5;
             txt_priretotalser.DefaultText = "";
             txt_priretotalser.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -325,17 +328,19 @@
             txt_priretotalser.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_priretotalser.Font = new Font("Segoe UI", 9F);
             txt_priretotalser.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_priretotalser.Location = new Point(35, 362);
+            txt_priretotalser.Location = new Point(40, 483);
+            txt_priretotalser.Margin = new Padding(3, 5, 3, 5);
             txt_priretotalser.Name = "txt_priretotalser";
             txt_priretotalser.PasswordChar = '\0';
             txt_priretotalser.PlaceholderText = "";
             txt_priretotalser.SelectedText = "";
             txt_priretotalser.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            txt_priretotalser.Size = new Size(324, 29);
+            txt_priretotalser.Size = new Size(370, 39);
             txt_priretotalser.TabIndex = 122;
             // 
             // txt_price
             // 
+            txt_price.BorderRadius = 5;
             txt_price.CustomizableEdges = customizableEdges7;
             txt_price.DefaultText = "";
             txt_price.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -345,17 +350,19 @@
             txt_price.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_price.Font = new Font("Segoe UI", 9F);
             txt_price.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_price.Location = new Point(35, 283);
+            txt_price.Location = new Point(40, 377);
+            txt_price.Margin = new Padding(3, 5, 3, 5);
             txt_price.Name = "txt_price";
             txt_price.PasswordChar = '\0';
             txt_price.PlaceholderText = "";
             txt_price.SelectedText = "";
             txt_price.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            txt_price.Size = new Size(324, 29);
+            txt_price.Size = new Size(370, 39);
             txt_price.TabIndex = 124;
             // 
             // txt_nameService
             // 
+            txt_nameService.BorderRadius = 5;
             txt_nameService.CustomizableEdges = customizableEdges9;
             txt_nameService.DefaultText = "";
             txt_nameService.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -365,23 +372,24 @@
             txt_nameService.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_nameService.Font = new Font("Segoe UI", 9F);
             txt_nameService.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_nameService.Location = new Point(35, 143);
+            txt_nameService.Location = new Point(40, 191);
+            txt_nameService.Margin = new Padding(3, 5, 3, 5);
             txt_nameService.Name = "txt_nameService";
             txt_nameService.PasswordChar = '\0';
             txt_nameService.PlaceholderText = "";
             txt_nameService.ReadOnly = true;
             txt_nameService.SelectedText = "";
             txt_nameService.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            txt_nameService.Size = new Size(324, 29);
+            txt_nameService.Size = new Size(370, 39);
             txt_nameService.TabIndex = 118;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(33, 259);
+            label5.Location = new Point(38, 345);
             label5.Name = "label5";
-            label5.Size = new Size(52, 21);
+            label5.Size = new Size(65, 28);
             label5.TabIndex = 123;
             label5.Text = "Price ";
             // 
@@ -389,9 +397,9 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(33, 192);
+            label6.Location = new Point(38, 256);
             label6.Name = "label6";
-            label6.Size = new Size(77, 21);
+            label6.Size = new Size(95, 28);
             label6.TabIndex = 119;
             label6.Text = "Quantity";
             // 
@@ -399,14 +407,15 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(33, 338);
+            label7.Location = new Point(38, 451);
             label7.Name = "label7";
-            label7.Size = new Size(90, 21);
+            label7.Size = new Size(112, 28);
             label7.TabIndex = 121;
             label7.Text = "Price Total";
             // 
             // txt_quantity
             // 
+            txt_quantity.BorderRadius = 5;
             txt_quantity.CustomizableEdges = customizableEdges11;
             txt_quantity.DefaultText = "";
             txt_quantity.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -416,13 +425,14 @@
             txt_quantity.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_quantity.Font = new Font("Segoe UI", 9F);
             txt_quantity.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_quantity.Location = new Point(35, 216);
+            txt_quantity.Location = new Point(40, 288);
+            txt_quantity.Margin = new Padding(3, 5, 3, 5);
             txt_quantity.Name = "txt_quantity";
             txt_quantity.PasswordChar = '\0';
             txt_quantity.PlaceholderText = "";
             txt_quantity.SelectedText = "";
             txt_quantity.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            txt_quantity.Size = new Size(324, 29);
+            txt_quantity.Size = new Size(370, 39);
             txt_quantity.TabIndex = 120;
             // 
             // guna2HtmlLabel1
@@ -430,10 +440,9 @@
             guna2HtmlLabel1.BackColor = Color.Transparent;
             guna2HtmlLabel1.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             guna2HtmlLabel1.ForeColor = Color.Blue;
-            guna2HtmlLabel1.Location = new Point(59, 46);
-            guna2HtmlLabel1.Margin = new Padding(3, 2, 3, 2);
+            guna2HtmlLabel1.Location = new Point(67, 61);
             guna2HtmlLabel1.Name = "guna2HtmlLabel1";
-            guna2HtmlLabel1.Size = new Size(219, 38);
+            guna2HtmlLabel1.Size = new Size(276, 47);
             guna2HtmlLabel1.TabIndex = 116;
             guna2HtmlLabel1.Text = "Edit Order Service ";
             // 
@@ -456,17 +465,16 @@
             Order.Controls.Add(label20);
             Order.Controls.Add(txt_Cus);
             Order.Controls.Add(label22);
-            Order.Location = new Point(34, 70);
-            Order.Margin = new Padding(3, 2, 3, 2);
+            Order.Location = new Point(39, 93);
             Order.Name = "Order";
-            Order.Padding = new Padding(3, 2, 3, 2);
-            Order.Size = new Size(792, 467);
+            Order.Size = new Size(905, 623);
             Order.TabIndex = 116;
             Order.TabStop = false;
             Order.Text = "Order";
             // 
             // txt_nameroom
             // 
+            txt_nameroom.BorderRadius = 5;
             txt_nameroom.CustomizableEdges = customizableEdges13;
             txt_nameroom.DefaultText = "";
             txt_nameroom.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -476,27 +484,29 @@
             txt_nameroom.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_nameroom.Font = new Font("Segoe UI", 9F);
             txt_nameroom.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_nameroom.Location = new Point(409, 362);
+            txt_nameroom.Location = new Point(467, 483);
+            txt_nameroom.Margin = new Padding(3, 5, 3, 5);
             txt_nameroom.Name = "txt_nameroom";
             txt_nameroom.PasswordChar = '\0';
             txt_nameroom.PlaceholderText = "";
             txt_nameroom.SelectedText = "";
             txt_nameroom.ShadowDecoration.CustomizableEdges = customizableEdges14;
-            txt_nameroom.Size = new Size(324, 29);
+            txt_nameroom.Size = new Size(370, 39);
             txt_nameroom.TabIndex = 125;
             // 
             // label24
             // 
             label24.AutoSize = true;
             label24.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label24.Location = new Point(30, 119);
+            label24.Location = new Point(34, 159);
             label24.Name = "label24";
-            label24.Size = new Size(96, 21);
+            label24.Size = new Size(119, 28);
             label24.TabIndex = 83;
             label24.Text = "Order Code";
             // 
             // txt_TotalPrice
             // 
+            txt_TotalPrice.BorderRadius = 5;
             txt_TotalPrice.CustomizableEdges = customizableEdges15;
             txt_TotalPrice.DefaultText = "";
             txt_TotalPrice.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -506,13 +516,14 @@
             txt_TotalPrice.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_TotalPrice.Font = new Font("Segoe UI", 9F);
             txt_TotalPrice.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_TotalPrice.Location = new Point(409, 283);
+            txt_TotalPrice.Location = new Point(467, 377);
+            txt_TotalPrice.Margin = new Padding(3, 5, 3, 5);
             txt_TotalPrice.Name = "txt_TotalPrice";
             txt_TotalPrice.PasswordChar = '\0';
             txt_TotalPrice.PlaceholderText = "";
             txt_TotalPrice.SelectedText = "";
             txt_TotalPrice.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            txt_TotalPrice.Size = new Size(324, 29);
+            txt_TotalPrice.Size = new Size(370, 39);
             txt_TotalPrice.TabIndex = 111;
             // 
             // guna2HtmlLabel2
@@ -520,15 +531,15 @@
             guna2HtmlLabel2.BackColor = Color.Transparent;
             guna2HtmlLabel2.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             guna2HtmlLabel2.ForeColor = Color.Blue;
-            guna2HtmlLabel2.Location = new Point(316, 46);
-            guna2HtmlLabel2.Margin = new Padding(3, 2, 3, 2);
+            guna2HtmlLabel2.Location = new Point(361, 61);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
-            guna2HtmlLabel2.Size = new Size(126, 38);
+            guna2HtmlLabel2.Size = new Size(159, 47);
             guna2HtmlLabel2.TabIndex = 114;
             guna2HtmlLabel2.Text = "Edit Order";
             // 
             // txt_prepay
             // 
+            txt_prepay.BorderRadius = 5;
             txt_prepay.CustomizableEdges = customizableEdges17;
             txt_prepay.DefaultText = "";
             txt_prepay.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -538,27 +549,29 @@
             txt_prepay.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_prepay.Font = new Font("Segoe UI", 9F);
             txt_prepay.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_prepay.Location = new Point(409, 143);
+            txt_prepay.Location = new Point(467, 191);
+            txt_prepay.Margin = new Padding(3, 5, 3, 5);
             txt_prepay.Name = "txt_prepay";
             txt_prepay.PasswordChar = '\0';
             txt_prepay.PlaceholderText = "";
             txt_prepay.SelectedText = "";
             txt_prepay.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            txt_prepay.Size = new Size(324, 29);
+            txt_prepay.Size = new Size(370, 39);
             txt_prepay.TabIndex = 110;
             // 
             // label25
             // 
             label25.AutoSize = true;
             label25.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label25.Location = new Point(409, 259);
+            label25.Location = new Point(467, 345);
             label25.Name = "label25";
-            label25.Size = new Size(86, 21);
+            label25.Size = new Size(106, 28);
             label25.TabIndex = 106;
             label25.Text = "TotalPrice";
             // 
             // txt_employe
             // 
+            txt_employe.BorderRadius = 5;
             txt_employe.CustomizableEdges = customizableEdges19;
             txt_employe.DefaultText = "";
             txt_employe.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -568,17 +581,19 @@
             txt_employe.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_employe.Font = new Font("Segoe UI", 9F);
             txt_employe.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_employe.Location = new Point(32, 362);
+            txt_employe.Location = new Point(37, 483);
+            txt_employe.Margin = new Padding(3, 5, 3, 5);
             txt_employe.Name = "txt_employe";
             txt_employe.PasswordChar = '\0';
             txt_employe.PlaceholderText = "";
             txt_employe.SelectedText = "";
             txt_employe.ShadowDecoration.CustomizableEdges = customizableEdges20;
-            txt_employe.Size = new Size(324, 29);
+            txt_employe.Size = new Size(370, 39);
             txt_employe.TabIndex = 109;
             // 
             // txt_phone
             // 
+            txt_phone.BorderRadius = 5;
             txt_phone.CustomizableEdges = customizableEdges21;
             txt_phone.DefaultText = "";
             txt_phone.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -588,17 +603,19 @@
             txt_phone.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_phone.Font = new Font("Segoe UI", 9F);
             txt_phone.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_phone.Location = new Point(32, 283);
+            txt_phone.Location = new Point(37, 377);
+            txt_phone.Margin = new Padding(3, 5, 3, 5);
             txt_phone.Name = "txt_phone";
             txt_phone.PasswordChar = '\0';
             txt_phone.PlaceholderText = "";
             txt_phone.SelectedText = "";
             txt_phone.ShadowDecoration.CustomizableEdges = customizableEdges22;
-            txt_phone.Size = new Size(324, 29);
+            txt_phone.Size = new Size(370, 39);
             txt_phone.TabIndex = 113;
             // 
             // txt_Code
             // 
+            txt_Code.BorderRadius = 5;
             txt_Code.CustomizableEdges = customizableEdges23;
             txt_Code.DefaultText = "";
             txt_Code.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -608,23 +625,24 @@
             txt_Code.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_Code.Font = new Font("Segoe UI", 9F);
             txt_Code.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_Code.Location = new Point(32, 143);
+            txt_Code.Location = new Point(37, 191);
+            txt_Code.Margin = new Padding(3, 5, 3, 5);
             txt_Code.Name = "txt_Code";
             txt_Code.PasswordChar = '\0';
             txt_Code.PlaceholderText = "";
             txt_Code.ReadOnly = true;
             txt_Code.SelectedText = "";
             txt_Code.ShadowDecoration.CustomizableEdges = customizableEdges24;
-            txt_Code.Size = new Size(324, 29);
+            txt_Code.Size = new Size(370, 39);
             txt_Code.TabIndex = 84;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(30, 259);
+            label3.Location = new Point(34, 345);
             label3.Name = "label3";
-            label3.Size = new Size(136, 21);
+            label3.Size = new Size(167, 28);
             label3.TabIndex = 112;
             label3.Text = "Customer Phone";
             // 
@@ -632,9 +650,9 @@
             // 
             label19.AutoSize = true;
             label19.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label19.Location = new Point(409, 338);
+            label19.Location = new Point(467, 451);
             label19.Name = "label19";
-            label19.Size = new Size(105, 21);
+            label19.Size = new Size(129, 28);
             label19.TabIndex = 92;
             label19.Text = "Name Room";
             // 
@@ -642,14 +660,15 @@
             // 
             label23.AutoSize = true;
             label23.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label23.Location = new Point(32, 192);
+            label23.Location = new Point(37, 256);
             label23.Name = "label23";
-            label23.Size = new Size(83, 21);
+            label23.Size = new Size(102, 28);
             label23.TabIndex = 85;
             label23.Text = "Customer";
             // 
             // txt_Roomprice
             // 
+            txt_Roomprice.BorderRadius = 5;
             txt_Roomprice.CustomizableEdges = customizableEdges25;
             txt_Roomprice.DefaultText = "";
             txt_Roomprice.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -659,22 +678,23 @@
             txt_Roomprice.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_Roomprice.Font = new Font("Segoe UI", 9F);
             txt_Roomprice.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_Roomprice.Location = new Point(409, 213);
+            txt_Roomprice.Location = new Point(467, 284);
+            txt_Roomprice.Margin = new Padding(3, 5, 3, 5);
             txt_Roomprice.Name = "txt_Roomprice";
             txt_Roomprice.PasswordChar = '\0';
             txt_Roomprice.PlaceholderText = "";
             txt_Roomprice.SelectedText = "";
             txt_Roomprice.ShadowDecoration.CustomizableEdges = customizableEdges26;
-            txt_Roomprice.Size = new Size(324, 29);
+            txt_Roomprice.Size = new Size(370, 39);
             txt_Roomprice.TabIndex = 91;
             // 
             // label14
             // 
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label14.Location = new Point(30, 338);
+            label14.Location = new Point(34, 451);
             label14.Name = "label14";
-            label14.Size = new Size(86, 21);
+            label14.Size = new Size(104, 28);
             label14.TabIndex = 100;
             label14.Text = "Employee";
             // 
@@ -682,14 +702,15 @@
             // 
             label20.AutoSize = true;
             label20.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label20.Location = new Point(409, 189);
+            label20.Location = new Point(467, 252);
             label20.Name = "label20";
-            label20.Size = new Size(97, 21);
+            label20.Size = new Size(120, 28);
             label20.TabIndex = 90;
             label20.Text = "Room Price";
             // 
             // txt_Cus
             // 
+            txt_Cus.BorderRadius = 5;
             txt_Cus.CustomizableEdges = customizableEdges27;
             txt_Cus.DefaultText = "";
             txt_Cus.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
@@ -699,27 +720,29 @@
             txt_Cus.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txt_Cus.Font = new Font("Segoe UI", 9F);
             txt_Cus.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txt_Cus.Location = new Point(32, 216);
+            txt_Cus.Location = new Point(37, 288);
+            txt_Cus.Margin = new Padding(3, 5, 3, 5);
             txt_Cus.Name = "txt_Cus";
             txt_Cus.PasswordChar = '\0';
             txt_Cus.PlaceholderText = "";
             txt_Cus.SelectedText = "";
             txt_Cus.ShadowDecoration.CustomizableEdges = customizableEdges28;
-            txt_Cus.Size = new Size(324, 29);
+            txt_Cus.Size = new Size(370, 39);
             txt_Cus.TabIndex = 86;
             // 
             // label22
             // 
             label22.AutoSize = true;
             label22.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label22.Location = new Point(409, 119);
+            label22.Location = new Point(467, 159);
             label22.Name = "label22";
-            label22.Size = new Size(63, 21);
+            label22.Size = new Size(77, 28);
             label22.TabIndex = 87;
             label22.Text = "Prepay";
             // 
             // guna2Button3
             // 
+            guna2Button3.BorderRadius = 5;
             guna2Button3.CustomizableEdges = customizableEdges29;
             guna2Button3.DisabledState.BorderColor = Color.DarkGray;
             guna2Button3.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -727,16 +750,16 @@
             guna2Button3.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             guna2Button3.Font = new Font("Segoe UI", 9F);
             guna2Button3.ForeColor = Color.White;
-            guna2Button3.Location = new Point(214, 579);
-            guna2Button3.Margin = new Padding(3, 2, 3, 2);
+            guna2Button3.Location = new Point(245, 772);
             guna2Button3.Name = "guna2Button3";
             guna2Button3.ShadowDecoration.CustomizableEdges = customizableEdges30;
-            guna2Button3.Size = new Size(161, 35);
+            guna2Button3.Size = new Size(184, 47);
             guna2Button3.TabIndex = 104;
             guna2Button3.Text = "Clear";
             // 
             // btn_edit
             // 
+            btn_edit.BorderRadius = 5;
             btn_edit.CustomizableEdges = customizableEdges31;
             btn_edit.DisabledState.BorderColor = Color.DarkGray;
             btn_edit.DisabledState.CustomBorderColor = Color.DarkGray;
@@ -744,33 +767,20 @@
             btn_edit.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
             btn_edit.Font = new Font("Segoe UI", 9F);
             btn_edit.ForeColor = Color.White;
-            btn_edit.Location = new Point(443, 579);
-            btn_edit.Margin = new Padding(3, 2, 3, 2);
+            btn_edit.Location = new Point(506, 772);
             btn_edit.Name = "btn_edit";
             btn_edit.ShadowDecoration.CustomizableEdges = customizableEdges32;
-            btn_edit.Size = new Size(161, 35);
+            btn_edit.Size = new Size(184, 47);
             btn_edit.TabIndex = 103;
             btn_edit.Text = " Confirm Edit Order";
             btn_edit.Click += btn_edit_Click;
             // 
-            // btnExportPDF
-            // 
-            btnExportPDF.Location = new Point(811, 15);
-            btnExportPDF.Margin = new Padding(3, 2, 3, 2);
-            btnExportPDF.Name = "btnExportPDF";
-            btnExportPDF.Size = new Size(110, 42);
-            btnExportPDF.TabIndex = 54;
-            btnExportPDF.Text = "Invoice";
-            btnExportPDF.UseVisualStyleBackColor = true;
-            btnExportPDF.Click += btnExportPDF_Click;
-            // 
             // frmQuanLyOrder
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1323, 709);
+            ClientSize = new Size(1512, 945);
             Controls.Add(tabControl1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "frmQuanLyOrder";
             Text = " ";
             tabControl1.ResumeLayout(false);

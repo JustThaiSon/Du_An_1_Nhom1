@@ -130,7 +130,7 @@ namespace QuanLyPhong
 
 			int Count = 0;
 			var listCustomer = _customerService.GetAllCustomerFromDb()
-			.Where(x => x.Name!.Contains(txtSearch.Text) || x.CCCD!.StartsWith(txtSearch.Text) || x.CustomerCode!.Contains(txtSearch.Text)).ToList();
+			.Where(x => x.Name.ToLower().Contains(txtSearch.Text.ToLower()) || x.CCCD.ToLower().StartsWith(txtSearch.Text.ToLower()) || x.CustomerCode.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
 
 			foreach (var item in listCustomer)
 			{
@@ -243,7 +243,7 @@ namespace QuanLyPhong
 		{
 			this.edit_Clear();
 		}
-		private void btn_Delete_Click(object sender, EventArgs e)
+		private void btn_Delete_Click(object sender, EventArgs	 e)
 		{
 			//if (selectedCustomerId == null)
 			//{
@@ -344,57 +344,60 @@ namespace QuanLyPhong
 			dtgHistoryPoints.Rows.Clear();
 
 			int count = 1;
-			foreach (var item in _historypointService.GetAllhtrPointFromDb().Where(x => x.Point > 0).OrderBy(x=>x.CreatedDate))
+			foreach (var item in _historypointService.GetAllhtrPointFromDb().Where(x => x.Point > 0 && x.CustomerId == Id).OrderBy(x=>x.CreatedDate))
 			{
 				dtgHistoryPoints.Rows.Add(count++, item.Id, item.Point?.ToString("0"), item.CreatedDate, _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.Name).FirstOrDefault());
 			}
 		}
-		private void LoadHistoryPoint(Guid Id, DateTime? startDate = null, DateTime? endDate = null)
+		 void LoadHistoryPoint(Guid Id, DateTime? startDate = null, DateTime? endDate = null)
 		{
-			dtgHistoryPoints.ColumnCount = 5;
-			dtgHistoryPoints.Columns[0].Name = "STT";
-			dtgHistoryPoints.Columns[1].Name = "Id";
-			dtgHistoryPoints.Columns[1].Visible = false;
-			dtgHistoryPoints.Columns[2].Name = "Point Used";
-			dtgHistoryPoints.Columns[3].Name = "CreatedDate";
-			dtgHistoryPoints.Columns[4].Name = "Customer";
+			//dtgHistoryPoints.ColumnCount = 5;
+			//dtgHistoryPoints.Columns[0].Name = "STT";
+			//dtgHistoryPoints.Columns[1].Name = "Id";
+			//dtgHistoryPoints.Columns[1].Visible = false;
+			//dtgHistoryPoints.Columns[2].Name = "Point Used";
+			//dtgHistoryPoints.Columns[3].Name = "CreatedDate";
+			//dtgHistoryPoints.Columns[4].Name = "Customer";
 			dtgHistoryPoints.Rows.Clear();
 
-			var historyPoints = _historypointService.GetAllhtrPointFromDb()
-								.Where(x => x.CustomerId == Id && x.Point > 0
-										&& (startDate.HasValue || x.CreatedDate >= startDate.Value)
-										&& (endDate.HasValue || x.CreatedDate <= endDate.Value))
-								.ToList();
+            //var historyPoints = _historypointService.GetAllhtrPointFromDb()
+            //					.Where(x => x.CustomerId == Id && x.Point > 0
+            //							&& (startDate.HasValue || x.CreatedDate >= startDate.Value)
+            //							&& (endDate.HasValue || x.CreatedDate <= endDate.Value))
+            //					.ToList();
+            var historyPoints = _historypointService.GetAllhtrPointFromDb()
+				.Where(x => x.CustomerId == Id && x.Point > 0
+				&& (startDate.HasValue && x.CreatedDate >= startDate.Value)
+				&& (endDate.HasValue && x.CreatedDate <= endDate.Value))
+				.ToList();
 
-			int count = 1;
+            int count = 1;
 			foreach (var item in historyPoints)
 			{
-
-
 				dtgHistoryPoints.Rows.Add(count++, item.Id, item.Point?.ToString("0"), item.CreatedDate, _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.Name).FirstOrDefault());
 			}
 		}
 		private void dtStartdate_ValueChanged(object sender, EventArgs e)
 		{
-			//if (dtStartdate.Value.Date > dtEndDate.Value.Date)
-			//{
-			//	MessageBox.Show("Start date cannot be later than end date.");
-			//	return;
-			//}
+			if (dtStartdate.Value.Date > dtEndDate.Value.Date)
+			{
+				MessageBox.Show("Start date cannot be later than end date.");
+				return;
+			}
 
-			//LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
+			LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
 		}
 
 		private void dtEndDate_ValueChanged(object sender, EventArgs e)
 		{
 
-			//if (dtStartdate.Value.Date > dtEndDate.Value.Date)
-			//{
-			//	MessageBox.Show("End date cannot be earlier than start date.");
-			//	return;
-			//}
+			if (dtStartdate.Value.Date > dtEndDate.Value.Date)
+			{
+				MessageBox.Show("End date cannot be earlier than start date.");
+				return;
+			}
 
-			//LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
+			LoadHistoryPoint(selectedCustomerId, dtStartdate.Value, dtEndDate.Value);
 		}
 	}
 }

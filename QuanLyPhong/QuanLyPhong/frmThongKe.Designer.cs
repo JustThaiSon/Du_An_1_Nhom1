@@ -137,6 +137,7 @@
             cbb_Phong.Name = "cbb_Phong";
             cbb_Phong.Size = new Size(204, 28);
             cbb_Phong.TabIndex = 111;
+            cbb_Phong.SelectedIndexChanged += cbb_Phong_SelectedIndexChanged;
             // 
             // cbb_Tang
             // 
@@ -169,6 +170,7 @@
             // 
             // dtP_TuNgay
             // 
+            dtP_TuNgay.BorderRadius = 5;
             dtP_TuNgay.Checked = true;
             dtP_TuNgay.CustomizableEdges = customizableEdges1;
             dtP_TuNgay.Font = new Font("Segoe UI", 9F);
@@ -184,6 +186,7 @@
             // 
             // dtP_DenNgay
             // 
+            dtP_DenNgay.BorderRadius = 5;
             dtP_DenNgay.Checked = true;
             dtP_DenNgay.CustomizableEdges = customizableEdges3;
             dtP_DenNgay.Font = new Font("Segoe UI", 9F);

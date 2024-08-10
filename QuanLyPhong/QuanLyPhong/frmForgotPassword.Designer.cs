@@ -103,7 +103,7 @@
             btn_Send.FillColor = Color.FromArgb(255, 192, 192);
             btn_Send.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_Send.ForeColor = Color.Black;
-            btn_Send.Location = new Point(444, 148);
+            btn_Send.Location = new Point(444, 152);
             btn_Send.Name = "btn_Send";
             btn_Send.PressedColor = Color.Blue;
             btn_Send.ShadowDecoration.CustomizableEdges = customizableEdges4;
@@ -154,7 +154,7 @@
             submit_Change.FillColor = Color.FromArgb(255, 192, 192);
             submit_Change.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             submit_Change.ForeColor = Color.Black;
-            submit_Change.Location = new Point(444, 459);
+            submit_Change.Location = new Point(444, 446);
             submit_Change.Name = "submit_Change";
             submit_Change.PressedColor = Color.Blue;
             submit_Change.ShadowDecoration.CustomizableEdges = customizableEdges8;

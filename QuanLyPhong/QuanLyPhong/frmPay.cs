@@ -278,9 +278,13 @@ namespace QuanLyPhong
 				{
 					lbPricePoint.Text = "0 VNĐ";
 				}
+
+				ToTal = firstOrderViewModel.ToTal;
+
 				decimal total = (firstOrderViewModel.ToTal ?? 0) - (firstOrderViewModel.Prepay ?? 0);
 
-				if (total > 0)
+
+                if (total > 0)
 				{
 					lbTotalPrice.Text = $"{total:0} VNĐ";
 				}
@@ -535,7 +539,7 @@ namespace QuanLyPhong
 				MessageBox.Show("Customer not found.");
 				return;
 			}
-			string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\Du_An_1_Nhom1\pdf";
+			string directoryPath = @"D:\Tai_Lieu_Sinh_Vien\duan1\pdf";
 			string fileName = $"invoice_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.pdf";
 			string filePath = System.IO.Path.Combine(directoryPath, fileName);
 

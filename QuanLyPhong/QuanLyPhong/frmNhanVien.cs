@@ -105,6 +105,11 @@ namespace QuanLyPhong
                 return;
             }
         }
+        private bool ValidatePassword(string password)
+        {
+            Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$");
+            return regex.IsMatch(password);
+        }
         private bool IsValidPhoneNumber(string phoneNumber)
         {
             return Regex.IsMatch(phoneNumber, @"^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b$");
@@ -146,6 +151,11 @@ namespace QuanLyPhong
             if (string.IsNullOrWhiteSpace(txt_add_PassWord.Text))
             {
                 MessageBox.Show("Password is not empty!!!.");
+                return;
+            }
+            if (!ValidatePassword(txt_add_PassWord.Text))
+            {
+                MessageBox.Show("Password is too weak. Password must contain at least 8 characters, including uppercase letters, lowercase letters, and numbers.");
                 return;
             }
             if (string.IsNullOrWhiteSpace(cccd))
@@ -320,8 +330,15 @@ namespace QuanLyPhong
             employee.Name = txt_Name.Text;
             employee.Address = txt_Adress.Text;
             employee.UserName = txt_UserName.Text;
+
+            
             if (!string.IsNullOrEmpty(txt_PassWord.Text))
             {
+                if (!ValidatePassword(txt_PassWord.Text))
+                {
+                    MessageBox.Show("Password is too weak. Password must contain at least 8 characters, including uppercase letters, lowercase letters, and numbers.");
+                    return;
+                }
                 employee.PassWord = BCrypt.Net.BCrypt.HashPassword(txt_PassWord.Text);
             }
 
