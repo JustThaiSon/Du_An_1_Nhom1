@@ -62,6 +62,8 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges32 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             tabControl1 = new TabControl();
             Information = new TabPage();
+            btnNext = new Button();
+            btnPrev = new Button();
             btnExportPDF = new Button();
             btnDelete = new Button();
             cbbPayment = new Guna.UI2.WinForms.Guna2ComboBox();
@@ -104,6 +106,7 @@
             label22 = new Label();
             guna2Button3 = new Guna.UI2.WinForms.Guna2Button();
             btn_edit = new Guna.UI2.WinForms.Guna2Button();
+            lb_pageNumber = new Guna.UI2.WinForms.Guna2HtmlLabel();
             tabControl1.SuspendLayout();
             Information.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgService).BeginInit();
@@ -125,6 +128,9 @@
             // 
             // Information
             // 
+            Information.Controls.Add(lb_pageNumber);
+            Information.Controls.Add(btnNext);
+            Information.Controls.Add(btnPrev);
             Information.Controls.Add(btnExportPDF);
             Information.Controls.Add(btnDelete);
             Information.Controls.Add(cbbPayment);
@@ -138,11 +144,31 @@
             Information.ForeColor = SystemColors.ControlText;
             Information.Location = new Point(4, 29);
             Information.Name = "Information";
-            Information.Padding = new Padding(3, 3, 3, 3);
+            Information.Padding = new Padding(3);
             Information.Size = new Size(1480, 888);
             Information.TabIndex = 0;
             Information.Text = "Information";
             Information.UseVisualStyleBackColor = true;
+            // 
+            // btnNext
+            // 
+            btnNext.Location = new Point(840, 493);
+            btnNext.Name = "btnNext";
+            btnNext.Size = new Size(109, 49);
+            btnNext.TabIndex = 56;
+            btnNext.Text = "Next";
+            btnNext.UseVisualStyleBackColor = true;
+            btnNext.Click += btnNext_Click;
+            // 
+            // btnPrev
+            // 
+            btnPrev.Location = new Point(595, 493);
+            btnPrev.Name = "btnPrev";
+            btnPrev.Size = new Size(109, 49);
+            btnPrev.TabIndex = 55;
+            btnPrev.Text = "Prev";
+            btnPrev.UseVisualStyleBackColor = true;
+            btnPrev.Click += btnPrev_Click;
             // 
             // btnExportPDF
             // 
@@ -229,7 +255,7 @@
             dtgv_order.Location = new Point(30, 97);
             dtgv_order.Name = "dtgv_order";
             dtgv_order.RowHeadersWidth = 51;
-            dtgv_order.Size = new Size(1417, 432);
+            dtgv_order.Size = new Size(1417, 378);
             dtgv_order.TabIndex = 44;
             dtgv_order.CellClick += dtgv_order_CellClick;
             dtgv_order.CellContentClick += dtgv_order_CellContentClick;
@@ -263,7 +289,7 @@
             tabPage2.Controls.Add(btn_edit);
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 3, 3, 3);
+            tabPage2.Padding = new Padding(3);
             tabPage2.RightToLeft = RightToLeft.Yes;
             tabPage2.Size = new Size(1480, 888);
             tabPage2.TabIndex = 1;
@@ -489,6 +515,7 @@
             txt_nameroom.Name = "txt_nameroom";
             txt_nameroom.PasswordChar = '\0';
             txt_nameroom.PlaceholderText = "";
+            txt_nameroom.ReadOnly = true;
             txt_nameroom.SelectedText = "";
             txt_nameroom.ShadowDecoration.CustomizableEdges = customizableEdges14;
             txt_nameroom.Size = new Size(370, 39);
@@ -521,6 +548,7 @@
             txt_TotalPrice.Name = "txt_TotalPrice";
             txt_TotalPrice.PasswordChar = '\0';
             txt_TotalPrice.PlaceholderText = "";
+            txt_TotalPrice.ReadOnly = true;
             txt_TotalPrice.SelectedText = "";
             txt_TotalPrice.ShadowDecoration.CustomizableEdges = customizableEdges16;
             txt_TotalPrice.Size = new Size(370, 39);
@@ -586,6 +614,7 @@
             txt_employe.Name = "txt_employe";
             txt_employe.PasswordChar = '\0';
             txt_employe.PlaceholderText = "";
+            txt_employe.ReadOnly = true;
             txt_employe.SelectedText = "";
             txt_employe.ShadowDecoration.CustomizableEdges = customizableEdges20;
             txt_employe.Size = new Size(370, 39);
@@ -608,6 +637,7 @@
             txt_phone.Name = "txt_phone";
             txt_phone.PasswordChar = '\0';
             txt_phone.PlaceholderText = "";
+            txt_phone.ReadOnly = true;
             txt_phone.SelectedText = "";
             txt_phone.ShadowDecoration.CustomizableEdges = customizableEdges22;
             txt_phone.Size = new Size(370, 39);
@@ -683,6 +713,7 @@
             txt_Roomprice.Name = "txt_Roomprice";
             txt_Roomprice.PasswordChar = '\0';
             txt_Roomprice.PlaceholderText = "";
+            txt_Roomprice.ReadOnly = true;
             txt_Roomprice.SelectedText = "";
             txt_Roomprice.ShadowDecoration.CustomizableEdges = customizableEdges26;
             txt_Roomprice.Size = new Size(370, 39);
@@ -725,6 +756,7 @@
             txt_Cus.Name = "txt_Cus";
             txt_Cus.PasswordChar = '\0';
             txt_Cus.PlaceholderText = "";
+            txt_Cus.ReadOnly = true;
             txt_Cus.SelectedText = "";
             txt_Cus.ShadowDecoration.CustomizableEdges = customizableEdges28;
             txt_Cus.Size = new Size(370, 39);
@@ -775,6 +807,15 @@
             btn_edit.Text = " Confirm Edit Order";
             btn_edit.Click += btn_edit_Click;
             // 
+            // lb_pageNumber
+            // 
+            lb_pageNumber.BackColor = Color.Transparent;
+            lb_pageNumber.Location = new Point(720, 505);
+            lb_pageNumber.Name = "lb_pageNumber";
+            lb_pageNumber.Size = new Size(36, 22);
+            lb_pageNumber.TabIndex = 57;
+            lb_pageNumber.Text = "label";
+            // 
             // frmQuanLyOrder
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -783,6 +824,7 @@
             Controls.Add(tabControl1);
             Name = "frmQuanLyOrder";
             Text = " ";
+            Load += frmQuanLyOrder_Load;
             tabControl1.ResumeLayout(false);
             Information.ResumeLayout(false);
             Information.PerformLayout();
@@ -842,5 +884,8 @@
 		private Guna.UI2.WinForms.Guna2ComboBox cbbPayment;
 		private Button btnDelete;
         private Button btnExportPDF;
+        private Button btnNext;
+        private Button btnPrev;
+        private Guna.UI2.WinForms.Guna2HtmlLabel lb_pageNumber;
     }
 }

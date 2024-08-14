@@ -354,7 +354,7 @@ namespace QuanLyPhong
             if (selectedService != null)
             {
                 txtStatus.Text = selectedService.Status.ToString();
-                lbGia.Text = selectedService.Price.ToString("0");
+                lbGia.Text = selectedService.Price.ToString("0") + " VND";
             }
         }
 
@@ -413,7 +413,6 @@ namespace QuanLyPhong
                 }
             }
         }
-
 
         private void btn_AddService_Click(object sender, EventArgs e)
         {

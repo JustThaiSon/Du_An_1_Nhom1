@@ -420,7 +420,7 @@
             // tb_search
             // 
             tb_search.CustomizableEdges = customizableEdges17;
-            tb_search.DefaultText = "Search in here";
+            tb_search.DefaultText = "";
             tb_search.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             tb_search.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
             tb_search.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);

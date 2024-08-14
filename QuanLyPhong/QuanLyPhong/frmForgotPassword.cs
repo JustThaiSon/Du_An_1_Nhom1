@@ -39,9 +39,6 @@ namespace QuanLyPhong
             Random random = new Random();
             generatedCode = random.Next(100000, 999999).ToString();
 
-
-
-
             MailMessage mail = new MailMessage();
             mail.To.Add(txt_EmailTofogotpass.Text.Trim());
             mail.From = new MailAddress("thaothaobatbai123@gmail.com");
@@ -87,9 +84,10 @@ namespace QuanLyPhong
                 return;
             }
 
-            if (txt_otp.Text != generatedCode)
+            string userInput = Regex.Replace(txt_otp.Text, @"\s+", "");
+            if (userInput != generatedCode)
             {
-                MessageBox.Show("Invalid OTP code. Please check again.");
+                MessageBox.Show("Mã OTP không hợp lệ. Vui lòng kiểm tra lại.");
                 return;
             }
 

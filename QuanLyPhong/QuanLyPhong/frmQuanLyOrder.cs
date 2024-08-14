@@ -31,6 +31,7 @@ using Image = System.Drawing.Image;
 using System.Drawing.Drawing2D;
 using Rectangle = System.Drawing.Rectangle;
 using iText.IO.Image;
+using NPOI.HSSF.Record.Chart;
 namespace QuanLyPhong
 {
     public partial class frmQuanLyOrder : Form
@@ -64,9 +65,10 @@ namespace QuanLyPhong
             _orderService = new OrderServicess();
             _employeeService = new EmployeeService();
             ServiceTongTien();
-            LoadDataGridViewOrder();
+            LoadDataGridViewOrder(CurrentPage);
             LoadMeNu();
             LoadCbbPayment();
+            LoadTotalPages();
 
         }
         void LoadMeNu()
@@ -101,7 +103,8 @@ namespace QuanLyPhong
                     MessageBox.Show("Service not found in the order.");
                     return;
                 }
-                var orderViewModel = _orderService.GetOrdersViewModels(OrderId);
+                var orderViewModel = _orderService.GetOrdersViewModels(OrderId)
+                      .FirstOrDefault(x => x.DatePayment == null);
                 if (orderViewModel == null)
                 {
                     MessageBox.Show("Order details not found or the order has been paid.");
@@ -194,8 +197,21 @@ namespace QuanLyPhong
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-        void LoadDataGridViewOrder()
+
+        private int CurrentPage = 1;
+        private int PageSizee = 10;
+        private int TotalPages;
+
+        void LoadTotalPages()
         {
+            int totalRecord = _orderService.TotalRecord();
+            TotalPages = (int)Math.Ceiling((double)totalRecord / PageSizee);
+            lb_pageNumber.Text = $"Page {CurrentPage} Of {TotalPages}";
+        }
+
+        void LoadDataGridViewOrder(int PageNumber)
+        {
+            int StartRecord = (PageNumber - 1) * PageSizee;
             dtgv_order.ColumnCount = 19;
             dtgv_order.Columns[0].Name = "Id";
             dtgv_order.Columns[0].Visible = false;
@@ -221,7 +237,7 @@ namespace QuanLyPhong
             dtgv_order.Rows.Clear();
             int Count = 0;
             decimal PriceRoom = 0;
-            foreach (var item in _orderService.GetAllOrdersViewModels())
+            foreach (var item in _orderService.GetAllOrdersViewModelsPage(StartRecord, PageSizee))
             {
                 TimeSpan? ToTalTime;
 
@@ -252,28 +268,26 @@ namespace QuanLyPhong
                     }
                 }
 
-                if (item.Rentaltype == RentalTypeEnum.Daily)
-                {
-                    PriceRoom = item.PricePerDay;
-                }
-                else
-                {
-                    PriceRoom = item.PriceByHour;
-                }
-                var employ = _employeeService.GetAllEmployeeFromDb().Where(x => x.Id == item.EmployeeId).Select(x => x.Name).FirstOrDefault();
-                var Customer = _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.Name).FirstOrDefault();
-                var CustomerPhone = _customerService.GetAllCustomerFromDb().Where(x => x.Id == item.CustomerId).Select(x => x.PhoneNumber).FirstOrDefault();
+                PriceRoom = item.Rentaltype == RentalTypeEnum.Daily ? item.PricePerDay : item.PriceByHour;
+                var employ = _employeeService.GetAllEmployeeFromDb().FirstOrDefault(x => x.Id == item.EmployeeId)?.Name;
+                var customer = _customerService.GetAllCustomerFromDb().FirstOrDefault(x => x.Id == item.CustomerId);
+                var customerName = customer?.Name;
+                var customerPhone = customer?.PhoneNumber;
+                var roomName = _roomService.GetAllRoomsFromDb().FirstOrDefault(x => x.Id == item.RoomId)?.RoomName;
 
-                var room = _roomService.GetAllRoomsFromDb().Where(x => x.Id == item.RoomId).Select(x => x.RoomName).FirstOrDefault();
-                var datePayment = item.DatePayment.HasValue ? item.DatePayment.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa thanh toán";
+                string datePayment = item.DatePayment.HasValue ? item.DatePayment.Value.ToString("dd/MM/yyyy HH:mm") : "Chưa thanh toán";
                 Count++;
 
-                decimal PointAdd = item.ToTalPrice * 0.01m;
-                dtgv_order.Rows.Add(item.Id, Count, item.OrderCode, employ, item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm"), datePayment, Customer,
-                    CustomerPhone, item.Prepay,
-                 item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
+                decimal pointAdded = item.ToTalPrice * 0.01m;
+                dtgv_order.Rows.Add(item.Id, Count, item.OrderCode, employ, item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm"), datePayment,
+                                    customerName, customerPhone, item.Prepay, item.ToTalPrice, roomName, item.Note, PriceRoom, pointAdded,
+                                    item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
             }
+
+            lb_pageNumber.Text = $"Page {CurrentPage} Of {TotalPages}";
+
         }
+
         void ServiceTongTien()
         {
             txt_priretotalser.Enabled = false;
@@ -446,7 +460,7 @@ namespace QuanLyPhong
                     MessageBox.Show("Successfully updated!");
 
                     tabControl1.SelectedTab = Information;
-                    LoadDataGridViewOrder();
+                    LoadDataGridViewOrder(CurrentPage);
                     LoadDataGridViewService(orderId);
                 }
                 else
@@ -516,7 +530,7 @@ namespace QuanLyPhong
                 _orderServiceService.UpdateOrderService(orderService);
                 MessageBox.Show("Updated the number of services successfully.");
                 LoadDataGridViewService(orderId);
-                LoadDataGridViewOrder();
+                LoadDataGridViewOrder(CurrentPage);
                 tabControl1.SelectedTab = Information;
             }
             catch (Exception ex)
@@ -539,8 +553,9 @@ namespace QuanLyPhong
         {
 
         }
-        void LoadDataGridViewOrderFilter()
+        void LoadDataGridViewOrderFilter(int PageNumber)
         {
+            int StartRecord = (PageNumber - 1) * PageSizee;
             dtgv_order.ColumnCount = 20;
             dtgv_order.Columns[0].Name = "Id";
             dtgv_order.Columns[0].Visible = false;
@@ -567,7 +582,7 @@ namespace QuanLyPhong
             dtgv_order.Rows.Clear();
             int Count = 0;
             decimal PriceRoom = 0;
-            foreach (var item in _orderService.GetAllOrdersViewModels().Where(x => x.PayMents == null))
+            foreach (var item in _orderService.GetAllOrdersViewModelsPage(StartRecord, PageSizee).Where(x => x.PayMents == null))
             {
                 TimeSpan? ToTalTime;
 
@@ -618,11 +633,15 @@ namespace QuanLyPhong
                 dtgv_order.Rows.Add(item.Id, Count, item.OrderCode, employ, item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm"), datePayment, Customer,
                     CustomerPhone, item.Prepay,
                     item.OrderType, item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
+
+                lb_pageNumber.Text = $"Page {CurrentPage} Of {TotalPages}";
+
             }
         }
 
-        void LoadDataGridViewOrderFilter2()
+        void LoadDataGridViewOrderFilter2(int PageNumber)
         {
+            int StartRecord = (PageNumber - 1) * PageSizee;
             dtgv_order.ColumnCount = 20;
             dtgv_order.Columns[0].Name = "Id";
             dtgv_order.Columns[0].Visible = false;
@@ -649,7 +668,7 @@ namespace QuanLyPhong
             dtgv_order.Rows.Clear();
             int Count = 0;
             decimal PriceRoom = 0;
-            foreach (var item in _orderService.GetAllOrdersViewModels().Where(x => x.PayMents != null))
+            foreach (var item in _orderService.GetAllOrdersViewModelsPage(StartRecord, PageSizee).Where(x => x.PayMents != null))
             {
                 TimeSpan? ToTalTime;
 
@@ -700,6 +719,8 @@ namespace QuanLyPhong
                 dtgv_order.Rows.Add(item.Id, Count, item.OrderCode, employ, item.DateCreated.Value.ToString("dd/MM/yyyy HH:mm"), datePayment, Customer,
                     CustomerPhone, item.Prepay,
                     item.OrderType, item.ToTalPrice, room, item.Note, PriceRoom, PointAdd, item.TotalPricePoint.ToString(), item.TotalDiscount, item.Rentaltype, totalTimeString, item.ToTal);
+                lb_pageNumber.Text = $"Page {CurrentPage} Of {TotalPages}";
+
             }
         }
         void LoadCbbPayment()
@@ -714,15 +735,15 @@ namespace QuanLyPhong
         {
             if (cbbPayment.SelectedIndex == 2)
             {
-                LoadDataGridViewOrderFilter();
+                LoadDataGridViewOrderFilter(CurrentPage);
             }
             else if (cbbPayment.SelectedIndex == 1)
             {
-                LoadDataGridViewOrderFilter2();
+                LoadDataGridViewOrderFilter2(CurrentPage);
             }
             else
             {
-                LoadDataGridViewOrder();
+                LoadDataGridViewOrder(CurrentPage);
             }
         }
         private void btnDelete_Click(object sender, EventArgs e)
@@ -784,7 +805,7 @@ namespace QuanLyPhong
                     MessageBox.Show("Cannot found serivce in orders.");
                 }
 
-                LoadDataGridViewOrder();
+                LoadDataGridViewOrder(CurrentPage);
                 LoadDataGridViewService(orderId);
             }
             catch (Exception ex)
@@ -855,7 +876,15 @@ namespace QuanLyPhong
                            .SetFontSize(14)
                            .SetTextAlignment(TextAlignment.CENTER)
                            .SetMarginBottom(20));
-                        var qrData = GetQRCodeImageData();
+                        decimal totalAmount = (filterData.ToTal ?? 0) - (filterData.Prepay ?? 0);
+
+                        if (totalAmount < 0)
+                        {
+                            totalAmount = 0;
+                        }
+
+
+                        var qrData = GetQRCodeImageData(totalAmount);
                         if (filterData.PayMents == "Payment by card")
                         {
                             if (!string.IsNullOrEmpty(qrData))
@@ -1048,7 +1077,7 @@ namespace QuanLyPhong
                         decimal pointAdd = filterData.ToTalPrice * 0.01m;
 
                         AddOrderDataCell("Số Điểm Cộng");
-                        AddOrderDataCell(pointAdd.ToString() + " Points");
+                        AddOrderDataCell(pointAdd.ToString("0") + " Points");
 
                         AddOrderDataCell("Tiền Trả Trước");
                         AddOrderDataCell(filterData.Prepay?.ToString("0") + " VND");
@@ -1085,6 +1114,10 @@ namespace QuanLyPhong
 
                         AddOrderDataCell("Tổng Tiền Hóa Đơn");
                         AddOrderDataCell($"{filterData.ToTal?.ToString("0")} VND");
+
+                        AddOrderDataCell("Tổng Khách Phải Trả");
+                        AddOrderDataCell($"{totalAmount.ToString("0")} VND");
+
                         document.Add(orderTable);
                         document.Close();
                     }
@@ -1159,7 +1192,7 @@ namespace QuanLyPhong
                 return ms.ToArray();
             }
         }
-        private string GetQRCodeImageData()
+        private string GetQRCodeImageData(decimal ToToPay)
         {
             var filterData = _orderService.GetOrdersViewModels(OrderId).FirstOrDefault();
 
@@ -1170,7 +1203,7 @@ namespace QuanLyPhong
                     acqId = 970436,
                     accountNo = "0731000935774",
                     accountName = "HOANG THAI SON",
-                    amount = Convert.ToInt32(filterData.ToTal),
+                    amount = Convert.ToInt32(ToToPay),
                     format = "text",
                     template = "compact2"
                 };
@@ -1272,6 +1305,52 @@ namespace QuanLyPhong
             }
             Issue_An_invoice();
         }
+
+        private void frmQuanLyOrder_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage > 1)
+            {
+                CurrentPage--;
+                if (cbbPayment.SelectedIndex == 1)
+                {
+                    LoadDataGridViewOrderFilter2(CurrentPage);
+                }
+                else if (cbbPayment.SelectedIndex == 2)
+                {
+                    LoadDataGridViewOrderFilter(CurrentPage);
+                }
+                else
+                {
+                    LoadDataGridViewOrder(CurrentPage);
+                }
+            }
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (CurrentPage < TotalPages)
+            {
+                CurrentPage++;
+                if (cbbPayment.SelectedIndex == 1)
+                {
+                    LoadDataGridViewOrderFilter2(CurrentPage);
+                }
+                else if (cbbPayment.SelectedIndex == 2)
+                {
+                    LoadDataGridViewOrderFilter(CurrentPage);
+                }
+                else
+                {
+                    LoadDataGridViewOrder(CurrentPage);
+                }
+            }
+        }
+
     }
 }
 

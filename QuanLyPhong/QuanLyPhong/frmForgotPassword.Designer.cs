@@ -238,6 +238,7 @@
             Controls.Add(txt_EmailTofogotpass);
             Controls.Add(label1);
             Name = "frmForgotPassword";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Load += frmForgotPassword_Load;
             ResumeLayout(false);

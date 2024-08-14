@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPay));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPay));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             btn_Back = new Guna.UI2.WinForms.Guna2Button();
             guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             lbRoomName = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -58,7 +56,6 @@
             guna2HtmlLabel22 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel24 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            TbVoucher = new Guna.UI2.WinForms.Guna2TextBox();
             lbTotalPrice = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel25 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -92,8 +89,9 @@
             btn_addFloor = new Button();
             cbbpoint = new Guna.UI2.WinForms.Guna2ComboBox();
             btn_confirm = new Button();
-            btnApply = new Button();
             cbbVoucher = new Guna.UI2.WinForms.Guna2ComboBox();
+            btnReset = new Button();
+            btnResetVoucher = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgService).BeginInit();
             groupBox2.SuspendLayout();
@@ -104,7 +102,7 @@
             // 
             btn_Back.BackColor = Color.Transparent;
             btn_Back.BorderRadius = 5;
-            btn_Back.CustomizableEdges = customizableEdges1;
+            btn_Back.CustomizableEdges = customizableEdges9;
             btn_Back.DisabledState.BorderColor = Color.DarkGray;
             btn_Back.DisabledState.CustomBorderColor = Color.DarkGray;
             btn_Back.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -116,7 +114,7 @@
             btn_Back.ImageSize = new Size(40, 40);
             btn_Back.Location = new Point(11, 12);
             btn_Back.Name = "btn_Back";
-            btn_Back.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btn_Back.ShadowDecoration.CustomizableEdges = customizableEdges10;
             btn_Back.Size = new Size(130, 56);
             btn_Back.TabIndex = 36;
             btn_Back.Text = "BACK";
@@ -296,30 +294,6 @@
             guna2HtmlLabel5.TabIndex = 58;
             guna2HtmlLabel5.Text = "Rental type:";
             // 
-            // TbVoucher
-            // 
-            TbVoucher.BorderColor = SystemColors.ActiveBorder;
-            TbVoucher.BorderRadius = 5;
-            TbVoucher.CustomizableEdges = customizableEdges3;
-            TbVoucher.DefaultText = "";
-            TbVoucher.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            TbVoucher.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            TbVoucher.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            TbVoucher.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            TbVoucher.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            TbVoucher.Font = new Font("Segoe UI", 9F);
-            TbVoucher.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            TbVoucher.Location = new Point(984, 12);
-            TbVoucher.Margin = new Padding(3, 5, 3, 5);
-            TbVoucher.Name = "TbVoucher";
-            TbVoucher.PasswordChar = '\0';
-            TbVoucher.PlaceholderText = "";
-            TbVoucher.SelectedText = "";
-            TbVoucher.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            TbVoucher.Size = new Size(217, 48);
-            TbVoucher.TabIndex = 59;
-            TbVoucher.TextChanged += TbVoucher_TextChanged;
-            // 
             // lbTotalPrice
             // 
             lbTotalPrice.BackColor = Color.Transparent;
@@ -346,7 +320,7 @@
             // 
             guna2HtmlLabel2.BackColor = Color.Transparent;
             guna2HtmlLabel2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            guna2HtmlLabel2.Location = new Point(581, 796);
+            guna2HtmlLabel2.Location = new Point(498, 796);
             guna2HtmlLabel2.Name = "guna2HtmlLabel2";
             guna2HtmlLabel2.Size = new Size(56, 27);
             guna2HtmlLabel2.TabIndex = 62;
@@ -587,7 +561,7 @@
             // 
             cbbPayment.BackColor = Color.Transparent;
             cbbPayment.BorderRadius = 5;
-            cbbPayment.CustomizableEdges = customizableEdges5;
+            cbbPayment.CustomizableEdges = customizableEdges11;
             cbbPayment.DrawMode = DrawMode.OwnerDrawFixed;
             cbbPayment.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbPayment.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -597,7 +571,7 @@
             cbbPayment.ItemHeight = 30;
             cbbPayment.Location = new Point(1059, 787);
             cbbPayment.Name = "cbbPayment";
-            cbbPayment.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            cbbPayment.ShadowDecoration.CustomizableEdges = customizableEdges12;
             cbbPayment.Size = new Size(217, 36);
             cbbPayment.TabIndex = 88;
             cbbPayment.SelectedIndexChanged += cbbOrderType_SelectedIndexChanged;
@@ -615,9 +589,9 @@
             // btn_addFloor
             // 
             btn_addFloor.Image = (Image)resources.GetObject("btn_addFloor.Image");
-            btn_addFloor.Location = new Point(887, 789);
+            btn_addFloor.Location = new Point(804, 787);
             btn_addFloor.Name = "btn_addFloor";
-            btn_addFloor.Size = new Size(46, 45);
+            btn_addFloor.Size = new Size(41, 36);
             btn_addFloor.TabIndex = 90;
             btn_addFloor.UseVisualStyleBackColor = true;
             btn_addFloor.Click += btn_addFloor_Click;
@@ -626,7 +600,7 @@
             // 
             cbbpoint.BackColor = Color.Transparent;
             cbbpoint.BorderRadius = 5;
-            cbbpoint.CustomizableEdges = customizableEdges7;
+            cbbpoint.CustomizableEdges = customizableEdges13;
             cbbpoint.DrawMode = DrawMode.OwnerDrawFixed;
             cbbpoint.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbpoint.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -634,9 +608,9 @@
             cbbpoint.Font = new Font("Segoe UI", 10F);
             cbbpoint.ForeColor = Color.FromArgb(68, 88, 112);
             cbbpoint.ItemHeight = 30;
-            cbbpoint.Location = new Point(653, 787);
+            cbbpoint.Location = new Point(581, 787);
             cbbpoint.Name = "cbbpoint";
-            cbbpoint.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            cbbpoint.ShadowDecoration.CustomizableEdges = customizableEdges14;
             cbbpoint.Size = new Size(217, 36);
             cbbpoint.TabIndex = 91;
             cbbpoint.SelectedIndexChanged += cbbpoint_SelectedIndexChanged;
@@ -652,22 +626,11 @@
             btn_confirm.UseVisualStyleBackColor = false;
             btn_confirm.Click += btn_confirm_Click;
             // 
-            // btnApply
-            // 
-            btnApply.BackColor = Color.Cyan;
-            btnApply.Location = new Point(438, 789);
-            btnApply.Name = "btnApply";
-            btnApply.Size = new Size(90, 45);
-            btnApply.TabIndex = 92;
-            btnApply.Text = "Apply";
-            btnApply.UseVisualStyleBackColor = false;
-            btnApply.Click += btnApply_Click;
-            // 
             // cbbVoucher
             // 
             cbbVoucher.BackColor = Color.Transparent;
             cbbVoucher.BorderRadius = 5;
-            cbbVoucher.CustomizableEdges = customizableEdges9;
+            cbbVoucher.CustomizableEdges = customizableEdges15;
             cbbVoucher.DrawMode = DrawMode.OwnerDrawFixed;
             cbbVoucher.DropDownStyle = ComboBoxStyle.DropDownList;
             cbbVoucher.FocusedColor = Color.FromArgb(94, 148, 255);
@@ -677,10 +640,32 @@
             cbbVoucher.ItemHeight = 30;
             cbbVoucher.Location = new Point(171, 787);
             cbbVoucher.Name = "cbbVoucher";
-            cbbVoucher.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            cbbVoucher.ShadowDecoration.CustomizableEdges = customizableEdges16;
             cbbVoucher.Size = new Size(217, 36);
             cbbVoucher.TabIndex = 93;
             cbbVoucher.SelectedIndexChanged += cbbVoucher_SelectedIndexChanged;
+            // 
+            // btnReset
+            // 
+            btnReset.BackColor = Color.Cyan;
+            btnReset.Location = new Point(851, 787);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(71, 36);
+            btnReset.TabIndex = 94;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
+            // 
+            // btnResetVoucher
+            // 
+            btnResetVoucher.BackColor = Color.Cyan;
+            btnResetVoucher.Location = new Point(394, 787);
+            btnResetVoucher.Name = "btnResetVoucher";
+            btnResetVoucher.Size = new Size(71, 36);
+            btnResetVoucher.TabIndex = 95;
+            btnResetVoucher.Text = "Reset";
+            btnResetVoucher.UseVisualStyleBackColor = false;
+            btnResetVoucher.Click += button1_Click;
             // 
             // frmPay
             // 
@@ -688,8 +673,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(192, 255, 255);
             ClientSize = new Size(1365, 907);
+            Controls.Add(btnResetVoucher);
+            Controls.Add(btnReset);
             Controls.Add(cbbVoucher);
-            Controls.Add(btnApply);
             Controls.Add(cbbpoint);
             Controls.Add(btn_addFloor);
             Controls.Add(guna2HtmlLabel6);
@@ -721,7 +707,6 @@
             Controls.Add(guna2HtmlLabel2);
             Controls.Add(lbTotalPrice);
             Controls.Add(guna2HtmlLabel25);
-            Controls.Add(TbVoucher);
             Controls.Add(guna2HtmlLabel5);
             Controls.Add(guna2HtmlLabel1);
             Controls.Add(guna2HtmlLabel24);
@@ -774,7 +759,6 @@
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel22;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel24;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
-        private Guna.UI2.WinForms.Guna2TextBox TbVoucher;
         private Guna.UI2.WinForms.Guna2HtmlLabel lbTotalPrice;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel25;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
@@ -808,7 +792,8 @@
         private Button btn_addFloor;
         private Guna.UI2.WinForms.Guna2ComboBox cbbpoint;
 		private Button btn_confirm;
-		private Button btnApply;
 		private Guna.UI2.WinForms.Guna2ComboBox cbbVoucher;
-	}
+        private Button btnReset;
+        private Button btnResetVoucher;
+    }
 }

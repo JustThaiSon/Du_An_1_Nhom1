@@ -28,7 +28,7 @@ namespace QuanLyPhong
         private Guid selectedEmployeeId = Guid.Empty;
         private Guid selectedRoleId = Guid.Empty;
         private byte[] img;
-        private string path_img = "C:\\Users\\admin\\Desktop\\ảnh";
+        private string path_img = "D:\\Tai_Lieu_Sinh_Vien\\duan1\\img\\(73) Pinterest_files";
         public frmNhanVien()
         {
             InitializeComponent();
@@ -38,6 +38,7 @@ namespace QuanLyPhong
             this.load_Status();
             this.load_Gender();
             this.Load_dtGV_Employee();
+            ptb_Employee.ImageLocation = "D:\\Tai_Lieu_Sinh_Vien\\duan1\\img\\(73) Pinterest_files\\553e979fb595d33403941cace9f5ba62.jpg";
         }
         public void load_Gender()
         {
@@ -486,7 +487,7 @@ namespace QuanLyPhong
             txt_CCCD.Clear();
             cb_Gender.SelectedIndex = 2;
             dtP_DateOfBirth.Value = DateTime.Now;
-            ptb_Employee.ImageLocation = "C:\\Users\\admin\\Desktop\\ảnh\\boy.png";
+            ptb_Employee.ImageLocation = "D:\\Tai_Lieu_Sinh_Vien\\duan1\\img\\(73) Pinterest_files\\553e979fb595d33403941cace9f5ba62.jpg";
         }
         private void add_Clear()
         {
@@ -501,7 +502,7 @@ namespace QuanLyPhong
             txt_add_CCCD.Clear();
             cbb_add_Gender.SelectedIndex = 2;
             dtP_add_DateOfBirth.Value = DateTime.Now;
-            ptB_add_Img.ImageLocation = "C:\\Users\\admin\\Desktop\\ảnh\\boy.png";
+            ptB_add_Img.ImageLocation = "D:\\Tai_Lieu_Sinh_Vien\\duan1\\img\\(73) Pinterest_files\\553e979fb595d33403941cace9f5ba62.jpg";
         }
         private void guna2Button3_Click(object sender, EventArgs e)
         {
